@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mappa Interattiva con OpenStreetMap</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+  <style>
+    html, body { height: 100%; margin: 0; }
+    #map { height: 100%; width: 100%; }
+    .controls {
+      position: absolute; top: 50%; right: 10px; transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.9); padding: 15px; border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); z-index: 1000; display: flex;
+      flex-direction: column; gap: 10px;
+    }
+    .controls button {
+      background: #007bff; color: white; border: none; padding: 10px;
+      border-radius: 5px; cursor: pointer; font-size: 14px; transition: background 0.3s;
+    }
+    .controls button:hover { background: #0056b3; }
+    .distance-display { text-align: center; font-weight: bold; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <div class="controls">
+    <button onclick="addMarker()">Aggiungi Marker</button>
+    <button onclick="removeMarkers()">Rimuovi Tutti i Marker</button>
+    <button onclick="calculateMidpoint()">Trova Punto Medio</button>
+    <button onclick="removeMidpoint()">Rimuovi Punto Medio</button>
+    <div class="distance-display" id="distance">Distanza: -- km</div>
+    <div class="distance-display" id="time">Tempo a piedi: -- min | Tempo in auto: -- min</div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+  <script>
+    const map = L.map('map').setView([52.5145, 13.3501], 13);
+    const baseLayers = {
+      "Mappa Stradale": L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(map),
+      "Satellite": L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenTopoMap contributors'
+      })
+    };
+    L.control.layers(baseLayers).addTo(map);
+
+    let markers = [], routeControl = null, midpointMarker = null;
+    
+    function addMarker() {
+      if (markers.length < 2) {
+        const marker = L.marker(map.getCenter(), { draggable: true }).addTo(map)
+          .bindPopup('Nuovo marker trascinabile');
+        marker.on('dragend', calculateDistance);
+        markers.push(marker);
+        calculateDistance();
+      } else {
+        alert('Puoi aggiungere solo due marker alla volta.');
+      }
+    }
+
+    function removeMarkers() {
+      markers.forEach(marker => map.removeLayer(marker));
+      markers = [];
+      if (routeControl) { map.removeControl(routeControl); routeControl = null; }
+      removeMidpoint();
+      document.getElementById('distance').innerText = "Distanza: -- km";
+      document.getElementById('time').innerText = "Tempo a piedi: -- min | Tempo in auto: -- min";
+    }
+
+    function calculateDistance() {
+      if (markers.length === 2) {
+        const latlng1 = markers[0].getLatLng();
+        const latlng2 = markers[1].getLatLng();
+        const distance = map.distance(latlng1, latlng2) / 1000;
+        const walkTime = (distance / 5) * 60;
+        const carTime = (distance / 40) * 60;
+        document.getElementById('distance').innerText = `Distanza: ${distance.toFixed(2)} km`;
+        document.getElementById('time').innerText = `Tempo a piedi: ${walkTime.toFixed(1)} min | Tempo in auto: ${carTime.toFixed(1)} min`;
+
+        if (routeControl) { map.removeControl(routeControl); }
+        routeControl = L.Routing.control({
+          waypoints: [latlng1, latlng2],
+          createMarker: () => null,
+          routeWhileDragging: false,
+          addWaypoints: false,
+          show: false,
+          fitSelectedRoutes: true,
+        }).addTo(map);
+      }
+    }
+
+    function calculateMidpoint() {
+      if (markers.length === 2) {
+        removeMidpoint(); // Rimuove il vecchio punto medio se esiste
+
+        const latlng1 = markers[0].getLatLng();
+        const latlng2 = markers[1].getLatLng();
+        const midLat = (latlng1.lat + latlng2.lat) / 2;
+        const midLng = (latlng1.lng + latlng2.lng) / 2;
+
+        midpointMarker = L.marker([midLat, midLng], {
+          icon: L.divIcon({
+            className: 'custom-icon',
+            html: '<div style="background-color: orange; width: 12px; height: 12px; border-radius: 50%;"></div>',
+            iconSize: [12, 12],
+            iconAnchor: [6, 6]
+          })
+        }).addTo(map).bindPopup("Punto Medio").openPopup();
+      }
+    }
+
+    function removeMidpoint() {
+      if (midpointMarker) {
+        map.removeLayer(midpointMarker);
+        midpointMarker = null;
+      }
+    }
+  </script>
+</body>
+</html>

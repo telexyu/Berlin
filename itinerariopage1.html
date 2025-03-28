@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Itinerario Viaggio a Berlino</title>
+    <link rel="stylesheet" href="Itinerariostyle.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #f5f5f5, #e3e3e3);
+            color: #333;
+        }
+        header {
+            background: linear-gradient(to right, #3b3b3b, #555);
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        header p {
+            font-size: 1.2rem;
+            margin: 0;
+        }
+        .container {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .dropdown {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .dropdown select {
+            padding: 0.8rem 1.2rem;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background: white;
+            cursor: pointer;
+        }
+        section {
+            display: none;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        section.active {
+            display: block;
+        }
+        h2 {
+            color: #3b3b3b;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        ul li {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-left: 4px solid #3b3b3b;
+            background: #f9f9f9;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        ul li img {
+            width: 200px;
+            height: auto;
+            border-radius: 8px;
+            margin-left: 1rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background: #333;
+            color: white;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+    <script>
+        function showDay(day) {
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => section.classList.remove('active'));
+            document.getElementById(day).classList.add('active');
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Itinerario Viaggio a Berlino</h1>
+        <p>5° superiore - Viaggio di istruzione</p>
+    </header>
+    <div class="container">
+        <div class="dropdown">
+            <label for="days">Seleziona il giorno:</label>
+            <select id="days" onchange="showDay(this.value)">
+                <option value="giorno1">Giorno 1</option>
+                <option value="giorno2">Giorno 2</option>
+                <option value="giorno3">Giorno 3</option>
+                <option value="giorno4">Giorno 4</option>
+            </select>
+        </div>
+
+        <section id="giorno1" class="active">
+            <h2>Giorno 1</h2>
+            <ul>
+                <li>Visita del Palazzo del Reichstag
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Berlin_-_Reichstagsgeb%C3%A4ude3.jpg">
+                </li>
+                <li>Porta di Brandeburgo
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/BrandenburgTor_in_early_morning_light.jpg" alt="Porta di Brandeburgo">
+                </li>
+                <li>Memoriale dell'Olocausto
+                    <img src="https://guideintour.it/wp-content/uploads/2024/05/Memoriale-olocausto-Berlino.jpg" alt="Memoriale dell'Olocausto">
+                </li>
+                <li>Rientro in hotel, cena e pernottamento</li>
+            </ul>
+        </section>
+
+        <section id="giorno2">
+            <h2>Giorno 2</h2>
+            <ul>
+                <li>Zoo e Acquario
+                    <img src="https://aws-tiqets-cdn.imgix.net/images/content/6146fa5ce60e44a2a23dd052ec7fb3a1.jpg?auto=format%2Ccompress&fit=fill&h=500&ixlib=python-3.2.1&q=70&w=500&s=18e66c5b33d9700b17c4087ba29fe206&dpr=2.625" alt="Zoo e Acquario">
+                </li>
+                <li>Sosta al Monkey Bar
+                    <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0a/8a/46/19/monkey-bar-berlin.jpg?w=900&h=500&s=1" alt="Monkey Bar">
+                </li>
+                <li>Museo della tecnica
+                    <img src="https://cdn.getyourguide.com/img/location/5729aa6090f4f.jpeg/99.jpg" alt="Museo della tecnica">
+                </li>
+                <li>Museo ebraico
+                    <img src="https://static2-viaggi.corriereobjects.it/wp-content/uploads/2020/01/Jewish_Museum_Berlin_02-wikimedia.jpg?v=1579790788" alt="Museo ebraico">
+                </li>
+                <li>Checkpoint Charlie e Museo del muro
+                    <img src="https://www.travel365.it/foto/checkpoint-charlie-berlino-germania-1-1.jpg" alt="Checkpoint Charlie">
+                </li>
+                <li>Topografia del terrore
+			<img src="https://www.viveberlintours.com/wp-content/uploads/2019/07/Topografia_del_Terrore_Berlino.jpg" alt="Topografia del terrore">
+		</li>
+                <li>Potsdamer Platz
+			<img src="https://www.ilturista.info/myTurista/files/458/Vista_Notturna_Potsdamer_Platz_Berlino.jpg" alt="Potsdamer Platz">
+		</li>
+            </ul>
+        </section>
+
+        <section id="giorno3">
+            <h2>Giorno 3</h2>
+            <ul>
+                <li>Isola dei musei
+                    <img src="https://www.visitberlin.de/system/files/styles/visitberlin_hero_visitberlin_desktop_2x/private/image/Museumsinsel%2BDom_iStock_c_Chalabala_DL_PPT_0.jpg.webp?itok=X0ec7y8P" alt="Isola dei musei">
+                </li>
+                <li>Duomo
+                    <img src="https://img.nh-hotels.net/8yYbq/ZaBrj/original/Germany_Cathedral_1.jpg?output-quality=70&resize=555:*&composite-to=center,center|555:280&background-color=white" alt="Duomo di Berlino">
+                </li>
+                <li> 
+                 Marx-Engels-Forum
+                 <img src="https://static.wixstatic.com/media/d0a141_35d628446b5b4e95a731400263d01db9~mv2.jpg/v1/fill/w_980,h_653,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/d0a141_35d628446b5b4e95a731400263d01db9~mv2.jpg" alt="Marx-Engels-Forum">
+                </li>
+                <li>Alexanderplatz
+                    <img src="https://content.r9cdn.net/rimg/dimg/94/77/3c308be3-lm-1035-172eedc4c70.jpg?width=1366&height=768&xhint=2600&yhint=3239&crop=true" alt="Alexanderplatz">
+                </li>
+                <li>East Side Gallery
+                    <img src="https://www.visitberlin.de/system/files/styles/visitberlin_bleed_header_visitberlin_mobile_1x/private/image/East-Side-Gallery_1427_c_visitBerlin_Foto_Philip_Koschel_DL_PPT_0.jpg.jpg?itok=H3jZPurE" alt="East Side Gallery">
+                </li>
+                <li>Tempo libero nella vicina Uber Arena
+			<img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/08/6b/7a/ff/o2-world-berlin.jpg?w=900&h=500&s=1" alt="Tempo libero nella vicina Uber Arena">
+		</li>
+                <li>Rientro in hotel, cena e pernottamento</li>
+            </ul>
+        </section>
+
+        <section id="giorno4">
+            <h2>Giorno 4</h2>
+            <ul>
+                <li>Olympiastadion
+                    <img src="https://www.tuttostadi.com/wp-content/uploads/2020/03/Stadio-Berlino-e1584909861276.jpg" alt="Olympiastadion">
+                </li>
+                <li>Hard Rock Café
+			<img src="https://media-cdn.tripadvisor.com/media/photo-s/09/83/f2/d1/hard-rock-cafe-berlin.jpg" alt="Hard Rock Café">
+
+		</li>
+                <li>Kurfürstendamm (passeggiata e shopping)
+			<img src="https://a.travel-assets.com/findyours-php/viewfinder/images/res70/165000/165081-Kurfuerstendamm.jpg" alt="Kurfürstendamm (passeggiata e shopping)">
+		</li>
+                <li>Rientro in hotel e trasferimento per l'aeroporto</li>
+            </ul>
+        </section>
+    </div>
+    <footer>
+        <p>© 2025 - Viaggio di istruzione</p>
+    </footer>
+</body>
+</html>

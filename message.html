@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berlino - Capitale della Germania</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #f5f5f5, #e3e3e3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+        }
+        header {
+            position: relative;
+            text-align: center;
+            color: white;
+            padding: 2rem 0;
+            background: url(https://i.pinimg.com/originals/23/48/43/2348435d463668414e926ffe10e35dd6.gif) center center / cover no-repeat;
+            height: 450px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        header h1 {
+            position: relative;
+            z-index: 2;
+            background: rgba(0, 0, 0, 0.6);
+            display: inline-block;
+            padding: 25px 35px;
+            border-radius: 10px;
+            font-size: 3rem;
+        }
+        nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: #333;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            width: 100%;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.3rem;
+            transition: color 0.3s, transform 0.3s;
+        }
+        nav a:hover {
+            color: #ffcc00;
+            transform: scale(1.1);
+        }
+        .container {
+            text-align: center;
+            padding: 2rem;
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 3rem;
+        }
+        .description {
+            margin-top: 2rem;
+            font-size: 1.3rem;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 3rem;
+        }
+        .fun-options {
+            margin-top: 3rem;
+            padding: 2rem;
+            background-color: #f9f9f9;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .fun-options a {
+            display: inline-block;
+            margin: 1rem;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            color: white;
+            background-color: #222;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .fun-options a:hover {
+            background-color: #ff5722;
+        }
+        /* Stile per il meteo */
+        #weather-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            width: 100%;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #weather-icon {
+            width: 100px;
+        }
+        .video-slider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .video-slider button {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px 17px;
+            font-size: 19px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background 0.3s;
+        }
+        .video-slider button:hover {
+            background-color: #ffcc00;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Esplora Berlino</h1>
+    </header>
+    <nav>
+        <a href="C:\Users\anton\Desktop\Itinerario\itinerariopage1.html">Itinerario</a>
+        <a href="C:\Users\anton\Desktop\Itinerario\berlino_luoghi.html">Luoghi</a>
+        <a href="C:\Users\anton\Desktop\Itinerario\mappaberlino.html">Maps</a>
+        <a href="C:\Users\anton\Desktop\Itinerario\aboutUs.html">About Us</a>
+    </nav>
+
+    <div class="container">
+        <div class="description">
+            <div class="video-slider">
+                <button class="prev" onclick="changeVideo(-1)">⬅</button>
+                
+                <iframe id="video-frame" width="700" height="315" 
+                    src="https://www.youtube.com/embed/J-NAdf6ajzs" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+                
+                <button class="next" onclick="changeVideo(1)">➡</button>
+            </div>
+
+            <p>Berlino è la capitale della Germania, famosa per la sua storia, la cultura vibrante e l'architettura unica. Visita la Porta di Brandeburgo, il Duomo e il Reichstag, e immergiti nella vita notturna e nei musei di livello mondiale.</p>
+        </div>
+
+        <!-- Sezione meteo -->
+        <div id="weather-container">
+            <h2 id="city-name">Caricamento...</h2>
+            <img id="weather-icon" src="" alt="Icona Meteo">
+            <p id="weather-description"></p>
+            <p><strong>Temperatura:</strong> <span id="temperature"></span>°C</p>
+        </div>
+
+        <!-- Opzioni di divertimento -->
+        <div class="fun-options">
+            <a href="https://www.tripadvisor.it/Restaurants-g187323-c21-Berlin.html" target="_blank">Cucina Locale</a>
+            <a href="https://www.visitberlin.de/it/eventi-berlino" target="_blank">Eventi Speciali</a>
+            <a href="https://www.berlino.com/vita-notturna-berlino/" target="_blank">Vita Notturna</a>
+            <a href="https://www.visitberlin.de/it/arte-e-cultura" target="_blank">Arte e Cultura</a>
+            <a href="https://www.tourberlino.it/dove-mangiare-e-bere-a-berlino/5-birrerie-da-non-perdere-a-berlino/" target="_blank">Birra di Berlino</a>
+            <a href="https://www.visitberlin.de/it/mezzi-pubblici-di-berlino" target="_blank">Mezzi Pubblici</a>
+        </div>
+    </div>
+
+    <script>
+        const videos = [
+            "https://www.youtube.com/embed/J-NAdf6ajzs",
+            "https://www.youtube.com/embed/hVfBQNENS9s",
+            "https://www.youtube.com/embed/oajsJB111hI"
+        ];
+        let currentVideo = 0;
+        
+        function changeVideo(direction) {
+            currentVideo = (currentVideo + direction + videos.length) % videos.length;
+            document.getElementById("video-frame").src = videos[currentVideo];
+        }
+
+        async function fetchWeather() {
+            try {
+                const response = await fetch("https://api.openweathermap.org/data/2.5/weather?q=Berlin&appid=1cf212d9504b25b72f9c8722b638005f&units=metric&lang=it");
+                const data = await response.json();
+                
+                document.getElementById("city-name").textContent = data.name;
+                document.getElementById("temperature").textContent = data.main.temp;
+                document.getElementById("weather-description").textContent = data.weather[0].description;
+                document.getElementById("weather-icon").src = `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
+            } catch (error) {
+                console.error("Errore nel recupero dei dati meteo", error);
+            }
+        }
+
+        fetchWeather();
+    </script>
+</body>
+</html>
