@@ -31,31 +31,37 @@
         header h1 {
             position: relative;
             z-index: 2;
-            background: rgba(0, 0, 0, 0.6);
+            background: linear-gradient(to right, #ff6b81, #ff4757);
             display: inline-block;
             padding: 25px 35px;
             border-radius: 10px;
             font-size: 3rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
         nav {
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
             background-color: #333;
             padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 10;
             width: 100%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         nav a {
             color: white;
             text-decoration: none;
             font-size: 1.3rem;
             transition: color 0.3s, transform 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
         }
         nav a:hover {
             color: #ffcc00;
             transform: scale(1.1);
+            background-color: rgba(255, 204, 0, 0.1);
         }
         .container {
             text-align: center;
@@ -67,12 +73,17 @@
         .description {
             margin-top: 2rem;
             font-size: 1.3rem;
-            line-height: 1.6;
+            line-height: 1.7;
             color: #333;
             max-width: 800px;
             margin-left: auto;
             margin-right: auto;
             margin-bottom: 3rem;
+            background-color: rgba(240, 255, 240, 0.8);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0f7fa;
         }
         .fun-options {
             margin-top: 3rem;
@@ -82,22 +93,30 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
             margin-bottom: 3rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
         }
         .fun-options a {
             display: inline-block;
-            margin: 1rem;
+            margin: 0.5rem;
             padding: 1rem 2rem;
             font-size: 1.2rem;
             color: white;
             background-color: #222;
             text-decoration: none;
             border-radius: 5px;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(to right, #4CAF50, #388E3C);
         }
         .fun-options a:hover {
             background-color: #ff5722;
+            transform: scale(1.05);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(to right, #FF7043, #D84315);
         }
-        /* Stile per il meteo */
         #weather-container {
             background: white;
             padding: 20px;
@@ -111,6 +130,11 @@
             max-width: 1000px;
             margin-left: auto;
             margin-right: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            border: 1px solid #b0bec5;
         }
         #weather-icon {
             width: 100px;
@@ -121,19 +145,81 @@
             justify-content: center;
             gap: 15px;
             margin-top: 20px;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }
         .video-slider button {
             background-color: #333;
             color: white;
             border: none;
             padding: 10px 17px;
-            font-size: 19px;
+            font-size: 1.2rem;
             cursor: pointer;
-            border-radius: 6px;
-            transition: background 0.3s;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(to right, #00B0FF, #0091EA);
         }
         .video-slider button:hover {
             background-color: #ffcc00;
+            transform: scale(1.05);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(to right, #FFCA28, #FF9800);
+        }
+        #video-frame {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 2px solid #81D4FA;
+        }
+        @media (max-width: 768px) {
+            .video-slider {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .fun-options {
+                flex-direction: column;
+                align-items: center;
+            }
+            nav a {
+                font-size: 1rem;
+                padding: 0.5rem;
+            }
+            header h1{
+                font-size: 2rem;
+                padding: 1rem 1.5rem
+            }
+            header{
+                height: 300px;
+            }
+        }
+
+        /* Nuovi stili per riempire gli spazi vuoti */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url(https://i.pinimg.com/originals/9d/64/97/9d64972b115f15f4b278464279c1b6b1.jpg) center center / cover no-repeat;
+            opacity: 0.1;
+            z-index: -1;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 3rem;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 1;
         }
     </style>
 </head>
@@ -141,21 +227,15 @@
     <header>
         <h1>Esplora Berlino</h1>
     </header>
-    <nav>
-    <a href="https://telexyu.github.io/Berlin/itinerariopage1.html">Itinerario</a>
-<a href="https://telexyu.github.io/Berlin/berlino_luoghi.html">Luoghi</a>
-<a href="https://telexyu.github.io/Berlin/mappaberlino.html">Maps</a>
-<a href="https://telexyu.github.io/Berlin/aboutUs.html">About Us</a>
-
-    </nav>
+   <nav> <a href="https://telexyu.github.io/Berlin/itinerariopage1.html">Itinerario</a> <a href="https://telexyu.github.io/Berlin/berlino_luoghi.html">Luoghi</a> <a href="https://telexyu.github.io/Berlin/mappaberlino.html">Maps</a> <a href="https://telexyu.github.io/Berlin/aboutUs.html">About Us</a> </nav>
 
     <div class="container">
         <div class="description">
             <div class="video-slider">
                 <button class="prev" onclick="changeVideo(-1)">⬅</button>
                 
-                <iframe id="video-frame" width="700" height="315" 
-                    src="https://www.youtube.com/embed/J-NAdf6ajzs" 
+                <iframe id="video-frame" 
+                    src="http://www.youtube.com/embed/dQw4w9WgXcQ"
                     frameborder="0" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                     allowfullscreen>
@@ -167,7 +247,6 @@
             <p>Berlino è la capitale della Germania, famosa per la sua storia, la cultura vibrante e l'architettura unica. Visita la Porta di Brandeburgo, il Duomo e il Reichstag, e immergiti nella vita notturna e nei musei di livello mondiale.</p>
         </div>
 
-        <!-- Sezione meteo -->
         <div id="weather-container">
             <h2 id="city-name">Caricamento...</h2>
             <img id="weather-icon" src="" alt="Icona Meteo">
@@ -175,7 +254,6 @@
             <p><strong>Temperatura:</strong> <span id="temperature"></span>°C</p>
         </div>
 
-        <!-- Opzioni di divertimento -->
         <div class="fun-options">
             <a href="https://www.tripadvisor.it/Restaurants-g187323-c21-Berlin.html" target="_blank">Cucina Locale</a>
             <a href="https://www.visitberlin.de/it/eventi-berlino" target="_blank">Eventi Speciali</a>
@@ -188,9 +266,9 @@
 
     <script>
         const videos = [
-            "https://www.youtube.com/embed/J-NAdf6ajzs",
-            "https://www.youtube.com/embed/hVfBQNENS9s",
-            "https://www.youtube.com/embed/oajsJB111hI"
+            "http://www.youtube.com/embed/dQw4w9WgXcQ",
+            "http://www.youtube.com/embed/jfKfyJRdkZA",
+            "http://www.youtube.com/embed/fJ9rUzIMcZQ"
         ];
         let currentVideo = 0;
         
