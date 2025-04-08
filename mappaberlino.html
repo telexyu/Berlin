@@ -1,316 +1,137 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mappa Interattiva - Menu</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calcolo Distanza Berlino con Itinerario e Satellite</title>
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
-
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
   <style>
-    /* Stili base per assicurare che la mappa occupi tutto lo spazio */
     html, body {
-      height: 100%;
       margin: 0;
       padding: 0;
-      font-family: 'Inter', sans-serif;
-      overflow: hidden; /* Impedisce lo scroll della pagina */
+      height: 100%;
     }
     #map {
-      height: 100%;
+      height: 80%;
       width: 100%;
-      /* Imposta un contesto di stacking per la mappa, sotto i controlli */
-      position: relative;
-      z-index: 0;
-    }
-    /* Stile per l'icona personalizzata del punto medio */
-    .custom-midpoint-icon div {
-      background-color: orange;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      border: 1px solid white;
-    }
-    /* Nasconde l'output testuale del percorso di Leaflet Routing Machine */
-    .leaflet-routing-container {
-        display: none;
     }
   </style>
 </head>
-<body class="h-screen">
-
+<body class="flex flex-col">
   <div id="map"></div>
 
-  <div class="
-      fixed z-50 /* Posizionato sopra la mappa (z-index: 0) */
-      /* --- Stili Mobile (default) --- */
-      bottom-4 inset-x-0 /* Fissato in basso, centrato orizzontalmente */
-      flex justify-center /* Centra il wrapper interno */
-      pointer-events-none /* Il contenitore non cattura eventi, permette interazione con mappa */
+  <!-- Info Box -->
+  <div class="p-4 bg-white shadow-md text-sm">
+    <div id="info" class="mb-2">Clicca sulla mappa per aggiungere due punti.</div>
+    <button id="reset" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Reset</button>
+  </div>
 
-      /* --- Stili Desktop (breakpoint 'md') --- */
-      md:pointer-events-auto /* Riabilita eventi per il contenitore su desktop */
-      md:inset-x-auto md:left-auto md:right-4 md:top-1/2 /* Posiziona a destra, al centro verticalmente */
-      md:w-auto md:-translate-y-1/2 /* Corregge il posizionamento verticale */
-      md:flex md:flex-col md:items-end /* Layout verticale, allineato a destra */
-    ">
-
-    <div class="relative pointer-events-auto /* Cattura eventi per pulsante/menu */
-                md:contents /* Su desktop, questo div non influenza il layout flex del genitore */
-               ">
-
-        <div id="map-controls-menu" class="hidden pointer-events-auto /* Nascosto ma interattivo quando visibile */
-              /* Stili comuni del pannello */
-              bg-white/90 rounded-lg shadow-lg backdrop-blur-sm border border-gray-200
-
-              /* --- Stili Mobile (default) --- */
-              absolute bottom-full left-1/2 -translate-x-1/2 mb-2 /* Posizionato sopra il wrapper, centrato */
-              w-max max-w-[calc(100vw-2rem)] /* Larghezza massima per evitare overflow */
-              p-3 flex flex-wrap justify-center items-center gap-2 /* Layout interno flessibile e a capo */
-
-              /* --- Stili Desktop (breakpoint 'md') --- */
-              md:static md:order-1 md:mb-2 /* Ritorna nel flusso normale, sopra il pulsante, con margine sotto */
-              md:w-auto md:max-w-none /* Larghezza automatica */
-              md:p-4 md:flex md:flex-col md:items-stretch md:gap-3 /* Layout verticale */
-            ">
-
-            <button onclick="addMarker()" class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md shadow hover:bg-blue-700 transition-colors cursor-pointer whitespace-nowrap">Aggiungi Marker</button>
-            <button onclick="removeMarkers()" class="px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-md shadow hover:bg-red-700 transition-colors cursor-pointer whitespace-nowrap">Rimuovi Tutti</button>
-            <button onclick="calculateMidpoint()" class="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-md shadow hover:bg-green-700 transition-colors cursor-pointer whitespace-nowrap">Trova Punto Medio</button>
-            <button onclick="removeMidpoint()" class="px-4 py-2 bg-gray-500 text-white text-sm font-medium rounded-md shadow hover:bg-gray-600 transition-colors cursor-pointer whitespace-nowrap">Rimuovi Punto Medio</button>
-
-            <div class="w-full text-center text-xs font-semibold text-gray-800 mt-2 md:text-sm md:mt-1 md:text-left" id="distance">Distanza: -- km</div>
-            <div class="w-full text-center text-xs font-semibold text-gray-800 md:text-sm md:text-left" id="time">Tempo a piedi: -- min | Tempo in auto: -- min</div>
-        </div>
-
-        <button id="menu-toggle-button" aria-controls="map-controls-menu" aria-expanded="false" class="relative pointer-events-auto /* Assicura che sia cliccabile */
-            p-2 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 active:bg-blue-800 transition-colors cursor-pointer
-            /* Ordine nel layout flex su desktop */
-            md:order-2 md:static /* Posizionamento statico su desktop */
-            ">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu block"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x hidden"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
-        </button>
-
-    </div> </div> <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
 
   <script>
-    // Variabili globali per la mappa e gli elementi
-    let map;
-    let markers = [];
-    let routeControl = null;
-    let midpointMarker = null;
+    let map = L.map('map').setView([52.52, 13.405], 13); // Centro di Berlino
+    let points = [];
+    let routingControl = null;
+    let markerLayer = L.layerGroup().addTo(map);
 
-    // Funzione per inizializzare la mappa
-    function initializeMap() {
-        const mapElement = document.getElementById('map');
-        if (!mapElement) {
-            console.error("Errore critico: Elemento #map non trovato nel DOM.");
-            return; // Interrompe l'esecuzione se la mappa non esiste
-        }
-
-        // Inizializza la mappa sull'elemento #map
-        map = L.map('map', {
-            // Opzioni aggiuntive se necessario, es. per evitare problemi di rendering
-            // preferCanvas: true
-        }).setView([40.825, 14.05], 13); // Centro iniziale (es. Monterusciello)
-
-        // Layer di base
-        const baseLayers = {
-          "Mappa Stradale": L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            maxZoom: 19
-          }).addTo(map), // Aggiunge questo layer di default
-          "Satellite": L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, et al.',
-            maxZoom: 19
-          })
-        };
-
-        // Controllo per cambiare layer
-        L.control.layers(baseLayers).addTo(map);
-
-        // Forza il ricalcolo delle dimensioni della mappa
-        map.whenReady(() => {
-            // Un piccolo ritardo puÃ² aiutare se ci sono problemi di timing con il rendering CSS
-            setTimeout(() => map.invalidateSize(), 10);
-        });
-
-        // Aggiorna le dimensioni anche al resize della finestra
-        window.addEventListener('resize', function() {
-            if (map) {
-                setTimeout(() => map.invalidateSize(), 100);
-            }
-        });
-
-        console.log("Mappa inizializzata."); // Messaggio di conferma in console
-    }
-
-    // --- Funzioni Gestione Marker, Distanza, Routing, Punto Medio ---
-    // (Queste funzioni rimangono identiche alla versione precedente,
-    //  con i controlli 'if (!map) return;' all'inizio)
-
-    function addMarker() {
-      if (!map) { console.error("Mappa non inizializzata."); return; }
-      if (markers.length < 2) {
-        const marker = L.marker(map.getCenter(), { draggable: true }).addTo(map)
-          .bindPopup(`Marker ${markers.length + 1} (trascinabile)`);
-        marker.on('dragend', calculateDistanceAndRoute);
-        markers.push(marker);
-        calculateDistanceAndRoute();
-      } else {
-        alert('Puoi aggiungere solo due marker alla volta.');
-      }
-    }
-
-    function removeMarkers() {
-      if (!map) { console.error("Mappa non inizializzata."); return; }
-      markers.forEach(marker => map.removeLayer(marker));
-      markers = [];
-      if (routeControl) {
-        map.removeControl(routeControl);
-        routeControl = null;
-      }
-      removeMidpoint();
-      document.getElementById('distance').innerText = "Distanza: -- km";
-      document.getElementById('time').innerText = "Tempo a piedi: -- min | Tempo in auto: -- min";
-    }
-
-    function calculateDistanceAndRoute() {
-      const distanceDisplay = document.getElementById('distance');
-      const timeDisplay = document.getElementById('time');
-
-      if (!map || markers.length !== 2) {
-         distanceDisplay.innerText = "Distanza: -- km";
-         timeDisplay.innerText = "Tempo a piedi: -- min | Tempo in auto: -- min";
-         if (routeControl) {
-            map.removeControl(routeControl);
-            routeControl = null;
-         }
-         removeMidpoint();
-         return;
-      }
-
-      const latlng1 = markers[0].getLatLng();
-      const latlng2 = markers[1].getLatLng();
-      const distance = map.distance(latlng1, latlng2) / 1000;
-      const walkSpeedKmh = 5;
-      const carSpeedKmh = 40;
-      const walkTimeMinutes = (distance / walkSpeedKmh) * 60;
-      const carTimeMinutes = (distance / carSpeedKmh) * 60;
-
-      distanceDisplay.innerText = `Distanza: ${distance.toFixed(2)} km`;
-      timeDisplay.innerText = `A piedi: ${walkTimeMinutes.toFixed(0)} min | In auto: ${carTimeMinutes.toFixed(0)} min`;
-
-      if (routeControl) {
-        map.removeControl(routeControl);
-      }
-      routeControl = L.Routing.control({
-        waypoints: [latlng1, latlng2],
-        createMarker: () => null,
-        routeWhileDragging: false,
-        addWaypoints: false,
-        show: false,
-        fitSelectedRoutes: true,
-        lineOptions: {
-           styles: [{color: 'blue', opacity: 0.7, weight: 5}]
-        }
-      }).addTo(map);
-
-      if (midpointMarker) {
-          calculateMidpoint(); // Aggiorna posizione punto medio se esiste
-      }
-    }
-
-    function calculateMidpoint() {
-      if (!map) { console.error("Mappa non inizializzata."); return; }
-      if (markers.length !== 2) {
-        alert("Sono necessari due marker per calcolare il punto medio.");
-        return;
-      }
-      removeMidpoint();
-      const latlng1 = markers[0].getLatLng();
-      const latlng2 = markers[1].getLatLng();
-      const midLat = (latlng1.lat + latlng2.lat) / 2;
-      const midLng = (latlng1.lng + latlng2.lng) / 2;
-
-      midpointMarker = L.marker([midLat, midLng], {
-        icon: L.divIcon({
-          className: 'custom-midpoint-icon',
-          html: '<div></div>',
-          iconSize: [12, 12],
-          iconAnchor: [6, 6]
-        })
-      }).addTo(map).bindPopup("Punto Medio").openPopup();
-    }
-
-    function removeMidpoint() {
-      if (map && midpointMarker) {
-        map.removeLayer(midpointMarker);
-        midpointMarker = null;
-      }
-    }
-
-    // --- Logica per il Menu a Tendina ---
-    function setupMenuToggle() {
-        const menuToggleButton = document.getElementById('menu-toggle-button');
-        const mapControlsMenu = document.getElementById('map-controls-menu');
-        const menuIcon = menuToggleButton.querySelector('.lucide-menu');
-        const closeIcon = menuToggleButton.querySelector('.lucide-x');
-
-        if (!menuToggleButton || !mapControlsMenu || !menuIcon || !closeIcon) {
-            console.error("Elementi del menu (toggle, container o icone) non trovati!");
-            return;
-        }
-
-        menuToggleButton.addEventListener('click', (event) => {
-          event.stopPropagation(); // Evita che il click si propaghi al document
-          const isHidden = mapControlsMenu.classList.toggle('hidden');
-          const isNowExpanded = !isHidden;
-          menuToggleButton.setAttribute('aria-expanded', String(isNowExpanded));
-          // Alterna visibilitÃ  icone
-          menuIcon.classList.toggle('hidden', isNowExpanded);
-          closeIcon.classList.toggle('hidden', !isNowExpanded);
-        });
-
-        // Listener per chiudere il menu cliccando fuori
-        document.addEventListener('click', (event) => {
-          // Controlla se il menu Ã¨ visibile e se il click NON Ã¨ avvenuto sul pulsante o all'interno del menu
-          if (!mapControlsMenu.classList.contains('hidden') &&
-              !menuToggleButton.contains(event.target) &&
-              !mapControlsMenu.contains(event.target))
-          {
-              mapControlsMenu.classList.add('hidden'); // Nasconde il menu
-              menuToggleButton.setAttribute('aria-expanded', 'false'); // Aggiorna ARIA
-              // Ripristina l'icona del menu
-              menuIcon.classList.remove('hidden');
-              closeIcon.classList.add('hidden');
-          }
-        });
-        console.log("Toggle menu configurato."); // Messaggio di conferma
-    }
-
-    // Esegui l'inizializzazione quando il DOM Ã¨ pronto
-    document.addEventListener('DOMContentLoaded', () => {
-        console.log("DOM caricato. Inizializzazione mappa...");
-        initializeMap();
-        console.log("Configurazione menu toggle...");
-        setupMenuToggle();
-        // Assicura che eventuali marker pre-esistenti (improbabile qui) abbiano il listener
-        markers.forEach(marker => {
-           marker.off('dragend').on('dragend', calculateDistanceAndRoute);
-        });
+    // Aggiungiamo la mappa base (OpenStreetMap)
+    const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
     });
 
+    // Aggiungiamo la mappa satellite (Esri)
+    const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      attribution: '&copy; <a href="https://www.esri.com/">Esri</a>'
+    });
+
+    // Impostiamo la mappa iniziale a OpenStreetMap
+    osmLayer.addTo(map);
+
+    // Controllo per passare tra la mappa normale e satellite
+    const baseMaps = {
+      "Mappa Normale": osmLayer,
+      "Satellite": satelliteLayer
+    };
+    
+    L.control.layers(baseMaps).addTo(map);
+
+    // Aggiunta dei marker sui luoghi di Berlino
+    const landmarks = [
+      { name: "Brandenburger Tor", coords: [52.5160, 13.3779], description: "Famoso arco trionfale di Berlino." },
+      { name: "Reichstag", coords: [52.5186, 13.3762], description: "Sede del Parlamento tedesco." },
+      { name: "Museo dell'Isola", coords: [52.5219, 13.4017], description: "Complesso di musei storici." },
+      { name: "Checkpoint Charlie", coords: [52.5076, 13.3904], description: "Ex punto di passaggio durante la Guerra Fredda." },
+      { name: "East Side Gallery", coords: [52.5050, 13.4396], description: "Tratto del Muro di Berlino trasformato in galleria d'arte." },
+    ];
+
+    landmarks.forEach((landmark) => {
+      const marker = L.marker(landmark.coords).addTo(markerLayer)
+        .bindPopup(`<b>${landmark.name}</b><br>${landmark.description}`)
+        .openPopup();
+    });
+
+    // Aggiunta dei marker e calcolo del percorso
+    map.on('click', function(e) {
+      if (points.length >= 2) return;
+
+      const marker = L.marker(e.latlng).addTo(markerLayer);
+      points.push(e.latlng);
+
+      if (points.length === 2) {
+        drawRoute(points[0], points[1]);
+      }
+    });
+
+    // Disegna il percorso
+    function drawRoute(p1, p2) {
+      if (routingControl) map.removeControl(routingControl);
+
+      routingControl = L.Routing.control({
+        waypoints: [p1, p2],
+        lineOptions: {
+          styles: [{ color: 'red', weight: 6 }]
+        },
+        addWaypoints: false,
+        routeWhileDragging: false,
+        draggableWaypoints: false,
+        createMarker: () => null
+      })
+      .on('routesfound', function(e) {
+        const route = e.routes[0];
+        const distanceKm = (route.summary.totalDistance / 1000).toFixed(2);
+        const timeAuto = (route.summary.totalDistance / 1000 / 50 * 60).toFixed(1);  // 50 km/h
+        const timePiedi = (route.summary.totalDistance / 1000 / 5 * 60).toFixed(1);  // 5 km/h
+
+        document.getElementById('info').innerHTML = `
+          📍 Distanza: <strong>${distanceKm} km</strong><br>
+          🚗 In auto: <strong>${timeAuto} minuti</strong><br>
+          🚶‍♂️ A piedi: <strong>${timePiedi} minuti</strong>
+        `;
+      })
+      .addTo(map);
+    }
+
+    // Reset
+    document.getElementById('reset').addEventListener('click', () => {
+      points = [];
+      markerLayer.clearLayers();
+      if (routingControl) {
+        map.removeControl(routingControl);
+        routingControl = null;
+      }
+      // Aggiungi i marker predefiniti
+      landmarks.forEach((landmark) => {
+        const marker = L.marker(landmark.coords).addTo(markerLayer)
+          .bindPopup(`<b>${landmark.name}</b><br>${landmark.description}`)
+          .openPopup();
+      });
+      document.getElementById('info').innerText = 'Clicca sulla mappa per aggiungere due punti.';
+    });
   </script>
 </body>
 </html>
