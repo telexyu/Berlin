@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Calcolo Distanza Berlino con Itinerario e Satellite</title>
+  <title>Calcolo Distanza Berlino con Itinerario</title>
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
@@ -39,26 +39,10 @@
     let routingControl = null;
     let markerLayer = L.layerGroup().addTo(map);
 
-    // Aggiungiamo la mappa base (OpenStreetMap)
-    const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    // Mappa base
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
-    });
-
-    // Aggiungiamo la mappa satellite (Esri)
-    const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-      attribution: '&copy; <a href="https://www.esri.com/">Esri</a>'
-    });
-
-    // Impostiamo la mappa iniziale a OpenStreetMap
-    osmLayer.addTo(map);
-
-    // Controllo per passare tra la mappa normale e satellite
-    const baseMaps = {
-      "Mappa Normale": osmLayer,
-      "Satellite": satelliteLayer
-    };
-    
-    L.control.layers(baseMaps).addTo(map);
+    }).addTo(map);
 
     // Aggiunta dei marker sui luoghi di Berlino
     const landmarks = [
