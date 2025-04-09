@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Calcolo Distanza Berlino con Itinerario</title>
 
+  <!-- Leaflet + Routing Machine -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
   <script src="https://cdn.tailwindcss.com"></script>
@@ -14,108 +15,227 @@
       margin: 0;
       padding: 0;
       height: 100%;
+      font-family: sans-serif;
     }
-    #map {
-      height: 80%;
+
+    header {
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      top: 0;
       width: 100%;
+      z-index: 1000;
+      height: 70px;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      max-width: 1200px;
+      padding: 0 20px;
+    }
+
+    .logo h1 {
+      color: #ffd700;
+      font-size: 1.8rem;
+      margin: 0;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 1rem;
+      padding: 6px 12px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      background-color: #ff6600;
+    }
+
+    #map {
+      position: absolute;
+      top: 70px;
+      bottom: 0;
+      width: 100%;
+      z-index: 0;
+    }
+
+    .controls {
+      position: fixed;
+      top: 80px;
+      left: 10px;
+      z-index: 1001;
+      background-color: white;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .controls button {
+      margin-top: 10px;
     }
   </style>
 </head>
-<body class="flex flex-col">
+<body>
+
+  <!-- Navbar -->
+  <header>
+    <div class="navbar">
+      <div class="logo">
+        <h1><a href="https://telexyu.github.io/Berlin/" style="text-decoration: none; color: #ffd700;">Viaggio Berlino</a></h1>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="https://telexyu.github.io/Berlin/itinerariopage1.html">Itinerario</a></li>
+          <li><a href="https://telexyu.github.io/Berlin/berlino_luoghi.html">Luoghi</a></li>
+          <li><a href="https://telexyu.github.io/Berlin/mappaberlino.html">Maps</a></li>
+          <li><a href="https://telexyu.github.io/Berlin/aboutUs.html">About Us</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Mappa -->
   <div id="map"></div>
 
-  <!-- Info Box -->
-  <div class="p-4 bg-white shadow-md text-sm">
-    <div id="info" class="mb-2">Clicca sulla mappa per aggiungere due punti.</div>
+  <!-- Controlli -->
+  <div class="controls">
+    <p id="info">Clicca sulla mappa per selezionare due punti e calcolare la distanza.</p>
+    <p id="distance"></p>
     <button id="reset" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Reset</button>
   </div>
 
+  <!-- Script Leaflet -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
 
   <script>
-    let map = L.map('map').setView([52.52, 13.405], 13); // Centro di Berlino
+    let map = L.map('map', {
+      center: [52.52, 13.405],
+      zoom: 13,
+      layers: [
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '© OpenStreetMap'
+        })
+      ]
+    });
+
+    const baseLayers = {
+      "Mappa": L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap'
+      }),
+      "Satellite": L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+        maxZoom: 20,
+        subdomains:['mt0','mt1','mt2','mt3'],
+        attribution: '© Google'
+      })
+    };
+
+    L.control.layers(baseLayers).addTo(map);
+
     let points = [];
     let routingControl = null;
     let markerLayer = L.layerGroup().addTo(map);
 
-    // Mappa base
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
-
-    // Aggiunta dei marker sui luoghi di Berlino
-    const landmarks = [
-      { name: "Brandenburger Tor", coords: [52.5160, 13.3779], description: "Famoso arco trionfale di Berlino." },
-      { name: "Reichstag", coords: [52.5186, 13.3762], description: "Sede del Parlamento tedesco." },
-      { name: "Museo dell'Isola", coords: [52.5219, 13.4017], description: "Complesso di musei storici." },
-      { name: "Checkpoint Charlie", coords: [52.5076, 13.3904], description: "Ex punto di passaggio durante la Guerra Fredda." },
-      { name: "East Side Gallery", coords: [52.5050, 13.4396], description: "Tratto del Muro di Berlino trasformato in galleria d'arte." },
+    const attrazioni = [
+      {
+        nome: "Porta di Brandeburgo",
+        coord: [52.5163, 13.3777],
+        descrizione: "Simbolo iconico della città."
+      },
+      {
+        nome: "Reichstag",
+        coord: [52.5186, 13.3762],
+        descrizione: "Sede del Parlamento tedesco."
+      },
+      {
+        nome: "Isola dei Musei",
+        coord: [52.5169, 13.4010],
+        descrizione: "Patrimonio UNESCO, con musei famosi."
+      },
+      {
+        nome: "East Side Gallery",
+        coord: [52.5050, 13.4396],
+        descrizione: "Tratto del Muro di Berlino dipinto da artisti."
+      }
     ];
 
-    landmarks.forEach((landmark) => {
-      const marker = L.marker(landmark.coords).addTo(markerLayer)
-        .bindPopup(`<b>${landmark.name}</b><br>${landmark.description}`)
-        .openPopup();
+    const iconaAttrazione = L.icon({
+      iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png',
+      iconSize: [32, 32],
+      iconAnchor: [16, 32],
+      popupAnchor: [0, -32]
     });
 
-    // Aggiunta dei marker e calcolo del percorso
-    map.on('click', function(e) {
-      if (points.length >= 2) return;
+    attrazioni.forEach(attr => {
+      const marker = L.marker(attr.coord, {
+        icon: iconaAttrazione
+      }).addTo(markerLayer);
+      marker.bindPopup(`<b>${attr.nome}</b><br>${attr.descrizione}`);
+    });
 
-      const marker = L.marker(e.latlng).addTo(markerLayer);
-      points.push(e.latlng);
+    map.on('click', function (e) {
+      if (points.length < 2) {
+        points.push(e.latlng);
+        L.marker(e.latlng).addTo(markerLayer);
+        if (points.length === 2) {
+          if (routingControl) {
+            map.removeControl(routingControl);
+          }
 
-      if (points.length === 2) {
-        drawRoute(points[0], points[1]);
+          routingControl = L.Routing.control({
+            waypoints: points,
+            routeWhileDragging: false,
+            language: 'it',
+            createMarker: () => null
+          }).addTo(map);
+
+          let latlng1 = points[0];
+          let latlng2 = points[1];
+          let distance = map.distance(latlng1, latlng2) / 1000;
+
+          let tempoAuto = distance / 50 * 60;
+          let tempoPiedi = distance / 5 * 60;
+          let tempoBici = distance / 15 * 60;
+
+          document.getElementById("distance").innerHTML =
+            `Distanza lineare: ${distance.toFixed(2)} km<br>
+            🚶‍♂️ Tempo a piedi: ${Math.round(tempoPiedi)} minuti<br>
+            🚗 Tempo in auto: ${Math.round(tempoAuto)} minuti<br>
+            🚴‍♀️ Tempo in bici: ${Math.round(tempoBici)} minuti`;
+        }
       }
     });
 
-    // Disegna il percorso
-    function drawRoute(p1, p2) {
-      if (routingControl) map.removeControl(routingControl);
-
-      routingControl = L.Routing.control({
-        waypoints: [p1, p2],
-        lineOptions: {
-          styles: [{ color: 'red', weight: 6 }]
-        },
-        addWaypoints: false,
-        routeWhileDragging: false,
-        draggableWaypoints: false,
-        createMarker: () => null
-      })
-      .on('routesfound', function(e) {
-        const route = e.routes[0];
-        const distanceKm = (route.summary.totalDistance / 1000).toFixed(2);
-        const timeAuto = (route.summary.totalDistance / 1000 / 50 * 60).toFixed(1);  // 50 km/h
-        const timePiedi = (route.summary.totalDistance / 1000 / 5 * 60).toFixed(1);  // 5 km/h
-
-        document.getElementById('info').innerHTML = `
-          📍 Distanza: <strong>${distanceKm} km</strong><br>
-          🚗 In auto: <strong>${timeAuto} minuti</strong><br>
-          🚶‍♂️ A piedi: <strong>${timePiedi} minuti</strong>
-        `;
-      })
-      .addTo(map);
-    }
-
-    // Reset
-    document.getElementById('reset').addEventListener('click', () => {
+    document.getElementById("reset").addEventListener("click", () => {
       points = [];
       markerLayer.clearLayers();
+      attrazioni.forEach(attr => {
+        const marker = L.marker(attr.coord, {
+          icon: iconaAttrazione
+        }).addTo(markerLayer);
+        marker.bindPopup(`<b>${attr.nome}</b><br>${attr.descrizione}`);
+      });
       if (routingControl) {
         map.removeControl(routingControl);
-        routingControl = null;
       }
-      // Aggiungi i marker predefiniti
-      landmarks.forEach((landmark) => {
-        const marker = L.marker(landmark.coords).addTo(markerLayer)
-          .bindPopup(`<b>${landmark.name}</b><br>${landmark.description}`)
-          .openPopup();
-      });
-      document.getElementById('info').innerText = 'Clicca sulla mappa per aggiungere due punti.';
+      document.getElementById("distance").innerText = "";
     });
   </script>
+
 </body>
 </html>
