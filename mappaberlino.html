@@ -19,7 +19,7 @@
     }
 
     header {
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.7);  /* Cambiato il background a 0.7 per opacità */
       display: flex;
       justify-content: center;
       align-items: center;
@@ -127,22 +127,24 @@
     let map = L.map('map', {
       center: [52.52, 13.405],
       zoom: 13,
-      layers: [
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '© OpenStreetMap'
-        })
-      ]
+      layers: []
     });
 
+    const baseLayerNormal = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap'
+    });
+
+    const baseLayerSatellite = L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
+      maxZoom: 20,
+      subdomains:['mt0','mt1','mt2','mt3'],
+      attribution: '© Google'
+    });
+
+    baseLayerNormal.addTo(map);
+
     const baseLayers = {
-      "Mappa": L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap'
-      }),
-      "Satellite": L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
-        maxZoom: 20,
-        subdomains:['mt0','mt1','mt2','mt3'],
-        attribution: '© Google'
-      })
+      "Mappa": baseLayerNormal,
+      "Satellite": baseLayerSatellite
     };
 
     L.control.layers(baseLayers).addTo(map);
@@ -175,7 +177,7 @@
     ];
 
     const iconaAttrazione = L.icon({
-      iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png',
+      iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/red-pushpin.png',
       iconSize: [32, 32],
       iconAnchor: [16, 32],
       popupAnchor: [0, -32]
