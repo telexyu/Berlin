@@ -1,0 +1,212 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script src="https://unpkg.com/unlazy@0.11.3/dist/unlazy.with-hashing.iife.js" defer init></script>
+    <script type="text/javascript">
+      window.tailwind.config = {
+        darkMode: ['class'],
+        theme: {
+          extend: {
+            colors: {
+              border: 'hsl(var(--border))',
+              input: 'hsl(var(--input))',
+              ring: 'hsl(var(--ring))',
+              background: 'hsl(var(--background))',
+              foreground: 'hsl(var(--foreground))',
+              primary: {
+                DEFAULT: 'hsl(var(--primary))',
+                foreground: 'hsl(var(--primary-foreground))'
+              },
+              secondary: {
+                DEFAULT: 'hsl(var(--secondary))',
+                foreground: 'hsl(var(--secondary-foreground))'
+              },
+              destructive: {
+                DEFAULT: 'hsl(var(--destructive))',
+                foreground: 'hsl(var(--destructive-foreground))'
+              },
+              muted: {
+                DEFAULT: 'hsl(var(--muted))',
+                foreground: 'hsl(var(--muted-foreground))'
+              },
+              accent: {
+                DEFAULT: 'hsl(var(--accent))',
+                foreground: 'hsl(var(--accent-foreground))'
+              },
+              popover: {
+                DEFAULT: 'hsl(var(--popover))',
+                foreground: 'hsl(var(--popover-foreground))'
+              },
+              card: {
+                DEFAULT: 'hsl(var(--card))',
+                foreground: 'hsl(var(--card-foreground))'
+              },
+            },
+          }
+        }
+      }
+    </script>
+    <style type="text/tailwindcss">
+      @layer base {
+        :root {
+          --background: 0 0% 100%;
+          --foreground: 20 14.3% 4.1%;
+          --card: 0 0% 100%;
+          --card-foreground: 20 14.3% 4.1%;
+          --popover: 0 0% 100%;
+          --popover-foreground: 20 14.3% 4.1%;
+          --primary: 24.6 95% 53.1%;
+          --primary-foreground: 60 9.1% 97.8%;
+          --secondary: 60 4.8% 95.9%;
+          --secondary-foreground: 24 9.8% 10%;
+          --muted: 60 4.8% 95.9%;
+          --muted-foreground: 25 5.3% 44.7%;
+          --accent: 60 4.8% 95.9%;
+          --accent-foreground: 24 9.8% 10%;
+          --destructive: 0 84.2% 60.2%;
+          --destructive-foreground: 60 9.1% 97.8%;
+          --border: 20 5.9% 90%;
+          --input: 20 5.9% 90%;
+          --ring: 24.6 95% 53.1%;
+          --radius: 0.95rem;
+        }
+        .dark {
+          --background: 20 14.3% 4.1%;
+          --foreground: 60 9.1% 97.8%;
+          --card: 20 14.3% 4.1%;
+          --card-foreground: 60 9.1% 97.8%;
+          --popover: 20 14.3% 4.1%;
+          --popover-foreground: 60 9.1% 97.8%;
+          --primary: 20.5 90.2% 48.2%;
+          --primary-foreground: 60 9.1% 97.8%;
+          --secondary: 12 6.5% 15.1%;
+          --secondary-foreground: 60 9.1% 97.8%;
+          --muted: 12 6.5% 15.1%;
+          --muted-foreground: 24 5.4% 63.9%;
+          --accent: 12 6.5% 15.1%;
+          --accent-foreground: 60 9.1% 97.8%;
+          --destructive: 0 72.2% 50.6%;
+          --destructive-foreground: 60 9.1% 97.8%;
+          --border: 12 6.5% 15.1%;
+          --input: 12 6.5% 15.1%;
+          --ring: 20.5 90.2% 48.2%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Barra di Navigazione Minimalista -->
+    <header class="sticky top-0 z-50 bg-background border-b border-border">
+      <div class="container mx-auto px-4">
+        <div class="flex h-16 items-center justify-center">
+          <h1 class="text-2xl font-bold" style="color: #252525;">Metropolitana di Berlino</h1>
+        </div>
+      </div>
+    </header>
+
+    <div class="container mx-auto px-4 pt-6">
+      <div class="relative mt-6">
+        <img src="https://www.viviberlino.it/images/viviberlino/01/Metropolitana_Berlino_vivicity.jpg" alt="Metropolitana di Berlino" class="w-full h-auto rounded-lg" />
+      </div>
+      <div class="mt-4">
+        <span class="text-muted-foreground">TRASPORTO</span>
+        <span class="text-muted-foreground">BERLINO</span>
+      </div>
+      <h2 class="text-3xl font-semibold mt-2">La Metropolitana di Berlino: Guida Completa</h2>
+      
+      <!-- Sezione Caratteristiche principali -->
+      <div class="mt-8 bg-card rounded-lg p-6 shadow-md">
+        <h3 class="text-2xl font-semibold mb-4">Caratteristiche principali</h3>
+        <ul class="space-y-4 text-muted-foreground">
+          <li><strong>Inaugurazione:</strong> 1902, rendendola una delle metropolitane più antiche al mondo.</li>
+          <li><strong>Gestione:</strong> La U-Bahn è gestita dalla BVG (Berliner Verkehrsbetriebe), mentre la S-Bahn è amministrata da una compagnia diversa, parte della Deutsche Bahn.</li>
+          <li><strong>Estensione:</strong> La U-Bahn si sviluppa su 155.4 km con 208 stazioni, mentre l'intera rete ferroviaria urbana (U-Bahn + S-Bahn) copre 482 km.</li>
+          <li><strong>Linee:</strong> La U-Bahn conta 9 linee principali (U1–U9), ciascuna identificata da un colore specifico, mentre la S-Bahn ha 15 linee, incluse due circolari (S41 e S42).</li>
+          <li><strong>Treni:</strong> I treni della U-Bahn sono alimentati tramite terza rotaia e sono facilmente riconoscibili per il loro colore giallo.</li>
+        </ul>
+      </div>
+      
+      <!-- Sezione Zone tariffarie -->
+      <div class="mt-8 bg-card rounded-lg p-6 shadow-md">
+        <h3 class="text-2xl font-semibold mb-4">Zone tariffarie</h3>
+        <p class="text-muted-foreground mb-4">La città è suddivisa in tre zone tariffarie:</p>
+        <ul class="space-y-4 text-muted-foreground">
+          <li><strong>Zona A:</strong> Centro città, inclusa la linea circolare della S-Bahn (Ringbahn).</li>
+          <li><strong>Zona B:</strong> Periferia urbana, fino ai confini della città.</li>
+          <li><strong>Zona C:</strong> Aree esterne fino a circa 15 km da Berlino, includendo Potsdam e gli aeroporti.</li>
+        </ul>
+        <p class="text-muted-foreground mt-4">Un unico biglietto consente di utilizzare tutti i mezzi pubblici (U-Bahn, S-Bahn, tram, autobus).</p>
+      </div>
+      
+      <!-- Sezione Frequenza e orari -->
+      <div class="mt-8 bg-card rounded-lg p-6 shadow-md">
+        <h3 class="text-2xl font-semibold mb-4">Frequenza e orari</h3>
+        <ul class="space-y-4 text-muted-foreground">
+          <li>Durante il giorno, i treni della U-Bahn passano ogni 5 minuti circa, mentre quelli della S-Bahn ogni 10 minuti.</li>
+          <li>Il servizio è attivo dalle prime ore del mattino fino a tarda notte. Nei fine settimana (venerdì e sabato), i treni operano senza interruzioni notturne.</li>
+        </ul>
+      </div>
+      
+      <!-- Sezione Tratti caratteristici -->
+      <div class="mt-8 bg-card rounded-lg p-6 shadow-md">
+        <h3 class="text-2xl font-semibold mb-4">Tratti caratteristici</h3>
+        <p class="text-muted-foreground">A differenza di molte altre metropolitane:</p>
+        <ul class="space-y-4 text-muted-foreground mt-4">
+          <li>La U-Bahn include lunghi tratti in superficie o sopra viadotti anche in zone centrali, come il famoso Oberbaumbrücke o il quartiere di Kreuzberg.</li>
+          <li>La rete è particolarmente densa nella parte occidentale della città, riflettendo la divisione storica di Berlino.</li>
+        </ul>
+      </div>
+      
+      <!-- Sezione Linee principali -->
+      <div class="mt-8 bg-card rounded-lg p-6 shadow-md">
+        <h3 class="text-2xl font-semibold mb-4">Linee principali</h3>
+        <p class="text-muted-foreground mb-4">Alcune delle linee più utilizzate includono:</p>
+        <ul class="space-y-4 text-muted-foreground">
+          <li><strong>U1 (linea verde):</strong> Da Warschauer Straße a Uhlandstraße, attraversando Kreuzberg e Charlottenburg.</li>
+          <li><strong>U2 (linea rossa):</strong> Da Pankow a Ruhleben, passando per Alexanderplatz e Potsdamer Platz.</li>
+          <li><strong>U5 (linea marrone):</strong> Collega Hönow ad Alexanderplatz.</li>
+          <li><strong>U6 (linea viola):</strong> Da Alt-Tegel a Alt-Mariendorf, con fermate vicine al Checkpoint Charlie.</li>
+        </ul>
+      </div>
+      
+      <!-- Sezione Curiosità -->
+      <div class="mt-8 bg-card rounded-lg p-6 shadow-md">
+        <h3 class="text-2xl font-semibold mb-4">Curiosità</h3>
+        <ul class="space-y-4 text-muted-foreground">
+          <li>Berlino è una delle poche città dove non ci sono tornelli nelle stazioni; i passeggeri devono obliterare il biglietto prima di salire sui treni.</li>
+          <li>Durante la divisione della città, alcune stazioni della U-Bahn nella Berlino Est furono chiuse e riaperte solo dopo la riunificazione.</li>
+          <li>La rete metropolitana di Berlino rappresenta un esempio eccellente di trasporto pubblico integrato ed efficiente, ideale per esplorare la città in modo rapido ed economico.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Sezione con immagini -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+      <div class="bg-card rounded-lg shadow-md overflow-hidden">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/U-Bahn_Berlin_M%C3%B6ckernbr%C3%BCcke.jpg/1920px-U-Bahn_Berlin_M%C3%B6ckernbr%C3%BCcke.jpg" alt="U-Bahn Berlino" class="w-full h-48 object-cover" />
+        <div class="p-4">
+          <h2 class="text-lg font-semibold">Treno della U-Bahn</h2>
+          <p class="text-muted-foreground text-sm">Caratteristico treno giallo della metropolitana berlinese</p>
+        </div>
+      </div>
+      <div class="bg-card rounded-lg shadow-md overflow-hidden">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/S-Bahn_at_Hauptbahnhof_Berlin.JPG/1920px-S-Bahn_at_Hauptbahnhof_Berlin.JPG" alt="Stazione S-Bahn" class="w-full h-48 object-cover" />
+        <div class="p-4">
+          <h2 class="text-lg font-semibold">Stazione S-Bahn</h2>
+          <p class="text-muted-foreground text-sm">Interno di una stazione della S-Bahn a Berlino</p>
+        </div>
+      </div>
+      <div class="bg-card rounded-lg shadow-md overflow-hidden">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Oberbaumbr%C3%BCcke_mit_U-Bahn.jpg/1920px-Oberbaumbr%C3%BCcke_mit_U-Bahn.jpg" alt="Oberbaumbrücke" class="w-full h-48 object-cover" />
+        <div class="p-4">
+          <h2 class="text-lg font-semibold">Oberbaumbrücke</h2>
+          <p class="text-muted-foreground text-sm">Famoso ponte attraversato dalla U-Bahn</p>
+        </div>
+      </div>
+    </div>
+    
+   
+  </body>
+</html>
