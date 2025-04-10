@@ -1,0 +1,219 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script src="https://unpkg.com/unlazy@0.11.3/dist/unlazy.with-hashing.iife.js" defer init></script>
+    <script type="text/javascript">
+      window.tailwind.config = {
+        darkMode: ['class'],
+        theme: {
+          extend: {
+            colors: {
+              border: 'hsl(var(--border))',
+              input: 'hsl(var(--input))',
+              ring: 'hsl(var(--ring))',
+              background: 'hsl(var(--background))',
+              foreground: 'hsl(var(--foreground))',
+              primary: {
+                DEFAULT: 'hsl(var(--primary))',
+                foreground: 'hsl(var(--primary-foreground))'
+              },
+              secondary: {
+                DEFAULT: 'hsl(var(--secondary))',
+                foreground: 'hsl(var(--secondary-foreground))'
+              },
+              destructive: {
+                DEFAULT: 'hsl(var(--destructive))',
+                foreground: 'hsl(var(--destructive-foreground))'
+              },
+              muted: {
+                DEFAULT: 'hsl(var(--muted))',
+                foreground: 'hsl(var(--muted-foreground))'
+              },
+              accent: {
+                DEFAULT: 'hsl(var(--accent))',
+                foreground: 'hsl(var(--accent-foreground))'
+              },
+              popover: {
+                DEFAULT: 'hsl(var(--popover))',
+                foreground: 'hsl(var(--popover-foreground))'
+              },
+              card: {
+                DEFAULT: 'hsl(var(--card))',
+                foreground: 'hsl(var(--card-foreground))'
+              },
+            },
+          }
+        }
+      }
+    </script>
+    <style type="text/tailwindcss">
+      @layer base {
+        :root {
+          --background: 0 0% 100%;
+          --foreground: 20 14.3% 4.1%;
+          --card: 0 0% 100%;
+          --card-foreground: 20 14.3% 4.1%;
+          --popover: 0 0% 100%;
+          --popover-foreground: 20 14.3% 4.1%;
+          --primary: 24.6 95% 53.1%;
+          --primary-foreground: 60 9.1% 97.8%;
+          --secondary: 60 4.8% 95.9%;
+          --secondary-foreground: 24 9.8% 10%;
+          --muted: 60 4.8% 95.9%;
+          --muted-foreground: 25 5.3% 44.7%;
+          --accent: 60 4.8% 95.9%;
+          --accent-foreground: 24 9.8% 10%;
+          --destructive: 0 84.2% 60.2%;
+          --destructive-foreground: 60 9.1% 97.8%;
+          --border: 20 5.9% 90%;
+          --input: 20 5.9% 90%;
+          --ring: 24.6 95% 53.1%;
+          --radius: 0.95rem;
+        }
+        .dark {
+          --background: 20 14.3% 4.1%;
+          --foreground: 60 9.1% 97.8%;
+          --card: 20 14.3% 4.1%;
+          --card-foreground: 60 9.1% 97.8%;
+          --popover: 20 14.3% 4.1%;
+          --popover-foreground: 60 9.1% 97.8%;
+          --primary: 20.5 90.2% 48.2%;
+          --primary-foreground: 60 9.1% 97.8%;
+          --secondary: 12 6.5% 15.1%;
+          --secondary-foreground: 60 9.1% 97.8%;
+          --muted: 12 6.5% 15.1%;
+          --muted-foreground: 24 5.4% 63.9%;
+          --accent: 12 6.5% 15.1%;
+          --accent-foreground: 60 9.1% 97.8%;
+          --destructive: 0 72.2% 50.6%;
+          --destructive-foreground: 60 9.1% 97.8%;
+          --border: 12 6.5% 15.1%;
+          --input: 12 6.5% 15.1%;
+          --ring: 20.5 90.2% 48.2%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Barra di Navigazione Minimalista -->
+    <header class="sticky top-0 z-50 bg-background border-b border-border">
+      <div class="container mx-auto px-4">
+        <div class="flex h-16 items-center justify-center">
+          <h1 class="text-2xl font-bold" style="color: #252525;">Cucina Berlinese</h1>
+        </div>
+      </div>
+    </header>
+
+    <div class="container mx-auto px-4 pt-6">
+      <div class="relative mt-6">
+        <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Piatti berlinesi" class="w-full h-auto rounded-lg" />
+      </div>
+      <div class="mt-4">
+        <span class="text-muted-foreground">GASTRONOMIA</span>
+        <span class="text-muted-foreground">BERLINO</span>
+      </div>
+      <h2 class="text-3xl font-semibold mt-2">Piatti tipici berlinesi</h2>
+      
+      <!-- Sezione Piatti principali -->
+      <div class="mt-8 bg-card rounded-lg p-6 shadow-md">
+        <h3 class="text-2xl font-semibold mb-4">I piatti più rappresentativi</h3>
+        <div class="space-y-6 text-muted-foreground">
+          <div>
+            <h4 class="font-medium">Currywurst</h4>
+            <p>Il re dello street food berlinese, inventato nel 1949 da Herta Heuwer. È una salsiccia di maiale cotta al vapore e poi fritta, servita con ketchup aromatizzato al curry e spesso accompagnata da patatine fritte.</p>
+          </div>
+          <div>
+            <h4 class="font-medium">Eisbein</h4>
+            <p>Stinco di maiale in salamoia e bollito, servito con purè di piselli, patate lesse e crauti. Questo piatto è molto sostanzioso ed è ideale per chi cerca un'esperienza autentica della cucina tedesca.</p>
+          </div>
+          <div>
+            <h4 class="font-medium">Kassler</h4>
+            <p>Bistecca di maiale affumicata, spesso accompagnata da Bratkartoffeln (patate saltate con cipolla e pancetta). È un piatto semplice ma ricco di sapore.</p>
+          </div>
+          <div>
+            <h4 class="font-medium">Königsberger Klopse</h4>
+            <p>Polpette di carne servite in una salsa bianca con capperi e limone. Questo piatto ha origini prussiane ed è molto apprezzato per il suo gusto delicato e leggermente acidulo.</p>
+          </div>
+          <div>
+            <h4 class="font-medium">Buletten</h4>
+            <p>Polpette di carne simili alle classiche meatballs, condite con cipolla e prezzemolo. Sono spesso servite come snack o accompagnate da insalata di patate.</p>
+          </div>
+          <div>
+            <h4 class="font-medium">Senfeier</h4>
+            <p>Uova sode servite con una salsa cremosa alla senape, accompagnate da patate bollite o pane. È un piatto tradizionale berlinese semplice ma saporito.</p>
+          </div>
+          <div>
+            <h4 class="font-medium">Havel-Zander</h4>
+            <p>Pesce persico del fiume Havel, cucinato con burro e servito con patate. Questo piatto rappresenta il lato meno conosciuto della cucina berlinese legata ai prodotti locali.</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Sezione Street food -->
+      <div class="mt-8 bg-card rounded-lg p-6 shadow-md">
+        <h3 class="text-2xl font-semibold mb-4">Street food multiculturale</h3>
+        <div class="space-y-4 text-muted-foreground">
+          <p>Berlino è famosa anche per il suo cibo di strada multiculturale:</p>
+          <ul class="list-disc pl-5 space-y-2">
+            <li><strong>Döner Kebab:</strong> Introdotto dalla comunità turca negli anni '70, è diventato uno dei piatti più popolari della città.</li>
+            <li><strong>Bretzel:</strong> Sebbene originario della Baviera, il bretzel è molto comune anche a Berlino come snack veloce.</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Sezione Dolci -->
+      <div class="mt-8 bg-card rounded-lg p-6 shadow-md">
+        <h3 class="text-2xl font-semibold mb-4">Dolci tipici</h3>
+        <div class="space-y-4 text-muted-foreground">
+          <ul class="list-disc pl-5 space-y-2">
+            <li><strong>Berliner Pfannkuchen:</strong> Simile ai bomboloni italiani, ripieni di marmellata o crema.</li>
+            <li><strong>Apfelkuchen:</strong> Torta di mele tradizionale.</li>
+            <li><strong>Käsekuchen:</strong> Torta al formaggio cremosa.</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Sezione Caratteristiche -->
+      <div class="mt-8 bg-card rounded-lg p-6 shadow-md">
+        <h3 class="text-2xl font-semibold mb-4">Caratteristiche della cucina berlinese</h3>
+        <div class="space-y-4 text-muted-foreground">
+          <ul class="list-disc pl-5 space-y-2">
+            <li>Porzioni abbondanti pensate per saziare</li>
+            <li>Piatti a base di carne (soprattutto maiale), patate e crauti</li>
+            <li>Influenze storiche dovute ai flussi migratori (francesi ugonotti, prussiani e lavoratori stranieri dopo la Seconda Guerra Mondiale)</li>
+          </ul>
+          <p class="mt-4">La gastronomia berlinese offre un'esperienza unica che combina tradizione locale e innovazione internazionale.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sezione con immagini -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+      <div class="bg-card rounded-lg shadow-md overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1603360946369-dc9bb6258143?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Currywurst" class="w-full h-48 object-cover" />
+        <div class="p-4">
+          <h2 class="text-lg font-semibold">Currywurst</h2>
+          <p class="text-muted-foreground text-sm">Lo street food simbolo di Berlino</p>
+        </div>
+      </div>
+      <div class="bg-card rounded-lg shadow-md overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Eisbein" class="w-full h-48 object-cover" />
+        <div class="p-4">
+          <h2 class="text-lg font-semibold">Eisbein</h2>
+          <p class="text-muted-foreground text-sm">Stinco di maiale con crauti</p>
+        </div>
+      </div>
+      <div class="bg-card rounded-lg shadow-md overflow-hidden">
+        <img src="https://th.bing.com/th/id/R.a0f47364c54ba6e6badc45c3a6fbe58c?rik=4ciyV8pp%2fpNtBg&pid=ImgRaw&r=0" alt="Berliner Pfannkuchen" class="w-full h-48 object-cover" />
+        <div class="p-4">
+          <h2 class="text-lg font-semibold">Berliner Pfannkuchen</h2>
+          <p class="text-muted-foreground text-sm">Il dolce tradizionale berlinese</p>
+        </div>
+      </div>
+    </div>
+    
+  
+  </body>
+</html>
