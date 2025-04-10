@@ -1,0 +1,311 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script src="https://unpkg.com/unlazy@0.11.3/dist/unlazy.with-hashing.iife.js" defer init></script>
+    <script type="text/javascript">
+      window.tailwind.config = {
+        darkMode: ['class'],
+        theme: {
+          extend: {
+            colors: {
+              border: 'hsl(var(--border))',
+              input: 'hsl(var(--input))',
+              ring: 'hsl(var(--ring))',
+              background: 'hsl(var(--background))',
+              foreground: 'hsl(var(--foreground))',
+              primary: {
+                DEFAULT: 'hsl(var(--primary))',
+                foreground: 'hsl(var(--primary-foreground))'
+              },
+              secondary: {
+                DEFAULT: 'hsl(var(--secondary))',
+                foreground: 'hsl(var(--secondary-foreground))'
+              },
+              destructive: {
+                DEFAULT: 'hsl(var(--destructive))',
+                foreground: 'hsl(var(--destructive-foreground))'
+              },
+              muted: {
+                DEFAULT: 'hsl(var(--muted))',
+                foreground: 'hsl(var(--muted-foreground))'
+              },
+              accent: {
+                DEFAULT: 'hsl(var(--accent))',
+                foreground: 'hsl(var(--accent-foreground))'
+              },
+              popover: {
+                DEFAULT: 'hsl(var(--popover))',
+                foreground: 'hsl(var(--popover-foreground))'
+              },
+              card: {
+                DEFAULT: 'hsl(var(--card))',
+                foreground: 'hsl(var(--card-foreground))'
+              },
+            },
+          }
+        }
+      }
+    </script>
+    <style type="text/tailwindcss">
+      @layer base {
+        :root {
+          --background: 0 0% 100%;
+          --foreground: 20 14.3% 4.1%;
+          --card: 0 0% 100%;
+          --card-foreground: 20 14.3% 4.1%;
+          --popover: 0 0% 100%;
+          --popover-foreground: 20 14.3% 4.1%;
+          --primary: 24.6 95% 53.1%;
+          --primary-foreground: 60 9.1% 97.8%;
+          --secondary: 60 4.8% 95.9%;
+          --secondary-foreground: 24 9.8% 10%;
+          --muted: 60 4.8% 95.9%;
+          --muted-foreground: 25 5.3% 44.7%;
+          --accent: 60 4.8% 95.9%;
+          --accent-foreground: 24 9.8% 10%;
+          --destructive: 0 84.2% 60.2%;
+          --destructive-foreground: 60 9.1% 97.8%;
+          --border: 20 5.9% 90%;
+          --input: 20 5.9% 90%;
+          --ring: 24.6 95% 53.1%;
+          --radius: 0.95rem;
+        }
+        .dark {
+          --background: 20 14.3% 4.1%;
+          --foreground: 60 9.1% 97.8%;
+          --card: 20 14.3% 4.1%;
+          --card-foreground: 60 9.1% 97.8%;
+          --popover: 20 14.3% 4.1%;
+          --popover-foreground: 60 9.1% 97.8%;
+          --primary: 20.5 90.2% 48.2%;
+          --primary-foreground: 60 9.1% 97.8%;
+          --secondary: 12 6.5% 15.1%;
+          --secondary-foreground: 60 9.1% 97.8%;
+          --muted: 12 6.5% 15.1%;
+          --muted-foreground: 24 5.4% 63.9%;
+          --accent: 12 6.5% 15.1%;
+          --accent-foreground: 60 9.1% 97.8%;
+          --destructive: 0 72.2% 50.6%;
+          --destructive-foreground: 60 9.1% 97.8%;
+          --border: 12 6.5% 15.1%;
+          --input: 12 6.5% 15.1%;
+          --ring: 20.5 90.2% 48.2%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Barra di Navigazione Minimalista -->
+    <header class="sticky top-0 z-50 bg-background border-b border-border">
+      <div class="container mx-auto px-4">
+        <div class="flex h-16 items-center justify-center">
+          <h1 class="text-2xl font-bold" style="color: #252525;">Birrerie di Berlino</h1>
+        </div>
+      </div>
+    </header>
+
+    <div class="container mx-auto px-4 pt-6">
+      <div class="relative mt-6">
+        <img src="https://images.unsplash.com/photo-1535958636474-b021ee887b13?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Birrerie di Berlino" class="w-full h-auto rounded-lg" />
+      </div>
+      <div class="mt-4">
+        <span class="text-muted-foreground">BEER</span>
+        <span class="text-muted-foreground">BERLINO</span>
+      </div>
+      <h2 class="text-3xl font-semibold mt-2">Le migliori birrerie e pub di Berlino</h2>
+      
+      <!-- Nuova Sezione Storia della Birra in Germania -->
+      <div class="mt-8 bg-card rounded-lg p-6 shadow-md">
+        <h3 class="text-2xl font-semibold mb-4">Storia della Birra in Germania</h3>
+        <div class="space-y-4 text-muted-foreground">
+          <p>La tradizione birraria tedesca affonda le sue radici nell'antichità, con i primi documenti che attestano la produzione di birra risalenti all'800 a.C. presso i Celti. Tuttavia, fu durante il Medioevo che la birra divenne una bevanda centrale nella cultura tedesca.</p>
+          
+          <h4 class="font-medium mt-4">Il Reinheitsgebot (1516)</h4>
+          <p>La Legge sulla Purezza della Birra, emanata nel Ducato di Baviera nel 1516, stabiliva che la birra potesse essere prodotta solo con tre ingredienti: acqua, malto d'orzo e luppolo. Questa legge, una delle più antiche norme alimentari ancora esistenti, ha plasmato per secoli la produzione birraria tedesca.</p>
+          
+          <h4 class="font-medium mt-4">L'evoluzione industriale</h4>
+          <p>Con la rivoluzione industriale del XIX secolo, la produzione di birra in Germania subì una radicale trasformazione. L'invenzione della refrigerazione artificiale da parte di Carl von Linde nel 1873 permise la produzione di birra a bassa fermentazione (lager) durante tutto l'anno.</p>
+          
+          <h4 class="font-medium mt-4">La cultura dei beer garden</h4>
+          <p>Nell'Ottocento nacquero i primi beer garden, giardini all'aperto dove si poteva bere la birra prodotta localmente. Questa tradizione è particolarmente forte a Monaco ma si è diffusa in tutta la Germania, compresa Berlino.</p>
+          
+          <h4 class="font-medium mt-4">La birra nella Berlino moderna</h4>
+          <p>Berlino ha sviluppato una sua identità birraria unica, con stili locali come la Berliner Weisse (birra acida di frumento) e una vivace scena craft beer che si è sviluppata negli ultimi decenni, pur mantenendo salde radici nella tradizione.</p>
+        </div>
+      </div>
+
+      <!-- Sezione Birrerie -->
+      <div class="mt-8 space-y-8">
+        <!-- Brauerei Lemke -->
+        <div class="bg-card rounded-lg p-6 shadow-md">
+          <div class="flex justify-between items-start">
+            <div>
+              <a href="https://www.tripadvisor.it/Restaurant_Review-g187323-d739814-Reviews-Brauerei_Lemke_Berlin-Berlin.html" target="_blank" rel="noopener noreferrer" class="text-xl font-semibold hover:text-primary">Brauerei Lemke Berlin</a>
+              <div class="flex items-center mt-1">
+                <span class="text-yellow-500">★ 4,5</span>
+                <span class="text-muted-foreground ml-2">(153 recensioni)</span>
+              </div>
+            </div>
+            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Aperto</span>
+          </div>
+          
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Quality Beer</span>
+            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Friendly Service</span>
+            <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">Pricey</span>
+          </div>
+          
+          <p class="mt-4 text-muted-foreground">
+            Questa storica birreria berlinese è nota per le sue birre artigianali di alta qualità, prodotte in loco. Situata nel cuore della città vicino ad Alexanderplatz, offre un'esperienza autentica per chi desidera esplorare la scena brassicola locale in un ambiente accogliente.
+          </p>
+          
+          <div class="mt-4 flex flex-wrap gap-4 text-sm">
+            <a href="https://www.lemke.biz/" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">Sito web</a>
+            <a href="https://goo.gl/maps/4YJQ5Z5Z5Z5Z5Z5Z5" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">Indicazioni</a>
+          </div>
+        </div>
+        
+        <!-- BrewDog -->
+        <div class="bg-card rounded-lg p-6 shadow-md">
+          <div class="flex justify-between items-start">
+            <div>
+              <a href="https://www.tripadvisor.it/Restaurant_Review-g187323-d10402019-Reviews-BrewDog_Berlin_Mitte-Berlin.html" target="_blank" rel="noopener noreferrer" class="text-xl font-semibold hover:text-primary">BrewDog Berlin Mitte</a>
+              <div class="flex items-center mt-1">
+                <span class="text-yellow-500">★ 4,4</span>
+                <span class="text-muted-foreground ml-2">(4.556 recensioni)</span>
+              </div>
+            </div>
+            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Aperto</span>
+          </div>
+          
+          <div class="mt-2 text-muted-foreground">
+            <span>€20–30</span>
+          </div>
+          
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Beer Selection</span>
+            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Atmosphere</span>
+            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Food Quality</span>
+          </div>
+          
+          <p class="mt-4 text-muted-foreground">
+            Parte di una catena internazionale, BrewDog Berlin Mitte si distingue per la sua selezione di birre artigianali scozzesi e ospita regolarmente birre ospiti. Con un'atmosfera trendy e opzioni di cibo, è perfetto per chi cerca una combinazione di birra craft e socialità.
+          </p>
+          
+          <div class="mt-4 flex flex-wrap gap-4 text-sm">
+            <a href="https://www.brewdog.com/global/berlin" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">Sito web</a>
+            <a href="https://goo.gl/maps/4YJQ5Z5Z5Z5Z5Z5Z5" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">Indicazioni</a>
+          </div>
+        </div>
+        
+        <!-- Hofbräu Wirtshaus -->
+        <div class="bg-card rounded-lg p-6 shadow-md">
+          <div class="flex justify-between items-start">
+            <div>
+              <a href="https://www.tripadvisor.it/Restaurant_Review-g187323-d739814-Reviews-Hofbraeu_Wirtshaus_Berlin-Berlin.html" target="_blank" rel="noopener noreferrer" class="text-xl font-semibold hover:text-primary">Hofbräu Wirtshaus Berlin</a>
+              <div class="flex items-center mt-1">
+                <span class="text-yellow-500">★ 4,3</span>
+                <span class="text-muted-foreground ml-2">(27.076 recensioni)</span>
+              </div>
+            </div>
+            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Aperto</span>
+          </div>
+          
+          <div class="mt-2 text-muted-foreground">
+            <span>€20–30</span>
+          </div>
+          
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Atmosphere</span>
+            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Vegan Options</span>
+            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Food Quality</span>
+          </div>
+          
+          <p class="mt-4 text-muted-foreground">
+            Questo locale bavarese porta a Berlino l'atmosfera dell'Oktoberfest con birre tradizionali, cibo regionale e musica dal vivo. È ideale per chi vuole immergersi nella cultura brassicola tedesca in un ambiente vivace e festoso.
+          </p>
+          
+          <div class="mt-4 flex flex-wrap gap-4 text-sm">
+            <a href="https://www.hofbraeu-wirtshaus.de/berlin/" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">Sito web</a>
+            <a href="https://goo.gl/maps/4YJQ5Z5Z5Z5Z5Z5Z5" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">Indicazioni</a>
+          </div>
+        </div>
+        
+        <!-- Georgbraeu -->
+        <div class="bg-card rounded-lg p-6 shadow-md">
+          <div class="flex justify-between items-start">
+            <div>
+              <a href="https://www.tripadvisor.it/Restaurant_Review-g187323-d739814-Reviews-Georgbraeu-Berlin.html" target="_blank" rel="noopener noreferrer" class="text-xl font-semibold hover:text-primary">Georgbraeu</a>
+              <div class="flex items-center mt-1">
+                <span class="text-yellow-500">★ 4,1</span>
+                <span class="text-muted-foreground ml-2">(8.190 recensioni)</span>
+              </div>
+            </div>
+            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Aperto</span>
+          </div>
+          
+          <div class="mt-2 text-muted-foreground">
+            <span>$$</span>
+          </div>
+          
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Atmosphere</span>
+            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Location</span>
+            <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">Service Issues</span>
+          </div>
+          
+          <p class="mt-4 text-muted-foreground">
+            Con il suo affascinante beer garden lungo il fiume Spree, Georgbraeu offre birre artigianali prodotte in loco e piatti tipici tedeschi. È un luogo perfetto per rilassarsi dopo una giornata di esplorazioni a Berlino.
+          </p>
+          
+          <div class="mt-4 flex flex-wrap gap-4 text-sm">
+            <a href="https://www.georgbraeu.de/" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">Sito web</a>
+            <a href="https://goo.gl/maps/4YJQ5Z5Z5Z5Z5Z5Z5" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">Indicazioni</a>
+          </div>
+        </div>
+        
+        <!-- Schneeeule -->
+        <div class="bg-card rounded-lg p-6 shadow-md">
+          <div class="flex justify-between items-start">
+            <div>
+              <a href="https://www.tripadvisor.it/Restaurant_Review-g187323-d739814-Reviews-Schneeeule_Salon_fur_Berliner_Bierkultur-Berlin.html" target="_blank" rel="noopener noreferrer" class="text-xl font-semibold hover:text-primary">Schneeeule Salon für Berliner Bierkultur</a>
+              <div class="flex items-center mt-1">
+                <span class="text-yellow-500">★ 4,9</span>
+                <span class="text-muted-foreground ml-2">(191 recensioni)</span>
+              </div>
+            </div>
+            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Aperto</span>
+          </div>
+          
+          <div class="mt-2 text-muted-foreground">
+            <span>€10–20</span>
+          </div>
+          
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Authentic Beer</span>
+            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Knowledgeable Staff</span>
+            <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">Limited Hours</span>
+          </div>
+          
+          <p class="mt-4 text-muted-foreground">
+            Specializzato nello stile tradizionale Berliner Weisse, Schneeeule è un punto di riferimento moderno per gli appassionati di birra. La sua filosofia produttiva si basa su metodi tradizionali e fermentazioni uniche, rendendolo una tappa obbligata per scoprire la cultura brassicola berlinese.
+          </p>
+          
+          <div class="mt-4 flex flex-wrap gap-4 text-sm">
+            <a href="https://www.schneeeule.de/" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">Sito web</a>
+            <a href="https://goo.gl/maps/4YJQ5Z5Z5Z5Z5Z5Z5" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">Indicazioni</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Footer Minimalista -->
+    <footer class="bg-card border-t border-border mt-12 py-8">
+      <div class="container mx-auto px-4 text-center">
+        <p class="text-muted-foreground text-sm">© 2023 Birrerie di Berlino - Tutti i diritti riservati</p>
+      </div>
+    </footer>
+  </body>
+</html>
