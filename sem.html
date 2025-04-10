@@ -1,0 +1,183 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script src="https://unpkg.com/unlazy@0.11.3/dist/unlazy.with-hashing.iife.js" defer init></script>
+    <script type="text/javascript">
+      window.tailwind.config = {
+        darkMode: ['class'],
+        theme: {
+          extend: {
+            colors: {
+              border: 'hsl(var(--border))',
+              input: 'hsl(var(--input))',
+              ring: 'hsl(var(--ring))',
+              background: 'hsl(var(--background))',
+              foreground: 'hsl(var(--foreground))',
+              primary: {
+                DEFAULT: 'hsl(var(--primary))',
+                foreground: 'hsl(var(--primary-foreground))'
+              },
+              secondary: {
+                DEFAULT: 'hsl(var(--secondary))',
+                foreground: 'hsl(var(--secondary-foreground))'
+              },
+              destructive: {
+                DEFAULT: 'hsl(var(--destructive))',
+                foreground: 'hsl(var(--destructive-foreground))'
+              },
+              muted: {
+                DEFAULT: 'hsl(var(--muted))',
+                foreground: 'hsl(var(--muted-foreground))'
+              },
+              accent: {
+                DEFAULT: 'hsl(var(--accent))',
+                foreground: 'hsl(var(--accent-foreground))'
+              },
+              popover: {
+                DEFAULT: 'hsl(var(--popover))',
+                foreground: 'hsl(var(--popover-foreground))'
+              },
+              card: {
+                DEFAULT: 'hsl(var(--card))',
+                foreground: 'hsl(var(--card-foreground))'
+              },
+            },
+          }
+        }
+      }
+    </script>
+    <style type="text/tailwindcss">
+      @layer base {
+        :root {
+          --background: 0 0% 100%;
+          --foreground: 20 14.3% 4.1%;
+          --card: 0 0% 100%;
+          --card-foreground: 20 14.3% 4.1%;
+          --popover: 0 0% 100%;
+          --popover-foreground: 20 14.3% 4.1%;
+          --primary: 24.6 95% 53.1%;
+          --primary-foreground: 60 9.1% 97.8%;
+          --secondary: 60 4.8% 95.9%;
+          --secondary-foreground: 24 9.8% 10%;
+          --muted: 60 4.8% 95.9%;
+          --muted-foreground: 25 5.3% 44.7%;
+          --accent: 60 4.8% 95.9%;
+          --accent-foreground: 24 9.8% 10%;
+          --destructive: 0 84.2% 60.2%;
+          --destructive-foreground: 60 9.1% 97.8%;
+          --border: 20 5.9% 90%;
+          --input: 20 5.9% 90%;
+          --ring: 24.6 95% 53.1%;
+          --radius: 0.95rem;
+        }
+        .dark {
+          --background: 20 14.3% 4.1%;
+          --foreground: 60 9.1% 97.8%;
+          --card: 20 14.3% 4.1%;
+          --card-foreground: 60 9.1% 97.8%;
+          --popover: 20 14.3% 4.1%;
+          --popover-foreground: 60 9.1% 97.8%;
+          --primary: 20.5 90.2% 48.2%;
+          --primary-foreground: 60 9.1% 97.8%;
+          --secondary: 12 6.5% 15.1%;
+          --secondary-foreground: 60 9.1% 97.8%;
+          --muted: 12 6.5% 15.1%;
+          --muted-foreground: 24 5.4% 63.9%;
+          --accent: 12 6.5% 15.1%;
+          --accent-foreground: 60 9.1% 97.8%;
+          --destructive: 0 72.2% 50.6%;
+          --destructive-foreground: 60 9.1% 97.8%;
+          --border: 12 6.5% 15.1%;
+          --input: 12 6.5% 15.1%;
+          --ring: 20.5 90.2% 48.2%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Barra di Navigazione Minimalista -->
+    <header class="sticky top-0 z-50 bg-background border-b border-border">
+      <div class="container mx-auto px-4">
+        <div class="flex h-16 items-center justify-center">
+          <h1 class="text-2xl font-bold" style="color: #252525;">Ampelmann di Berlino</h1>
+        </div>
+      </div>
+    </header>
+
+    <div class="container mx-auto px-4 pt-6">
+      <div class="relative mt-6">
+        <img src="https://berlinomagazine.com/wp-content/uploads/2014/03/Ampelmaennchen.jpg" alt="Ampelmann di Berlino" class="w-full h-auto rounded-lg" />
+      </div>
+      <div class="mt-4">
+        <span class="text-muted-foreground">CULTURA</span>
+        <span class="text-muted-foreground">BERLINO</span>
+      </div>
+      <h2 class="text-3xl font-semibold mt-2">L'Ampelmann: L'iconico omino dei semafori di Berlino</h2>
+      
+      <!-- Sezione Storia -->
+      <div class="mt-8 bg-card rounded-lg p-6 shadow-md">
+        <h3 class="text-2xl font-semibold mb-4">Storia dell'Ampelmann</h3>
+        <div class="space-y-4 text-muted-foreground">
+          <p>L'Ampelmann è stato introdotto per la prima volta a Berlino Est nel 1961. La sua creazione rispondeva alla necessità di rendere più riconoscibili i segnali di traffico, specialmente per le persone con discromatopsia.</p>
+          <p>L'omino è dotato di un aspetto paffutello e di un cappello, e si distingue per le sue pose: con il semaforo rosso, allarga le braccia per indicare "stop", mentre con il verde cammina per invitare i pedoni ad attraversare.</p>
+        </div>
+      </div>
+      
+      <!-- Sezione Importanza culturale -->
+      <div class="mt-8 bg-card rounded-lg p-6 shadow-md">
+        <h3 class="text-2xl font-semibold mb-4">Importanza culturale</h3>
+        <div class="space-y-4 text-muted-foreground">
+          <p>Dopo la caduta del Muro di Berlino, l'Ampelmann rischiò di scomparire, ma grazie a un referendum popolare e all'interesse dei turisti, è stato mantenuto e addirittura adottato anche a Berlino Ovest.</p>
+          <p>Oggi è uno dei simboli più amati della città, rappresentato su vari souvenir come magneti, penne e t-shirt.</p>
+        </div>
+      </div>
+      
+      <!-- Sezione Arte e innovazione -->
+      <div class="mt-8 bg-card rounded-lg p-6 shadow-md">
+        <h3 class="text-2xl font-semibold mb-4">Arte e innovazione</h3>
+        <div class="space-y-4 text-muted-foreground">
+          <p>Berlino continua a innovare anche nell'ambito dei semafori. Recentemente, la città ha introdotto progetti artistici che trasformano i passaggi pedonali in vere e proprie gallerie d'arte a cielo aperto.</p>
+          <p>Utilizzando proiezioni ad alta definizione, vengono create opere d'arte dinamiche sotto i piedi dei pedoni, mantenendo però sempre riconoscibile l'iconico Ampelmann.</p>
+        </div>
+      </div>
+      
+      <!-- Sezione Simbolismo -->
+      <div class="mt-8 bg-card rounded-lg p-6 shadow-md">
+        <h3 class="text-2xl font-semibold mb-4">Simbolismo</h3>
+        <div class="space-y-4 text-muted-foreground">
+          <p>L'Ampelmann non è solo un semaforo, ma un simbolo della storia e della cultura berlinese. Rappresenta la capacità della città di trasformare elementi funzionali in vere e proprie icone culturali.</p>
+          <p>Mantiene viva la memoria del passato, integrandola perfettamente con la modernità e diventando un ponte tra la Berlino Est e Ovest, tra storia e contemporaneità.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sezione con immagini -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+      <div class="bg-card rounded-lg shadow-md overflow-hidden">
+        <img src="https://i.pinimg.com/736x/22/b0/f5/22b0f592874078ebb66483bb15ae59e3.jpg" alt="Ampelmann rosso" class="w-full h-48 object-cover" />
+        <div class="p-4">
+          <h2 class="text-lg font-semibold">Ampelmann rosso</h2>
+          <p class="text-muted-foreground text-sm">La versione "stop" con le braccia allargate</p>
+        </div>
+      </div>
+      <div class="bg-card rounded-lg shadow-md overflow-hidden">
+        <img src="https://i.pinimg.com/736x/4c/5c/1a/4c5c1acc7a681facee3a4e586e7860bd.jpg" alt="Ampelmann verde" class="w-full h-48 object-cover" />
+        <div class="p-4">
+          <h2 class="text-lg font-semibold">Ampelmann verde</h2>
+          <p class="text-muted-foreground text-sm">La versione "via" con l'omino che cammina</p>
+        </div>
+      </div>
+      <div class="bg-card rounded-lg shadow-md overflow-hidden">
+        <img src="https://www.ampelmannshop.com/media/19/1d/2f/1671525286/ampelmann-berlin-souvenir-shop-hauptbahnhof-min.jpg?ts=1671525286" alt="Negozio Ampelmann" class="w-full h-48 object-cover" />
+        <div class="p-4">
+          <h2 class="text-lg font-semibold">Negozio Ampelmann</h2>
+          <p class="text-muted-foreground text-sm">Uno dei tanti negozi di souvenir dedicati</p>
+        </div>
+      </div>
+    </div>
+    
+    
+  </body>
+</html>
