@@ -398,7 +398,7 @@
                     icon: iconaAttrazione // Use the custom attraction icon
                 }).addTo(attractionLayer); // Add to the specific attraction layer
                 // Bind popup with attraction name and description
-                marker.bindPopup(<b>${attr.nome}</b><br>${attr.descrizione});
+                marker.bindPopup(`<b>${attr.nome}</b><br>${attr.descrizione}`);
             });
         }
 
