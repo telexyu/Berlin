@@ -130,7 +130,7 @@
             position: fixed;
             top: 80px; /* Position below navbar */
             left: 10px;
-            z-index: 1001; /* Higher z-index to be above map */
+            z-index: 1001; /* Higher z-index to be above map BUT below header */
             background-color: hsl(var(--background)); /* Use Tailwind CSS variable */
             color: hsl(var(--foreground)); /* Use Tailwind CSS variable */
             padding: 0.5rem; /* Reduced padding for mobile */
@@ -156,6 +156,7 @@
         .leaflet-control-layers {
             border-radius: 0.5rem;
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            z-index: 1002; /* Ensure layer control is also below header */
         }
         /* Style for Leaflet routing control */
         .leaflet-routing-container {
@@ -167,6 +168,7 @@
             font-size: 0.8rem; /* Slightly smaller font for mobile */
             background-color: hsl(var(--background)) !important; /* Ensure background matches */
             color: hsl(var(--foreground)) !important; /* Ensure text color matches */
+            z-index: 1002; /* Ensure routing control is also below header */
         }
         /* Style routing alternatives to be less wide */
          .leaflet-routing-alternatives-container {
@@ -187,6 +189,13 @@
         #mobile-menu .flex svg {
              margin: auto;
         }
+
+        /* Ensure header is above map controls when mobile menu is open */
+        header {
+             /* Tailwind z-50 is already present, this ensures it's above 1001/1002 */
+            z-index: 1010 !important;
+        }
+
 
         /* Apply adjustments for medium screens and up (Desktop) */
         @media (min-width: 768px) { /* Corresponds to md: breakpoint */
@@ -217,7 +226,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body class="bg-background text-foreground">
-    <header class="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header class="sticky top-0 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div class="container mx-auto px-4">
             <div class="flex h-16 items-center justify-between">
                 <div class="flex items-center">
