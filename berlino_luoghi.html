@@ -3,359 +3,659 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Attrazioni di Berlino</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script src="https://unpkg.com/unlazy@0.11.3/dist/unlazy.with-hashing.iife.js" defer init></script>
+    <script type="text/javascript">
+      window.tailwind.config = {
+        darkMode: ['class'],
+        theme: {
+          extend: {
+            colors: {
+              border: 'hsl(var(--border))',
+              input: 'hsl(var(--input))',
+              ring: 'hsl(var(--ring))',
+              background: 'hsl(var(--background))',
+              foreground: 'hsl(var(--foreground))',
+              primary: {
+                DEFAULT: 'hsl(var(--primary))',
+                foreground: 'hsl(var(--primary-foreground))'
+              },
+              secondary: {
+                DEFAULT: 'hsl(var(--secondary))',
+                foreground: 'hsl(var(--secondary-foreground))'
+              },
+              destructive: {
+                DEFAULT: 'hsl(var(--destructive))',
+                foreground: 'hsl(var(--destructive-foreground))'
+              },
+              muted: {
+                DEFAULT: 'hsl(var(--muted))',
+                foreground: 'hsl(var(--muted-foreground))'
+              },
+              accent: {
+                DEFAULT: 'hsl(var(--accent))',
+                foreground: 'hsl(var(--accent-foreground))'
+              },
+              popover: {
+                DEFAULT: 'hsl(var(--popover))',
+                foreground: 'hsl(var(--popover-foreground))'
+              },
+              card: {
+                DEFAULT: 'hsl(var(--card))',
+                foreground: 'hsl(var(--card-foreground))'
+              },
+            },
+          }
         }
-        header {
-            background: linear-gradient(to right, #3b3b3b, hsl(0, 0%, 70%));
-            color: #fff;
-            padding: 1rem 0;
-            text-align: center;
+      }
+    </script>
+    <style type="text/tailwindcss">
+      @layer base {
+        :root {
+          --background: 0 0% 100%;
+          --foreground: 20 14.3% 4.1%;
+          --card: 0 0% 100%;
+          --card-foreground: 20 14.3% 4.1%;
+          --popover: 0 0% 100%;
+          --popover-foreground: 20 14.3% 4.1%;
+          --primary: 24.6 95% 53.1%;
+          --primary-foreground: 60 9.1% 97.8%;
+          --secondary: 60 4.8% 95.9%;
+          --secondary-foreground: 24 9.8% 10%;
+          --muted: 60 4.8% 95.9%;
+          --muted-foreground: 25 5.3% 44.7%;
+          --accent: 60 4.8% 95.9%;
+          --accent-foreground: 24 9.8% 10%;
+          --destructive: 0 84.2% 60.2%;
+          --destructive-foreground: 60 9.1% 97.8%;
+          --border: 20 5.9% 90%;
+          --input: 20 5.9% 90%;
+          --ring: 24.6 95% 53.1%;
+          --radius: 0.95rem;
         }
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 2rem auto;
+        .dark {
+          --background: 20 14.3% 4.1%;
+          --foreground: 60 9.1% 97.8%;
+          --card: 20 14.3% 4.1%;
+          --card-foreground: 60 9.1% 97.8%;
+          --popover: 20 14.3% 4.1%;
+          --popover-foreground: 60 9.1% 97.8%;
+          --primary: 20.5 90.2% 48.2%;
+          --primary-foreground: 60 9.1% 97.8%;
+          --secondary: 12 6.5% 15.1%;
+          --secondary-foreground: 60 9.1% 97.8%;
+          --muted: 12 6.5% 15.1%;
+          --muted-foreground: 24 5.4% 63.9%;
+          --accent: 12 6.5% 15.1%;
+          --accent-foreground: 60 9.1% 97.8%;
+          --destructive: 0 72.2% 50.6%;
+          --destructive-foreground: 60 9.1% 97.8%;
+          --border: 12 6.5% 15.1%;
+          --input: 12 6.5% 15.1%;
+          --ring: 20.5 90.2% 48.2%;
         }
-        .attraction {
-            background: #fff;
-            margin-bottom: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-        .attraction img {
-            width: 100%;
-            height: auto;
-        }
-        .content {
-            padding: 1rem;
-        }
-        .content h2 {
-            margin: 0 0 1rem;
-            color: #333;
-        }
-        .content p {
-            margin: 0;
-        }
-        .button-container {
-            margin: 1rem 0;
-        }
-        .button-container button {
-            padding: 0.8rem 2rem;
-            background-color: #3b3b3b;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            text-align: left;
-            display: inline-block;
-        }
-        .button-container button:hover {
-            background-color: #555;
-        }
+      }
     </style>
+    <title>Attrazioni di Berlino</title>
 </head>
-<body>
-    <header>
-        <h1>Attrazioni di Berlino</h1>
+<body class="bg-background text-foreground">
+    <!-- Barra di Navigazione -->
+    <header class="sticky top-0 z-50 bg-background border-b border-border">
+      <div class="container mx-auto px-4">
+        <div class="flex h-16 items-center justify-between">
+          <div class="flex items-center">
+            <a href="https://telexyu.github.io/Berlin/">
+              <h1 class="text-2xl font-bold" style="color: #252525;">Viaggio Berlino</h1>
+            </a>
+          </div>
+          
+          <!-- Navigazione Desktop -->
+          <nav class="hidden md:flex items-center space-x-6">
+            <a href="https://telexyu.github.io/Berlin/itinerariopage1.html" class="text-sm font-medium hover:text-primary transition-colors">ITINERARIO</a>
+            <a href="https://telexyu.github.io/Berlin/berlino_luoghi.html" class="text-sm font-medium hover:text-primary transition-colors">LUOGHI</a>
+            <a href="#" class="text-sm font-medium hover:text-primary transition-colors">CARATTERISTICHE</a>
+            <a href="#" class="text-sm font-medium hover:text-primary transition-colors">ABOUT US</a>
+            <a href="#" class="text-sm font-medium hover:text-primary transition-colors">CONTATTI</a>
+            <a href="https://telexyu.github.io/Berlin/mappaberlino.html" class="text-sm font-medium hover:text-primary transition-colors">MAPPA</a>
+          </nav>
+          
+          <!-- Icone Social - Versione Desktop -->
+          <div class="hidden md:flex items-center space-x-4">
+            <a href="https://www.twitch.tv/righiminutoperminuto" class="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
+              <span class="sr-only">Twitch</span>
+              <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/>
+              </svg>
+            </a>
+            <a href="https://www.instagram.com/righireport/" class="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
+              <span class="sr-only">Instagram</span>
+              <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"></path>
+              </svg>
+            </a>
+          </div>
+
+          <!-- Pulsante Menu Mobile -->
+          <div class="md:hidden">
+            <button type="button" class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary" aria-controls="mobile-menu" aria-expanded="false">
+              <span class="sr-only">Apri menu principale</span>
+              <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
+              </svg>
+              <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Menu Mobile -->
+      <div class="md:hidden hidden" id="mobile-menu">
+        <div class="space-y-1 px-2 pt-2 pb-3">
+          <a href="https://telexyu.github.io/Berlin/itinerariopage1.html" class="text-sm font-medium hover:text-primary transition-colors">ITINERARIO</a>
+          <a href="https://telexyu.github.io/Berlin/berlino_luoghi.html" class="text-sm font-medium hover:text-primary transition-colors">LUOGHI</a>
+          <a href="#" class="text-sm font-medium hover:text-primary transition-colors">CARATTERISTICHE</a>
+          <a href="#" class="text-sm font-medium hover:text-primary transition-colors">ABOUT US</a>
+          <a href="#" class="text-sm font-medium hover:text-primary transition-colors">CONTATTI</a>
+          <a href="https://telexyu.github.io/Berlin/mappaberlino.html" class="text-sm font-medium hover:text-primary transition-colors">MAPPA</a>
+        </div>
+        <div class="flex items-center justify-center space-x-4 px-2 pt-2 pb-4">
+          <a href="https://www.twitch.tv/righiminutoperminuto" class="text-muted-foreground hover:text-primary" target="_blank" rel="noopener noreferrer">
+            <span class="sr-only">Twitch</span>
+            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/>
+            </svg>
+          </a>
+          <a href="https://www.instagram.com/righireport/" class="text-muted-foreground hover:text-primary" target="_blank" rel="noopener noreferrer">
+            <span class="sr-only">Instagram</span>
+            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
     </header>
-    <div class="container">
-        <div class="attraction">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/BrandenburgTor_in_early_morning_light.jpg" alt="La Porta di Brandeburgo">
-            <div class="content">
-                <h2>La Porta di Brandeburgo</h2>
-                <p>Simbolo storico di Berlino, questa porta è un'icona dell'unità e della pace, situata nel cuore della città.</p>
-               
-                
-                <audio controls>
-                    <source src="https://www.dropbox.com/scl/fi/vmm7by42shgx265euuvez/WhatsApp-2025-03-12-22.26.45_acc2c5a6.mp3?rlkey=m4psvd5oa6bexdmz172m2d7lt&st=pl5m0bml&raw=1
-                    " type="audio/mpeg">
-                    Il tuo browser non supporta il tag audio.
-                </audio>
-                
-                <audio controls>
-                    <source src="https://www.dropbox.com/scl/fi/7fldalrlh8pnau8xv3daq/WhatsApp-2025-03-12-22.38.19_9d195fe4.mp3?rlkey=sknqboygvwt2x5pqblx4vgaw3&st=zik52k9u&raw=1" type="audio/mpeg">
-                    Il tuo browser non supporta il tag audio.
-                </audio>
-                <div class="button-container">
-                    <button onclick="window.location.href='https://it.wikipedia.org/wiki/Porta_di_Brandeburgo';">Scopri di più</button>
+
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-8">Attrazioni di Berlino</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Attrazione 1 -->
+            <div class="bg-card rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-[1.02]">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/BrandenburgTor_in_early_morning_light.jpg" alt="La Porta di Brandeburgo" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h2 class="text-xl font-semibold mb-2">La Porta di Brandeburgo</h2>
+                    <p class="text-muted-foreground mb-4">Simbolo storico di Berlino, questa porta è un'icona dell'unità e della pace, situata nel cuore della città.</p>
+                    
+                    <div class="flex flex-col space-y-3 mb-4">
+                        <div class="flex items-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/03/Flag_of_Italy.svg" alt="Italiano" class="w-6 h-4 mr-2">
+                            <audio controls class="w-full">
+                                <source src="https://www.dropbox.com/scl/fi/vmm7by42shgx265euuvez/WhatsApp-2025-03-12-22.26.45_acc2c5a6.mp3?rlkey=m4psvd5oa6bexdmz172m2d7lt&st=pl5m0bml&raw=1" type="audio/mpeg">
+                                Il tuo browser non supporta il tag audio.
+                            </audio>
+                        </div>
+                        <div class="flex items-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Flag_of_the_United_Kingdom_%281-2%29.svg" alt="English" class="w-6 h-4 mr-2">
+                            <audio controls class="w-full">
+                                <source src="https://www.dropbox.com/scl/fi/7fldalrlh8pnau8xv3daq/WhatsApp-2025-03-12-22.38.19_9d195fe4.mp3?rlkey=sknqboygvwt2x5pqblx4vgaw3&st=zik52k9u&raw=1" type="audio/mpeg">
+                                Il tuo browser non supporta il tag audio.
+                            </audio>
+                        </div>
+                    </div>
+                    
+                    <button onclick="window.open('https://it.wikipedia.org/wiki/Porta_di_Brandeburgo', '_blank')" class="w-full bg-primary text-primary-foreground py-2 rounded-md hover:bg-primary/90 transition-colors">
+                        Scopri di più
+                    </button>
                 </div>
             </div>
-        </div>
-        <div class="attraction">
-            <img src="https://lunamag.de/wp-content/uploads/2021/04/1b826f42-20171013-026_aus.jpg" alt="Deutsches Technikmuseum">
-            <div class="content">
-                <h2>Deutsches Technikmuseum</h2>
-                <p>Un museo dedicato alla tecnologia e all'innovazione, con esposizioni su trasporti, comunicazioni e molto altro.</p>
-                <audio controls>
-                    <source src="https://www.dropbox.com/scl/fi/t8dmkdpexf45q15ex0v6l/museo-tec-online-audio-converter.com.mp3?rlkey=wy01bl1eo0c4nawewltqtnhnz&st=frtl6c2g&raw=1" type="audio/mpeg">
-                    Il tuo browser non supporta il tag audio.
-                </audio>
-                <!-- Aggiunta audio 2 INGLESE -->
-                <audio controls>
-                    <source src="https://www.dropbox.com/scl/fi/20zjzfh4xtzo2ifjlttx4/museo-tec-ing-online-audio-converter.com.mp3?rlkey=26p8udztp5eat3x5eq0yx5gmu&st=zxrhxbf9&raw=1" type="audio/mpeg">
-                    Il tuo browser non supporta il tag audio.
-                </audio>
-                <div class="button-container">
-                    <button onclick="window.location.href='https://it.wikipedia.org/wiki/Deutsches_Technikmuseum_Berlin';">Scopri di più</button>
+            
+            <!-- Attrazione 2 -->
+            <div class="bg-card rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-[1.02]">
+                <img src="https://lunamag.de/wp-content/uploads/2021/04/1b826f42-20171013-026_aus.jpg" alt="Deutsches Technikmuseum" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h2 class="text-xl font-semibold mb-2">Deutsches Technikmuseum</h2>
+                    <p class="text-muted-foreground mb-4">Un museo dedicato alla tecnologia e all'innovazione, con esposizioni su trasporti, comunicazioni e molto altro.</p>
+                    
+                    <div class="flex flex-col space-y-3 mb-4">
+                        <div class="flex items-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/03/Flag_of_Italy.svg" alt="Italiano" class="w-6 h-4 mr-2">
+                            <audio controls class="w-full">
+                                <source src="https://www.dropbox.com/scl/fi/t8dmkdpexf45q15ex0v6l/museo-tec-online-audio-converter.com.mp3?rlkey=wy01bl1eo0c4nawewltqtnhnz&st=frtl6c2g&raw=1" type="audio/mpeg">
+                                Il tuo browser non supporta il tag audio.
+                            </audio>
+                        </div>
+                        <div class="flex items-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Flag_of_the_United_Kingdom_%281-2%29.svg" alt="English" class="w-6 h-4 mr-2">
+                            <audio controls class="w-full">
+                                <source src="https://www.dropbox.com/scl/fi/20zjzfh4xtzo2ifjlttx4/museo-tec-ing-online-audio-converter.com.mp3?rlkey=26p8udztp5eat3x5eq0yx5gmu&st=zxrhxbf9&raw=1" type="audio/mpeg">
+                                Il tuo browser non supporta il tag audio.
+                            </audio>
+                        </div>
+                    </div>
+                    
+                    <button onclick="window.open('https://it.wikipedia.org/wiki/Deutsches_Technikmuseum_Berlin', '_blank')" class="w-full bg-primary text-primary-foreground py-2 rounded-md hover:bg-primary/90 transition-colors">
+                        Scopri di più
+                    </button>
                 </div>
             </div>
-        </div>
-        <div class="attraction">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Berlin_-_Reichstagsgeb%C3%A4ude3.jpg" alt="Palazzo del Reichstag">
-            <div class="content">
-                <h2>Palazzo del Reichstag</h2>
-                <p>Sede del Parlamento tedesco, noto per la sua cupola di vetro che offre viste spettacolari della città.</p>
-                <audio controls>
-                    <source src="https://www.dropbox.com/scl/fi/vd89g1skyvg6xnhmoij3a/reichs-ita-online-audio-converter.com.mp3?rlkey=9tvwjd6h0cz8lmec0oqwpm509&st=ylwykv15&raw=1" type="audio/mpeg">
-                    Il tuo browser non supporta il tag audio.
-                </audio>
-                <!-- Aggiunta audio 2 INGLESE -->
-                <audio controls>
-                    <source src="https://www.dropbox.com/scl/fi/aloa20nsczczc5k0zgbcv/the-reighst-online-audio-converter.com.mp3?rlkey=mkph46oknfe1q0iazcck7ca28&st=sfo0clko&raw=1" type="audio/mpeg">
-                    Il tuo browser non supporta il tag audio.
-                </audio>
-                <div class="button-container">
-                    <button onclick="window.location.href='https://it.wikipedia.org/wiki/Palazzo_del_Reichstag';">Scopri di più</button>
+            
+            <!-- Attrazione 3 -->
+            <div class="bg-card rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-[1.02]">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Berlin_-_Reichstagsgeb%C3%A4ude3.jpg" alt="Palazzo del Reichstag" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h2 class="text-xl font-semibold mb-2">Palazzo del Reichstag</h2>
+                    <p class="text-muted-foreground mb-4">Sede del Parlamento tedesco, noto per la sua cupola di vetro che offre viste spettacolari della città.</p>
+                    
+                    <div class="flex flex-col space-y-3 mb-4">
+                        <div class="flex items-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/03/Flag_of_Italy.svg" alt="Italiano" class="w-6 h-4 mr-2">
+                            <audio controls class="w-full">
+                                <source src="https://www.dropbox.com/scl/fi/vd89g1skyvg6xnhmoij3a/reichs-ita-online-audio-converter.com.mp3?rlkey=9tvwjd6h0cz8lmec0oqwpm509&st=ylwykv15&raw=1" type="audio/mpeg">
+                                Il tuo browser non supporta il tag audio.
+                            </audio>
+                        </div>
+                        <div class="flex items-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Flag_of_the_United_Kingdom_%281-2%29.svg" alt="English" class="w-6 h-4 mr-2">
+                            <audio controls class="w-full">
+                                <source src="https://www.dropbox.com/scl/fi/aloa20nsczczc5k0zgbcv/the-reighst-online-audio-converter.com.mp3?rlkey=mkph46oknfe1q0iazcck7ca28&st=sfo0clko&raw=1" type="audio/mpeg">
+                                Il tuo browser non supporta il tag audio.
+                            </audio>
+                        </div>
+                    </div>
+                    
+                    <button onclick="window.open('https://it.wikipedia.org/wiki/Palazzo_del_Reichstag', '_blank')" class="w-full bg-primary text-primary-foreground py-2 rounded-md hover:bg-primary/90 transition-colors">
+                        Scopri di più
+                    </button>
                 </div>
             </div>
-        </div>
-        <div class="attraction">
-            <img src="https://guideintour.it/wp-content/uploads/2020/07/L%E2%80%99isola-dei-Musei-di-Berlino.jpg" alt="L'Isola dei Musei">
-            <div class="content">
-                <h2>L'Isola dei Musei</h2>
-                <p>Un complesso di musei di fama mondiale, patrimonio dell'umanità UNESCO, che ospita collezioni d'arte e storia.</p>
-                <audio controls>
-                    <source src="https://www.dropbox.com/scl/fi/p6ec1vb6lj7njssk559s8/isola.mp3?rlkey=pugr5z1x8ak59mobfux1vygvc&st=pe3v96p2&raw=1" type="audio/mpeg">
-                    Il tuo browser non supporta il tag audio.
-                </audio>
-                <!-- Aggiunta audio 2 INGLESE -->
-                <audio controls>
-                    <source src="https://www.dropbox.com/scl/fi/nxp7etmwa6ewztif1bvyy/island-online-audio-converter.com.mp3?rlkey=2x4txrkqfaum7601l2jpgs4c2&st=l4t5vbd5&raw=1" type="audio/mpeg">
-                    Il tuo browser non supporta il tag audio.
-                </audio>
-                <div class="button-container">
-                    <button onclick="window.location.href='https://it.wikipedia.org/wiki/Isola_dei_musei">Scopri di più</button>
+            
+            <!-- Attrazione 4 -->
+            <div class="bg-card rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-[1.02]">
+                <img src="https://guideintour.it/wp-content/uploads/2020/07/L%E2%80%99isola-dei-Musei-di-Berlino.jpg" alt="L'Isola dei Musei" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h2 class="text-xl font-semibold mb-2">L'Isola dei Musei</h2>
+                    <p class="text-muted-foreground mb-4">Un complesso di musei di fama mondiale, patrimonio dell'umanità UNESCO, che ospita collezioni d'arte e storia.</p>
+                    
+                    <div class="flex flex-col space-y-3 mb-4">
+                        <div class="flex items-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/03/Flag_of_Italy.svg" alt="Italiano" class="w-6 h-4 mr-2">
+                            <audio controls class="w-full">
+                                <source src="https://www.dropbox.com/scl/fi/p6ec1vb6lj7njssk559s8/isola.mp3?rlkey=pugr5z1x8ak59mobfux1vygvc&st=pe3v96p2&raw=1" type="audio/mpeg">
+                                Il tuo browser non supporta il tag audio.
+                            </audio>
+                        </div>
+                        <div class="flex items-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Flag_of_the_United_Kingdom_%281-2%29.svg" alt="English" class="w-6 h-4 mr-2">
+                            <audio controls class="w-full">
+                                <source src="https://www.dropbox.com/scl/fi/nxp7etmwa6ewztif1bvyy/island-online-audio-converter.com.mp3?rlkey=2x4txrkqfaum7601l2jpgs4c2&st=l4t5vbd5&raw=1" type="audio/mpeg">
+                                Il tuo browser non supporta il tag audio.
+                            </audio>
+                        </div>
+                    </div>
+                    
+                    <button onclick="window.open('https://it.wikipedia.org/wiki/Isola_dei_musei', '_blank')" class="w-full bg-primary text-primary-foreground py-2 rounded-md hover:bg-primary/90 transition-colors">
+                        Scopri di più
+                    </button>
                 </div>
             </div>
-        </div>
-        <div class="attraction">
-            <img src="https://www.viviberlino.it/images/viviberlino/Acquadom_Berlino/Aquadom_berlino_1.jpg" alt="Lo Zoo di Berlino e l'Acquario">
-            <div class="content">
-                <h2>Lo Zoo di Berlino e l'Acquario</h2>
-                <p>Uno degli zoo più antichi e famosi del mondo, con una vasta varietà di animali e un acquario straordinario.</p>
-                <audio controls>
-                    <source src="https://www.dropbox.com/scl/fi/dzx36tbmrmgbw6sxl1m5c/zoo-online-audio-converter.com.mp3?rlkey=4707agilq30vplvm9v3lrchds&st=o05cidjp&raw=1" type="audio/mpeg">
-                    Il tuo browser non supporta il tag audio.
-                </audio>
-                <!-- Aggiunta audio 2 INGLESE -->
-                <audio controls>
-                    <source src="https://www.dropbox.com/scl/fi/bnvh0psxy9uc1f2q905xh/2zooo-online-audio-converter.com.mp3?rlkey=n44qq4ibbqoi6hz4cshb9bzhe&st=s7ukska6&raw=1" type="audio/mpeg">
-                    Il tuo browser non supporta il tag audio.
-                </audio>
-                <div class="button-container">
-                    <button onclick="window.location.href='https://it.wikipedia.org/wiki/Zoologischer_Garten_Berlin';">Scopri di più</button>
+            
+            <!-- Attrazione 5 -->
+            <div class="bg-card rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-[1.02]">
+                <img src="https://www.viviberlino.it/images/viviberlino/Acquadom_Berlino/Aquadom_berlino_1.jpg" alt="Lo Zoo di Berlino e l'Acquario" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h2 class="text-xl font-semibold mb-2">Lo Zoo di Berlino e l'Acquario</h2>
+                    <p class="text-muted-foreground mb-4">Uno degli zoo più antichi e famosi del mondo, con una vasta varietà di animali e un acquario straordinario.</p>
+                    
+                    <div class="flex flex-col space-y-3 mb-4">
+                        <div class="flex items-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/03/Flag_of_Italy.svg" alt="Italiano" class="w-6 h-4 mr-2">
+                            <audio controls class="w-full">
+                                <source src="https://www.dropbox.com/scl/fi/dzx36tbmrmgbw6sxl1m5c/zoo-online-audio-converter.com.mp3?rlkey=4707agilq30vplvm9v3lrchds&st=o05cidjp&raw=1" type="audio/mpeg">
+                                Il tuo browser non supporta il tag audio.
+                            </audio>
+                        </div>
+                        <div class="flex items-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Flag_of_the_United_Kingdom_%281-2%29.svg" alt="English" class="w-6 h-4 mr-2">
+                            <audio controls class="w-full">
+                                <source src="https://www.dropbox.com/scl/fi/bnvh0psxy9uc1f2q905xh/2zooo-online-audio-converter.com.mp3?rlkey=n44qq4ibbqoi6hz4cshb9bzhe&st=s7ukska6&raw=1" type="audio/mpeg">
+                                Il tuo browser non supporta il tag audio.
+                            </audio>
+                        </div>
+                    </div>
+                    
+                    <button onclick="window.open('https://it.wikipedia.org/wiki/Zoologischer_Garten_Berlin', '_blank')" class="w-full bg-primary text-primary-foreground py-2 rounded-md hover:bg-primary/90 transition-colors">
+                        Scopri di più
+                    </button>
                 </div>
             </div>
-        </div>
-        <div class="attraction">
-            <img src="https://www.viveberlintours.com/wp-content/uploads/2019/03/Cattedrale-di-Berlino-Berliner-dom.jpg" alt="Il Duomo di Berlino">
-            <div class="content">
-                <h2>Il Duomo di Berlino</h2>
-                <p>Un'imponente cattedrale che rappresenta uno dei principali edifici religiosi della città.</p>
-                <audio controls>
-                    <source src="https://www.dropbox.com/scl/fi/uwfr2zem171fz94linoy8/Auduomo-online-audio-converter.com.mp3?rlkey=2ozm1ok1s42jo1pkya6w2dpzr&st=a7m041b0&raw=1" type="audio/mpeg">
-                    Il tuo browser non supporta il tag audio.
-                </audio>
-                <!-- Aggiunta audio 2 INGLESE -->
-                <audio controls>
-                    <source src="https://www.dropbox.com/scl/fi/l7sxh04l563wmg4lrj3qw/duomo-online-audio-converter.com.mp3?rlkey=rg46207wzw1j6blh0dva4m6fz&st=5uklo2oj&raw=1" type="audio/mpeg">
-                    Il tuo browser non supporta il tag audio.
-                </audio>
-                <div class="button-container">
-                    <button onclick="window.location.href='https://it.wikipedia.org/wiki/Duomo_di_Berlino';">Scopri di più</button>
+            
+            <!-- Attrazione 6 -->
+            <div class="bg-card rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-[1.02]">
+                <img src="https://www.viveberlintours.com/wp-content/uploads/2019/03/Cattedrale-di-Berlino-Berliner-dom.jpg" alt="Il Duomo di Berlino" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h2 class="text-xl font-semibold mb-2">Il Duomo di Berlino</h2>
+                    <p class="text-muted-foreground mb-4">Un'imponente cattedrale che rappresenta uno dei principali edifici religiosi della città.</p>
+                    
+                    <div class="flex flex-col space-y-3 mb-4">
+                        <div class="flex items-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/03/Flag_of_Italy.svg" alt="Italiano" class="w-6 h-4 mr-2">
+                            <audio controls class="w-full">
+                                <source src="https://www.dropbox.com/scl/fi/uwfr2zem171fz94linoy8/Auduomo-online-audio-converter.com.mp3?rlkey=2ozm1ok1s42jo1pkya6w2dpzr&st=a7m041b0&raw=1" type="audio/mpeg">
+                                Il tuo browser non supporta il tag audio.
+                            </audio>
+                        </div>
+                        <div class="flex items-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Flag_of_the_United_Kingdom_%281-2%29.svg" alt="English" class="w-6 h-4 mr-2">
+                            <audio controls class="w-full">
+                                <source src="https://www.dropbox.com/scl/fi/l7sxh04l563wmg4lrj3qw/duomo-online-audio-converter.com.mp3?rlkey=rg46207wzw1j6blh0dva4m6fz&st=5uklo2oj&raw=1" type="audio/mpeg">
+                                Il tuo browser non supporta il tag audio.
+                            </audio>
+                        </div>
+                    </div>
+                    
+                    <button onclick="window.open('https://it.wikipedia.org/wiki/Duomo_di_Berlino', '_blank')" class="w-full bg-primary text-primary-foreground py-2 rounded-md hover:bg-primary/90 transition-colors">
+                        Scopri di più
+                    </button>
                 </div>
             </div>
-        </div>
-        <div class="attraction">
-            <img src="https://cdn-imgix.headout.com/media/images/50fd11e8dc91e699d6a4ca95717e0b9d-This%20is%20a%20Photograph%20of%20Berlin%20Wall%20Museum.jpg?auto=format&w=1222.3999999999999&h=687.6&q=90&fit=crop&ar=16%3A9&crop=faces" alt="Il Museo del Muro di Berlino">
-            <div class="content">
-                <h2>Il Museo del Muro di Berlino</h2>
-                <p>Un museo che racconta la storia del Muro di Berlino e la vita durante la sua esistenza.</p>
-                <audio controls>
-                    <source src="https://www.dropbox.com/scl/fi/survuydqhnz1nl7ch3idi/east.mp3-online-audio-converter.com.mp3?rlkey=j3gv3g3tgr72xy9fsiox8jyee&st=zcc7k1fa&raw=1" type="audio/mpeg">
-                    Il tuo browser non supporta il tag audio.
-                </audio>
-                <!-- Aggiunta audio 2 INGLESE -->
-                <audio controls>
-                    <source src="https://www.dropbox.com/scl/fi/rb91izw8q2k040bx2voqz/Parte-7.m4a?rlkey=uspt02mx4oedfvr2n5uxzpehh&st=qc4sk85z&raw=1" type="audio/mpeg">
-                    Il tuo browser non supporta il tag audio.
-                </audio>
-                <div class="button-container">
-                    <button onclick="window.location.href='https://example.com/museo-muro-berlino';">Scopri di più</button>
+            
+            <!-- Attrazione 7 -->
+            <div class="bg-card rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-[1.02]">
+                <img src="https://cdn-imgix.headout.com/media/images/50fd11e8dc91e699d6a4ca95717e0b9d-This%20is%20a%20Photograph%20of%20Berlin%20Wall%20Museum.jpg?auto=format&w=1222.3999999999999&h=687.6&q=90&fit=crop&ar=16%3A9&crop=faces" alt="Il Museo del Muro di Berlino" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h2 class="text-xl font-semibold mb-2">Il Museo del Muro di Berlino</h2>
+                    <p class="text-muted-foreground mb-4">Un museo che racconta la storia del Muro di Berlino e la vita durante la sua esistenza.</p>
+                    
+                    <div class="flex flex-col space-y-3 mb-4">
+                        <div class="flex items-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/03/Flag_of_Italy.svg" alt="Italiano" class="w-6 h-4 mr-2">
+                            <audio controls class="w-full">
+                                <source src="https://www.dropbox.com/scl/fi/survuydqhnz1nl7ch3idi/east.mp3-online-audio-converter.com.mp3?rlkey=j3gv3g3tgr72xy9fsiox8jyee&st=zcc7k1fa&raw=1" type="audio/mpeg">
+                                Il tuo browser non supporta il tag audio.
+                            </audio>
+                        </div>
+                        <div class="flex items-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Flag_of_the_United_Kingdom_%281-2%29.svg" alt="English" class="w-6 h-4 mr-2">
+                            <audio controls class="w-full">
+                                <source src="https://www.dropbox.com/scl/fi/rb91izw8q2k040bx2voqz/Parte-7.m4a?rlkey=uspt02mx4oedfvr2n5uxzpehh&st=qc4sk85z&raw=1" type="audio/mpeg">
+                                Il tuo browser non supporta il tag audio.
+                            </audio>
+                        </div>
+                    </div>
+                    
+                    <button onclick="window.open('https://example.com/museo-muro-berlino', '_blank')" class="w-full bg-primary text-primary-foreground py-2 rounded-md hover:bg-primary/90 transition-colors">
+                        Scopri di più
+                    </button>
                 </div>
             </div>
-        </div>
-        <div class="attraction">
-            <img src="https://static.wixstatic.com/media/d0a141_7148e9f7dce940e282c51b538c7c56eb~mv2.jpg/v1/fill/w_528,h_352,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/d0a141_7148e9f7dce940e282c51b538c7c56eb~mv2.jpg" alt="Checkpoint Charlie">
-            <div class="content">
-                <h2>Checkpoint Charlie</h2>
-                <p>Il famoso punto di controllo che rappresenta uno dei simboli della Guerra Fredda.</p>
-                <audio controls>
-                    <source src="https://www.dropbox.com/scl/fi/fmcsxmh8os72l20bwukj1/check-online-audio-converter.com.mp3?rlkey=bm85tizp911lyt3ckeciq1yku&st=1ktsigfa&raw=1" type="audio/mpeg">
-                    Il tuo browser non supporta il tag audio.
-                </audio>
-                <!-- Aggiunta audio 2 INGLESE -->
-                <audio controls>
-                    <source src="https://www.dropbox.com/scl/fi/jwiyaob10zseu55qofl0q/Parte-1.m4a?rlkey=tzsi3sug9y624y3wudcfz25u8&st=5o7u85q5&raw=1" type="audio/mpeg">
-                    Il tuo browser non supporta il tag audio.
-                </audio>
-                <div class="button-container">
-                    <button onclick="window.location.href='https://it.wikipedia.org/wiki/Checkpoint_Charlie';">Scopri di più</button>
+            
+            <!-- Attrazione 8 -->
+            <div class="bg-card rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-[1.02]">
+                <img src="https://static.wixstatic.com/media/d0a141_7148e9f7dce940e282c51b538c7c56eb~mv2.jpg/v1/fill/w_528,h_352,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/d0a141_7148e9f7dce940e282c51b538c7c56eb~mv2.jpg" alt="Checkpoint Charlie" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h2 class="text-xl font-semibold mb-2">Checkpoint Charlie</h2>
+                    <p class="text-muted-foreground mb-4">Il famoso punto di controllo che rappresenta uno dei simboli della Guerra Fredda.</p>
+                    
+                    <div class="flex flex-col space-y-3 mb-4">
+                        <div class="flex items-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/03/Flag_of_Italy.svg" alt="Italiano" class="w-6 h-4 mr-2">
+                            <audio controls class="w-full">
+                                <source src="https://www.dropbox.com/scl/fi/fmcsxmh8os72l20bwukj1/check-online-audio-converter.com.mp3?rlkey=bm85tizp911lyt3ckeciq1yku&st=1ktsigfa&raw=1" type="audio/mpeg">
+                                Il tuo browser non supporta il tag audio.
+                            </audio>
+                        </div>
+                        <div class="flex items-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Flag_of_the_United_Kingdom_%281-2%29.svg" alt="English" class="w-6 h-4 mr-2">
+                            <audio controls class="w-full">
+                                <source src="https://www.dropbox.com/scl/fi/jwiyaob10zseu55qofl0q/Parte-1.m4a?rlkey=tzsi3sug9y624y3wudcfz25u8&st=5o7u85q5&raw=1" type="audio/mpeg">
+                                Il tuo browser non supporta il tag audio.
+                            </audio>
+                        </div>
+                    </div>
+                    
+                    <button onclick="window.open('https://it.wikipedia.org/wiki/Checkpoint_Charlie', '_blank')" class="w-full bg-primary text-primary-foreground py-2 rounded-md hover:bg-primary/90 transition-colors">
+                        Scopri di più
+                    </button>
                 </div>
             </div>
-        </div>
-        <div class="attraction">
-            <img src="https://www.viveberlintours.com/wp-content/uploads/2019/07/Topografia_del_Terrore_Berlino.jpg" alt="La Topografia del Terrore">
-            <div class="content">
-                <h2>La Topografia del Terrore</h2>
-                <p>Un museo all'aperto e al chiuso che documenta i crimini del regime nazista.</p>
-                <audio controls>
-                    <source src="https://www.dropbox.com/scl/fi/xr5vai2m56g6b1khhu3xq/topo-online-audio-converter.com.mp3?rlkey=w7kerd8qxz5kwuiu411l0h6c6&st=3cml2gcn&raw=1" type="audio/mpeg">
-                    Il tuo browser non supporta il tag audio.
-                </audio>
-                <!-- Aggiunta audio 2 INGLESE -->
-                <audio controls>
-                    <source src="https://www.dropbox.com/scl/fi/16o9x4zrbqar38etfrlj2/Parte-2.m4a?rlkey=6cqtn169ueo81jnupte74soua&st=yb835pba&raw=1" type="audio/mpeg">
-                    Il tuo browser non supporta il tag audio.
-                </audio>
-                <div class="button-container">
-                    <button onclick="window.location.href='https://it.wikipedia.org/wiki/Topographie_des_Terrors';">Scopri di più</button>
+            
+            <!-- Attrazione 9 -->
+            <div class="bg-card rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-[1.02]">
+                <img src="https://www.viveberlintours.com/wp-content/uploads/2019/07/Topografia_del_Terrore_Berlino.jpg" alt="La Topografia del Terrore" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h2 class="text-xl font-semibold mb-2">La Topografia del Terrore</h2>
+                    <p class="text-muted-foreground mb-4">Un museo all'aperto e al chiuso che documenta i crimini del regime nazista.</p>
+                    
+                    <div class="flex flex-col space-y-3 mb-4">
+                        <div class="flex items-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/03/Flag_of_Italy.svg" alt="Italiano" class="w-6 h-4 mr-2">
+                            <audio controls class="w-full">
+                                <source src="https://www.dropbox.com/scl/fi/xr5vai2m56g6b1khhu3xq/topo-online-audio-converter.com.mp3?rlkey=w7kerd8qxz5kwuiu411l0h6c6&st=3cml2gcn&raw=1" type="audio/mpeg">
+                                Il tuo browser non supporta il tag audio.
+                            </audio>
+                        </div>
+                        <div class="flex items-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Flag_of_the_United_Kingdom_%281-2%29.svg" alt="English" class="w-6 h-4 mr-2">
+                            <audio controls class="w-full">
+                                <source src="https://www.dropbox.com/scl/fi/16o9x4zrbqar38etfrlj2/Parte-2.m4a?rlkey=6cqtn169ueo81jnupte74soua&st=yb835pba&raw=1" type="audio/mpeg">
+                                Il tuo browser non supporta il tag audio.
+                            </audio>
+                        </div>
+                    </div>
+                    
+                    <button onclick="window.open('https://it.wikipedia.org/wiki/Topographie_des_Terrors', '_blank')" class="w-full bg-primary text-primary-foreground py-2 rounded-md hover:bg-primary/90 transition-colors">
+                        Scopri di più
+                    </button>
                 </div>
             </div>
-        </div>
-        <div class="attraction">
-            <img src="https://www.viveberlintours.com/wp-content/uploads/2018/07/Museo-Ebraico-Berlino.jpg" alt="Il Museo Ebraico di Berlino">
-            <div class="content">
-                <h2>Il Museo Ebraico di Berlino</h2>
-                <p>Un luogo che esplora la storia, la cultura e le esperienze del popolo ebraico in Germania.</p>
-                <audio controls>
-                    <source src="https://www.dropbox.com/scl/fi/2nqlpxnpcjqo4sf579bmu/muse-e-online-audio-converter.com.mp3?rlkey=8krvtvof1yus12fszpmmze67b&st=mr8hg5mk&raw=1" type="audio/mpeg">
-                    Il tuo browser non supporta il tag audio.
-                </audio>
-                <!-- Aggiunta audio 2 -->
-                <audio controls>
-                    <source src="https://www.dropbox.com/scl/fi/dvsigd36lz8cyzozq3o4r/Parte-3.m4a?rlkey=r9cwt90quqxfcpktsd2xc8rbx&st=ssnin7mz&raw=1" type="audio/mpeg">
-                    Il tuo browser non supporta il tag audio.
-                </audio>
-                <div class="button-container">
-                    <button onclick="window.location.href='https://it.wikipedia.org/wiki/Museo_ebraico_di_Berlino';">Scopri di più</button>
+            
+            <!-- Attrazione 10 -->
+            <div class="bg-card rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-[1.02]">
+                <img src="https://www.viveberlintours.com/wp-content/uploads/2018/07/Museo-Ebraico-Berlino.jpg" alt="Il Museo Ebraico di Berlino" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h2 class="text-xl font-semibold mb-2">Il Museo Ebraico di Berlino</h2>
+                    <p class="text-muted-foreground mb-4">Un luogo che esplora la storia, la cultura e le esperienze del popolo ebraico in Germania.</p>
+                    
+                    <div class="flex flex-col space-y-3 mb-4">
+                        <div class="flex items-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/03/Flag_of_Italy.svg" alt="Italiano" class="w-6 h-4 mr-2">
+                            <audio controls class="w-full">
+                                <source src="https://www.dropbox.com/scl/fi/2nqlpxnpcjqo4sf579bmu/muse-e-online-audio-converter.com.mp3?rlkey=8krvtvof1yus12fszpmmze67b&st=mr8hg5mk&raw=1" type="audio/mpeg">
+                                Il tuo browser non supporta il tag audio.
+                            </audio>
+                        </div>
+                        <div class="flex items-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Flag_of_the_United_Kingdom_%281-2%29.svg" alt="English" class="w-6 h-4 mr-2">
+                            <audio controls class="w-full">
+                                <source src="https://www.dropbox.com/scl/fi/dvsigd36lz8cyzozq3o4r/Parte-3.m4a?rlkey=r9cwt90quqxfcpktsd2xc8rbx&st=ssnin7mz&raw=1" type="audio/mpeg">
+                                Il tuo browser non supporta il tag audio.
+                            </audio>
+                        </div>
+                    </div>
+                    
+                    <button onclick="window.open('https://it.wikipedia.org/wiki/Museo_ebraico_di_Berlino', '_blank')" class="w-full bg-primary text-primary-foreground py-2 rounded-md hover:bg-primary/90 transition-colors">
+                        Scopri di più
+                    </button>
                 </div>
             </div>
-        </div>
-        <div class="attraction">
-            <img src="https://www.rivistailmulino.it/main/file/inline/f/136c2f0599b3a0175c544b72e4861b9f" alt="Memoriale dell'Olocausto">
-            <div class="content">
-                <h2>Memoriale dell'Olocausto</h2>
-                <p>Un memoriale commovente dedicato alle vittime dell'Olocausto, composto da una serie di blocchi di cemento grigi.</p>
-                <audio controls>
-                    <source src="https://www.dropbox.com/scl/fi/4zvd8rqoviqownnribg8i/mem-online-audio-converter.com.mp3?rlkey=7gbdtwbhwc31w1bkychsfrtvt&st=8fy74t8f&raw=1" type="audio/mpeg">
-                    Il tuo browser non supporta il tag audio.
-                </audio>
-                <!-- Aggiunta audio 2 -->
-                <audio controls>
-                    <source src="https://www.dropbox.com/scl/fi/eigffxiwyztretg2fhsc3/Parte-6.m4a?rlkey=uhhth7tqwjphifrglqv4rvi61&st=3n1nvel7&raw=1" type="audio/mpeg">
-                    Il tuo browser non supporta il tag audio.
-                </audio>
-                <div class="button-container">
-                    <button onclick="window.location.href='https://it.wikipedia.org/wiki/Memoriale_per_gli_ebrei_assassinati_d%27Europa';">Scopri di più</button>
+            
+            <!-- Attrazione 11 -->
+            <div class="bg-card rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-[1.02]">
+                <img src="https://www.rivistailmulino.it/main/file/inline/f/136c2f0599b3a0175c544b72e4861b9f" alt="Memoriale dell'Olocausto" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h2 class="text-xl font-semibold mb-2">Memoriale dell'Olocausto</h2>
+                    <p class="text-muted-foreground mb-4">Un memoriale commovente dedicato alle vittime dell'Olocausto, composto da una serie di blocchi di cemento grigi.</p>
+                    
+                    <div class="flex flex-col space-y-3 mb-4">
+                        <div class="flex items-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/03/Flag_of_Italy.svg" alt="Italiano" class="w-6 h-4 mr-2">
+                            <audio controls class="w-full">
+                                <source src="https://www.dropbox.com/scl/fi/4zvd8rqoviqownnribg8i/mem-online-audio-converter.com.mp3?rlkey=7gbdtwbhwc31w1bkychsfrtvt&st=8fy74t8f&raw=1" type="audio/mpeg">
+                                Il tuo browser non supporta il tag audio.
+                            </audio>
+                        </div>
+                        <div class="flex items-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Flag_of_the_United_Kingdom_%281-2%29.svg" alt="English" class="w-6 h-4 mr-2">
+                            <audio controls class="w-full">
+                                <source src="https://www.dropbox.com/scl/fi/eigffxiwyztretg2fhsc3/Parte-6.m4a?rlkey=uhhth7tqwjphifrglqv4rvi61&st=3n1nvel7&raw=1" type="audio/mpeg">
+                                Il tuo browser non supporta il tag audio.
+                            </audio>
+                        </div>
+                    </div>
+                    
+                    <button onclick="window.open('https://it.wikipedia.org/wiki/Memoriale_per_gli_ebrei_assassinati_d%27Europa', '_blank')" class="w-full bg-primary text-primary-foreground py-2 rounded-md hover:bg-primary/90 transition-colors">
+                        Scopri di più
+                    </button>
                 </div>
             </div>
-        </div>
-        <div class="attraction">
-            <img src="https://assets-global.website-files.com/5bd82da7b7abc53f312e765d/5c8a79d7b9cbd11bbe96829d_Potsdam-Sanssouci-Palace_000032513926_Full.jpg" alt="Palazzo di Potsdam">
-            <div class="content">
-                <h2>Palazzo di Potsdam</h2>
-                <p>Un magnifico palazzo reale situato nella vicina Potsdam, famoso per i suoi giardini e la sua architettura barocca.</p>
-                <audio controls>
-                    <source src="https://www.dropbox.com/scl/fi/sxfx97hvprx7ymmwj77h9/palazzo-online-audio-converter.com.mp3?rlkey=j5ec0dnqw8f2sekqvm1urnefv&st=tvx98o96&raw=1" type="audio/mpeg">
-                    Il tuo browser non supporta il tag audio.
-                </audio>
-                <!-- Aggiunta audio 2 -->
-                <audio controls>
-                    <source src="https://www.dropbox.com/scl/fi/y4bp6nr27gp9zhrckv203/palace-online-audio-converter.com.mp3?rlkey=2k8b6humbzx0gsblxncobxnx3&st=nxwdrqzu&raw=1" type="audio/mpeg">
-                    Il tuo browser non supporta il tag audio.
-                </audio>
-                <div class="button-container">
-                    <button onclick="window.location.href='https://it.wikipedia.org/wiki/Palazzo_di_Sanssouci';">Scopri di più</button>
+            
+            <!-- Attrazione 12 -->
+            <div class="bg-card rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-[1.02]">
+                <img src="https://assets-global.website-files.com/5bd82da7b7abc53f312e765d/5c8a79d7b9cbd11bbe96829d_Potsdam-Sanssouci-Palace_000032513926_Full.jpg" alt="Palazzo di Potsdam" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h2 class="text-xl font-semibold mb-2">Palazzo di Potsdam</h2>
+                    <p class="text-muted-foreground mb-4">Un magnifico palazzo reale situato nella vicina Potsdam, famoso per i suoi giardini e la sua architettura barocca.</p>
+                    
+                    <div class="flex flex-col space-y-3 mb-4">
+                        <div class="flex items-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/03/Flag_of_Italy.svg" alt="Italiano" class="w-6 h-4 mr-2">
+                            <audio controls class="w-full">
+                                <source src="https://www.dropbox.com/scl/fi/sxfx97hvprx7ymmwj77h9/palazzo-online-audio-converter.com.mp3?rlkey=j5ec0dnqw8f2sekqvm1urnefv&st=tvx98o96&raw=1" type="audio/mpeg">
+                                Il tuo browser non supporta il tag audio.
+                            </audio>
+                        </div>
+                        <div class="flex items-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Flag_of_the_United_Kingdom_%281-2%29.svg" alt="English" class="w-6 h-4 mr-2">
+                            <audio controls class="w-full">
+                                <source src="https://www.dropbox.com/scl/fi/y4bp6nr27gp9zhrckv203/palace-online-audio-converter.com.mp3?rlkey=2k8b6humbzx0gsblxncobxnx3&st=nxwdrqzu&raw=1" type="audio/mpeg">
+                                Il tuo browser non supporta il tag audio.
+                            </audio>
+                        </div>
+                    </div>
+                    
+                    <button onclick="window.open('https://it.wikipedia.org/wiki/Palazzo_di_Sanssouci', '_blank')" class="w-full bg-primary text-primary-foreground py-2 rounded-md hover:bg-primary/90 transition-colors">
+                        Scopri di più
+                    </button>
                 </div>
             </div>
-        </div>
-        <div class="attraction">
-            <img src="https://a.travel-assets.com/findyours-php/viewfinder/images/res70/170000/170808-Berliner-Dom.jpg" alt="Duomo di Alexanderplatz">
-            <div class="content">
-                <h2>Duomo di Alexanderplatz</h2>
-                <p>Una splendida chiesa situata vicino alla famosa piazza Alexanderplatz, simbolo della città.</p>
-                <audio controls>
-                    <source src="https://www.dropbox.com/scl/fi/pfim10fywv3zorcn7ide7/0325.MP3?rlkey=hezijafez9vv7f9hr9pg3n4xt&st=bwgqg5ss&raw=1" type="audio/mpeg">
-                    Il tuo browser non supporta il tag audio.
-                </audio>
-                <!-- Aggiunta audio 2 INGLESE -->
-                <audio controls>
-                    <source src="https://www.dropbox.com/scl/fi/glbfvbw0qlkw50r8050il/Parte-4.m4a?rlkey=n3894x3977ap86e4iy9b8k2lp&st=xcljihh9&raw=1" type="audio/mpeg">
-                    Il tuo browser non supporta il tag audio.
-                </audio>
-                <div class="button-container">
-                    <button onclick="window.location.href='https://it.wikipedia.org/wiki/Alexanderplatz'">Scopri di più</button>
+            
+            <!-- Attrazione 13 -->
+            <div class="bg-card rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-[1.02]">
+                <img src="https://a.travel-assets.com/findyours-php/viewfinder/images/res70/170000/170808-Berliner-Dom.jpg" alt="Duomo di Alexanderplatz" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h2 class="text-xl font-semibold mb-2">Duomo di Alexanderplatz</h2>
+                    <p class="text-muted-foreground mb-4">Una splendida chiesa situata vicino alla famosa piazza Alexanderplatz, simbolo della città.</p>
+                    
+                    <div class="flex flex-col space-y-3 mb-4">
+                        <div class="flex items-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/03/Flag_of_Italy.svg" alt="Italiano" class="w-6 h-4 mr-2">
+                            <audio controls class="w-full">
+                                <source src="https://www.dropbox.com/scl/fi/pfim10fywv3zorcn7ide7/0325.MP3?rlkey=hezijafez9vv7f9hr9pg3n4xt&st=bwgqg5ss&raw=1" type="audio/mpeg">
+                                Il tuo browser non supporta il tag audio.
+                            </audio>
+                        </div>
+                        <div class="flex items-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Flag_of_the_United_Kingdom_%281-2%29.svg" alt="English" class="w-6 h-4 mr-2">
+                            <audio controls class="w-full">
+                                <source src="https://www.dropbox.com/scl/fi/glbfvbw0qlkw50r8050il/Parte-4.m4a?rlkey=n3894x3977ap86e4iy9b8k2lp&st=xcljihh9&raw=1" type="audio/mpeg">
+                                Il tuo browser non supporta il tag audio.
+                            </audio>
+                        </div>
+                    </div>
+                    
+                    <button onclick="window.open('https://it.wikipedia.org/wiki/Alexanderplatz', '_blank')" class="w-full bg-primary text-primary-foreground py-2 rounded-md hover:bg-primary/90 transition-colors">
+                        Scopri di più
+                    </button>
                 </div>
             </div>
-        </div>
-        <div class="attraction">
-            <img src="https://th.bing.com/th/id/OIP.pf2UZJYYwNkl8bliGbt-7AHaEo?rs=1&pid=ImgDetMain" alt="Olympiastadion">
-            <div class="content">
-                <h2>Olympiastadion</h2>
-                <p>Lo stadio olimpico di Berlino, un luogo storico per eventi sportivi e concerti internazionali.</p>
-                <audio controls>
-                    <source src="https://www.dropbox.com/scl/fi/vxz4w53hrnxsrbklyy8ye/stadio-online-audio-converter.com.mp3?rlkey=rslfq9lzyeatpye467exjypd1&st=3qe9keh8&raw=1" type="audio/mpeg">
-                    Il tuo browser non supporta il tag audio.
-                </audio>
-                <!-- Aggiunta audio 2 INGLESE -->
-                <audio controls>
-                    <source src="https://www.dropbox.com/scl/fi/thvgflb4pv9b5q0nujl40/Parte-8-online-audio-converter.com.mp3?rlkey=u5ls33hvckfisphy93z6oul8y&st=m7ejigbe&raw=1" type="audio/mpeg">
-                    Il tuo browser non supporta il tag audio.
-                </audio>
-                <div class="button-container">
-                    <button onclick="window.location.href='https://it.wikipedia.org/wiki/Stadio_Olimpico_(Berlino)';">Scopri di più</button>
+            
+            <!-- Attrazione 14 -->
+            <div class="bg-card rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-[1.02]">
+                <img src="https://th.bing.com/th/id/R.1753c7eb6a861d7f293b7017abc4cfbe?rik=ijEWLz5koTVijw&riu=http%3a%2f%2ftraveldigg.com%2fwp-content%2fuploads%2f2016%2f08%2fOlympiastadion-Berlin-Lights-At-Night.jpg&ehk=qFMQ9Thdy2upU6jjsldfr8Dgc9XGj8mLyfJN7hANd4g%3d&risl=&pid=ImgRaw&r=0" alt="Olympiastadion" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h2 class="text-xl font-semibold mb-2">Olympiastadion</h2>
+                    <p class="text-muted-foreground mb-4">Lo stadio olimpico di Berlino, un luogo storico per eventi sportivi e concerti internazionali.</p>
+                    
+                    <div class="flex flex-col space-y-3 mb-4">
+                        <div class="flex items-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/03/Flag_of_Italy.svg" alt="Italiano" class="w-6 h-4 mr-2">
+                            <audio controls class="w-full">
+                                <source src="https://www.dropbox.com/scl/fi/vxz4w53hrnxsrbklyy8ye/stadio-online-audio-converter.com.mp3?rlkey=rslfq9lzyeatpye467exjypd1&st=3qe9keh8&raw=1" type="audio/mpeg">
+                                Il tuo browser non supporta il tag audio.
+                            </audio>
+                        </div>
+                        <div class="flex items-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Flag_of_the_United_Kingdom_%281-2%29.svg" alt="English" class="w-6 h-4 mr-2">
+                            <audio controls class="w-full">
+                                <source src="https://www.dropbox.com/scl/fi/thvgflb4pv9b5q0nujl40/Parte-8-online-audio-converter.com.mp3?rlkey=u5ls33hvckfisphy93z6oul8y&st=m7ejigbe&raw=1" type="audio/mpeg">
+                                Il tuo browser non supporta il tag audio.
+                            </audio>
+                        </div>
+                    </div>
+                    
+                    <button onclick="window.open('https://it.wikipedia.org/wiki/Stadio_Olimpico_(Berlino)', '_blank')" class="w-full bg-primary text-primary-foreground py-2 rounded-md hover:bg-primary/90 transition-colors">
+                        Scopri di più
+                    </button>
                 </div>
             </div>
-        </div>
-        <div class="attraction">
-            <img src="https://berlin-sehenswuerdigkeiten.net/wp-content/uploads/kaiser-wilhelm-gedaechtniskirche-kurfuerstendamm-berlin-1.jpg" alt="Kurfürstendamm">
-            <div class="content">
-                <h2>Kurfürstendamm</h2>
-                <p>Una delle vie più famose di Berlino, ideale per lo shopping e per ammirare l'architettura della città.</p>
-                <audio controls>
-                    <source src="https://www.dropbox.com/scl/fi/bdfsxvibey4imh3r0xbxm/kurfustendam-ita-online-audio-converter.com.mp3?rlkey=3cjru53uie0abkv6zjvbfhfvi&st=2m2m0b66&raw=1" type="audio/mpeg">
-                    Il tuo browser non supporta il tag audio.
-                </audio>
-                <!-- Aggiunta audio 2 INGLESE -->
-                <audio controls>
-                    <source src="https://www.dropbox.com/scl/fi/dbwm4630sa96n9ft4w8fw/Parte-10-online-audio-converter.com.mp3?rlkey=ibwfs2201qaewcnvj1ivr4ice&st=3biox0oy&raw=1" type="audio/mpeg">
-                    Il tuo browser non supporta il tag audio.
-                </audio>
-                <div class="button-container">
-                    <button onclick="window.location.href='https://it.wikipedia.org/wiki/Kurf%C3%BCrstendamm';">Scopri di più</button>
+            
+            <!-- Attrazione 15 -->
+            <div class="bg-card rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-[1.02]">
+                <img src="https://berlin-sehenswuerdigkeiten.net/wp-content/uploads/kaiser-wilhelm-gedaechtniskirche-kurfuerstendamm-berlin-1.jpg" alt="Kurfürstendamm" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h2 class="text-xl font-semibold mb-2">Kurfürstendamm</h2>
+                    <p class="text-muted-foreground mb-4">Una delle vie più famose di Berlino, ideale per lo shopping e per ammirare l'architettura della città.</p>
+                    
+                    <div class="flex flex-col space-y-3 mb-4">
+                        <div class="flex items-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/03/Flag_of_Italy.svg" alt="Italiano" class="w-6 h-4 mr-2">
+                            <audio controls class="w-full">
+                                <source src="https://www.dropbox.com/scl/fi/bdfsxvibey4imh3r0xbxm/kurfustendam-ita-online-audio-converter.com.mp3?rlkey=3cjru53uie0abkv6zjvbfhfvi&st=2m2m0b66&raw=1" type="audio/mpeg">
+                                Il tuo browser non supporta il tag audio.
+                            </audio>
+                        </div>
+                        <div class="flex items-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Flag_of_the_United_Kingdom_%281-2%29.svg" alt="English" class="w-6 h-4 mr-2">
+                            <audio controls class="w-full">
+                                <source src="https://www.dropbox.com/scl/fi/dbwm4630sa96n9ft4w8fw/Parte-10-online-audio-converter.com.mp3?rlkey=ibwfs2201qaewcnvj1ivr4ice&st=3biox0oy&raw=1" type="audio/mpeg">
+                                Il tuo browser non supporta il tag audio.
+                            </audio>
+                        </div>
+                    </div>
+                    
+                    <button onclick="window.open('https://it.wikipedia.org/wiki/Kurf%C3%BCrstendamm', '_blank')" class="w-full bg-primary text-primary-foreground py-2 rounded-md hover:bg-primary/90 transition-colors">
+                        Scopri di più
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Informativa sulla Privacy -->
+   
+    
+    <script>
+    
+
+      // Toggle menu mobile
+      const mobileMenuButton = document.querySelector('[aria-controls="mobile-menu"]');
+      const mobileMenu = document.getElementById('mobile-menu');
+      
+      mobileMenuButton.addEventListener('click', function() {
+          const expanded = this.getAttribute('aria-expanded') === 'true';
+          this.setAttribute('aria-expanded', !expanded);
+          mobileMenu.classList.toggle('hidden');
+          
+          // Toggle icona
+          const menuIcon = this.querySelector('svg:not(.hidden)');
+          const closeIcon = this.querySelector('svg.hidden');
+          menuIcon.classList.add('hidden');
+          menuIcon.classList.remove('block');
+          closeIcon.classList.remove('hidden');
+          closeIcon.classList.add('block');
+      });
+    </script>
 </body>
 </html>
