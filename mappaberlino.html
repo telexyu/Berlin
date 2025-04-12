@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Mappa Berlino</title>
-    <!-- Leaflet + Routing Machine -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -48,11 +47,16 @@
                             foreground: 'hsl(var(--card-foreground))'
                         },
                     },
+                    borderRadius: { // Consistent radius definition
+                        lg: "var(--radius)",
+                        md: "calc(var(--radius) - 2px)",
+                        sm: "calc(var(--radius) - 4px)",
+                    },
                 }
             }
         }
     </script>
-      <style type="text/tailwindcss">
+    <style type="text/tailwindcss">
       @layer base {
         :root {
           --background: 0 0% 100%;
@@ -74,7 +78,7 @@
           --border: 20 5.9% 90%;
           --input: 20 5.9% 90%;
           --ring: 24.6 95% 53.1%;
-          --radius: 0.95rem;
+          --radius: 0.5rem; /* Reduced radius for a sharper look */
         }
         .dark {
           --background: 20 14.3% 4.1%;
@@ -98,244 +102,391 @@
           --ring: 20.5 90.2% 48.2%;
         }
       }
+      @layer base { /* Apply base styles */
+          * {
+              @apply border-border;
+          }
+          body {
+              @apply bg-background text-foreground;
+          }
+      }
     </style>
     <style>
         html, body {
             margin: 0;
             padding: 0;
             height: 100%;
-            font-family: sans-serif;
+            font-family: 'Inter', sans-serif; /* Using Inter font */
         }
         #map {
             position: absolute;
-            top: 64px; /* Adjusted for new navbar height */
+            top: 64px; /* Adjusted for navbar height */
             bottom: 0;
             width: 100%;
-            z-index: 0;
+            z-index: 0; /* Ensure map is behind controls */
         }
+        /* Style for Controls Panel */
         .controls {
             position: fixed;
-            top: 80px;
+            top: 80px; /* Position below navbar */
             left: 10px;
-            z-index: 1001;
-            background-color: white;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            z-index: 1001; /* Higher z-index to be above map */
+            background-color: hsl(var(--background)); /* Use Tailwind CSS variable */
+            color: hsl(var(--foreground)); /* Use Tailwind CSS variable */
+            padding: 0.5rem; /* Reduced padding for mobile */
+            border-radius: 0.5rem; /* Use Tailwind rounded-lg */
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* Tailwind shadow-md */
+            max-width: 60%; /* Limit width on small screens */
+            width: auto; /* Allow shrinking */
+            font-size: 0.75rem; /* text-xs for mobile */
         }
         .controls button {
-            margin-top: 10px;
+            margin-top: 8px; /* Adjusted margin */
+            font-size: 0.75rem; /* text-xs for mobile button */
+        }
+        .controls #distance {
+             font-size: 0.75rem; /* text-xs for mobile distance */
+        }
+        .controls #info {
+             font-size: 0.75rem; /* text-xs for mobile info */
+             margin-bottom: 0.25rem; /* Reduced margin */
+        }
+
+        /* Style for Leaflet layer control */
+        .leaflet-control-layers {
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        /* Style for Leaflet routing control */
+        .leaflet-routing-container {
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            max-height: 200px; /* Reduced max-height for mobile */
+            overflow-y: auto; /* Add scroll if needed */
+            max-width: 80%; /* Limit width on small screens */
+            font-size: 0.8rem; /* Slightly smaller font for mobile */
+            background-color: hsl(var(--background)) !important; /* Ensure background matches */
+            color: hsl(var(--foreground)) !important; /* Ensure text color matches */
+        }
+        /* Style routing alternatives to be less wide */
+         .leaflet-routing-alternatives-container {
+            max-width: 100%;
+            padding: 5px;
+        }
+
+        /* Ensure mobile menu items are block level and styled */
+        #mobile-menu a {
+            display: block;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem; /* rounded-md */
+        }
+        #mobile-menu a:hover {
+             background-color: hsl(var(--secondary)); /* Use secondary color for hover */
+        }
+        /* Ensure icons in mobile menu are aligned */
+        #mobile-menu .flex svg {
+             margin: auto;
+        }
+
+        /* Apply adjustments for medium screens and up (Desktop) */
+        @media (min-width: 768px) { /* Corresponds to md: breakpoint */
+            .controls {
+                max-width: 300px; /* Reset max-width for larger screens */
+                padding: 1rem; /* Restore default padding */
+                font-size: 0.875rem; /* text-sm for desktop */
+            }
+             .controls button {
+                font-size: 0.875rem; /* text-sm for desktop button */
+             }
+             .controls #distance {
+                 font-size: 0.875rem; /* text-sm for desktop distance */
+             }
+             .controls #info {
+                 font-size: 0.875rem; /* text-sm for desktop info */
+                 margin-bottom: 0.5rem; /* Restore margin */
+             }
+            .leaflet-routing-container {
+                 max-width: 350px; /* Allow more width on larger screens */
+                 max-height: 300px; /* Restore max-height */
+                 font-size: inherit; /* Reset font size */
+            }
         }
     </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 </head>
-<body>
-    <!-- Nuova Barra di Navigazione -->
-    <header class="sticky top-0 z-50 bg-background border-b border-border">
+<body class="bg-background text-foreground">
+    <header class="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div class="container mx-auto px-4">
             <div class="flex h-16 items-center justify-between">
-                <!-- Logo/Marca -->
                 <div class="flex items-center">
-                    <h1 class="text-2xl font-bold" style="color: #252525;">
-                        <a href="https://telexyu.github.io/Berlin/" style="text-decoration: none; color: inherit;">Viaggio Berlino</a>
-                    </h1>
+                    <a href="https://telexyu.github.io/Berlin/" class="text-xl md:text-2xl font-bold text-foreground hover:text-primary transition-colors" style="text-decoration: none;"> Viaggio Berlino
+                    </a>
                 </div>
-                
-                <!-- Navigazione Desktop -->
-                <nav class="hidden md:flex items-center space-x-6">
-                    <a href="https://telexyu.github.io/Berlin/itinerariopage1.html" class="text-sm font-medium hover:text-primary transition-colors">ITINERARIO</a>
-                    <a href="https://telexyu.github.io/Berlin/berlino_luoghi.html" class="text-sm font-medium hover:text-primary transition-colors">LUOGHI</a>
-                    <a href="#" class="text-sm font-medium hover:text-primary transition-colors">CARATTERISTICHE</a>
-                    <a href="https://telexyu.github.io/Berlin/aboutUs.html" class="text-sm font-medium hover:text-primary transition-colors">ABOUT US</a>
-                    <a href="#" class="text-sm font-medium hover:text-primary transition-colors">CONTATTI</a>
-                    <a href="https://telexyu.github.io/Berlin/mappaberlino.html" class="text-sm font-medium hover:text-primary transition-colors">MAPPA</a>
-                </nav>
-                
-                <!-- Icone Social - Versione Desktop -->
+
+                <nav class="hidden md:flex items-center space-x-6 text-sm font-medium">
+                    <a href="https://telexyu.github.io/Berlin/itinerariopage1.html" class="text-muted-foreground hover:text-primary transition-colors">ITINERARIO</a>
+                    <a href="https://telexyu.github.io/Berlin/berlino_luoghi.html" class="text-muted-foreground hover:text-primary transition-colors">LUOGHI</a>
+                    <a href="#" class="text-muted-foreground hover:text-primary transition-colors">CARATTERISTICHE</a>
+                    <a href="https://telexyu.github.io/Berlin/aboutUs.html" class="text-muted-foreground hover:text-primary transition-colors">ABOUT US</a>
+                    <a href="#" class="text-muted-foreground hover:text-primary transition-colors">CONTATTI</a>
+                    <a href="https://telexyu.github.io/Berlin/mappaberlino.html" class="font-semibold text-primary transition-colors">MAPPA</a> </nav>
+
                 <div class="hidden md:flex items-center space-x-4">
-                    <a href="https://www.twitch.tv/righiminutoperminuto" class="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.twitch.tv/righiminutoperminuto" class="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer" aria-label="Twitch">
                         <span class="sr-only">Twitch</span>
                         <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/>
                         </svg>
                     </a>
-                    <a href="https://www.instagram.com/righireport/" class="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.instagram.com/righireport/" class="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                         <span class="sr-only">Instagram</span>
                         <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"></path>
                         </svg>
                     </a>
                 </div>
-                
-                <!-- Pulsante Menu Mobile -->
+
                 <div class="md:hidden">
-                    <button type="button" class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary" aria-controls="mobile-menu" aria-expanded="false">
+                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground hover:bg-secondary hover:text-secondary-foreground focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary" aria-controls="mobile-menu" aria-expanded="false">
                         <span class="sr-only">Apri menu principale</span>
-                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                        <svg id="icon-open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
                         </svg>
-                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                        <svg id="icon-close" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
                         </svg>
                     </button>
                 </div>
             </div>
         </div>
-        
-         <!-- Menu Mobile -->
-         <div class="md:hidden hidden" id="mobile-menu">
-          <div class="space-y-1 px-2 pt-2 pb-3">
-            <a href="#" class="text-sm font-medium hover:text-primary transition-colors">ITINERARIO</a>
-              <a href="#" class="text-sm font-medium hover:text-primary transition-colors">LUOGHI</a>
-              <a href="#" class="text-sm font-medium hover:text-primary transition-colors">CARATTERISTICHE</a>
-              <a href="#" class="text-sm font-medium hover:text-primary transition-colors">ABOUT US</a>
-              <a href="#" class="text-sm font-medium hover:text-primary transition-colors">CONTATTI</a>
-              <a href="https://telexyu.github.io/Berlin/mappaberlino.html" class="text-sm font-medium hover:text-primary transition-colors">MAPPA</a>
-          </div>
-          <div class="flex items-center justify-center space-x-4 px-2 pt-2 pb-4">
-            <a href="#" class="text-muted-foreground hover:text-primary">
-              <span class="sr-only">Twitter</span>
-              <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
-              </svg>
-            </a>
-            <a href="#" class="text-muted-foreground hover:text-primary">
-              <span class="sr-only">Instagram</span>
-              <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"></path>
-              </svg>
-            </a>
-          </div>
+
+        <div class="hidden md:hidden" id="mobile-menu">
+            <div class="space-y-1 px-2 pt-2 pb-3">
+                <a href="https://telexyu.github.io/Berlin/itinerariopage1.html" class="text-muted-foreground hover:text-primary transition-colors">ITINERARIO</a>
+                <a href="https://telexyu.github.io/Berlin/berlino_luoghi.html" class="text-muted-foreground hover:text-primary transition-colors">LUOGHI</a>
+                <a href="#" class="text-muted-foreground hover:text-primary transition-colors">CARATTERISTICHE</a>
+                <a href="https://telexyu.github.io/Berlin/aboutUs.html" class="text-muted-foreground hover:text-primary transition-colors">ABOUT US</a>
+                <a href="#" class="text-muted-foreground hover:text-primary transition-colors">CONTATTI</a>
+                <a href="https://telexyu.github.io/Berlin/mappaberlino.html" class="font-semibold text-primary transition-colors">MAPPA</a> </div>
+            <div class="flex items-center justify-center space-x-4 border-t border-border px-2 pt-4 pb-4">
+                 <a href="https://www.twitch.tv/righiminutoperminuto" class="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer" aria-label="Twitch">
+                    <span class="sr-only">Twitch</span>
+                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                         <path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/>
+                    </svg>
+                 </a>
+                 <a href="https://www.instagram.com/righireport/" class="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                    <span class="sr-only">Instagram</span>
+                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                         <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"></path>
+                    </svg>
+                 </a>
+            </div>
         </div>
-      </header>
-        <!-- Mappa -->
-  <div id="map"></div>
+    </header>
 
-  <!-- Controlli -->
-  <div class="controls">
-    <p id="info">Clicca sulla mappa per selezionare due punti e calcolare la distanza.</p>
-    <p id="distance"></p>
-    <button id="reset" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Reset</button>
-  </div>
+      <div id="map"></div>
 
-  <!-- Script Leaflet -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+    <div class="controls bg-background text-foreground rounded-lg shadow-md">
+        <p id="info" class="text-muted-foreground">Clicca sulla mappa per selezionare due punti e calcolare il percorso.</p>
+        <div id="distance" class="font-medium"></div>
+        <button id="reset" class="w-full bg-destructive text-destructive-foreground px-3 py-1.5 rounded-md hover:bg-destructive/90 font-medium transition-colors">Reset</button> </div>
 
-  <script>
-    let map = L.map('map', {
-      center: [52.52, 13.405],
-      zoom: 13,
-      layers: []
-    });
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
 
-    const baseLayerNormal = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap'
-    });
+    <script>
+        // Initialize the map centered on Berlin
+        let map = L.map('map', {
+            center: [52.52, 13.405], // Berlin coordinates
+            zoom: 13,
+            layers: [] // Start with no layers, add base layer below
+        });
 
-    const baseLayerSatellite = L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
-      maxZoom: 20,
-      subdomains:['mt0','mt1','mt2','mt3'],
-      attribution: '© Google'
-    });
+        // Define base map layers
+        const baseLayerNormal = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        });
 
-    baseLayerNormal.addTo(map);
+        const baseLayerSatellite = L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
+            maxZoom: 20,
+            subdomains:['mt0','mt1','mt2','mt3'],
+            attribution: '&copy; Google'
+        });
 
-    const baseLayers = {
-      "Mappa": baseLayerNormal,
-      "Satellite": baseLayerSatellite
-    };
+        // Add the default base layer to the map
+        baseLayerNormal.addTo(map);
 
-    L.control.layers(baseLayers).addTo(map);
+        // Create layer control object
+        const baseLayers = {
+            "Mappa": baseLayerNormal,
+            "Satellite": baseLayerSatellite
+        };
 
-    let points = [];
-    let routingControl = null;
-    let markerLayer = L.layerGroup().addTo(map);
+        // Add layer control to the map
+        L.control.layers(baseLayers).addTo(map);
 
-    const attrazioni = [
-      {
-        nome: "Porta di Brandeburgo",
-        coord: [52.5163, 13.3777],
-        descrizione: "Simbolo iconico della città."
-      },
-      {
-        nome: "Reichstag",
-        coord: [52.5186, 13.3762],
-        descrizione: "Sede del Parlamento tedesco."
-      },
-      {
-        nome: "Isola dei Musei",
-        coord: [52.5169, 13.4010],
-        descrizione: "Patrimonio UNESCO, con musei famosi."
-      },
-      {
-        nome: "East Side Gallery",
-        coord: [52.5050, 13.4396],
-        descrizione: "Tratto del Muro di Berlino dipinto da artisti."
-      }
-    ];
+        // Variables for routing and markers
+        let points = []; // Array to store clicked points (max 2)
+        let routingControl = null; // Variable to hold the routing control instance
+        let markerLayer = L.layerGroup().addTo(map); // Layer group for user-added markers
+        let attractionLayer = L.layerGroup().addTo(map); // Layer group for attraction markers
 
-    const iconaAttrazione = L.icon({
-      iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/red-pushpin.png',
-      iconSize: [32, 32],
-      iconAnchor: [16, 32],
-      popupAnchor: [0, -32]
-    });
+        // Define attractions data
+        const attrazioni = [
+            {
+                nome: "Porta di Brandeburgo",
+                coord: [52.5163, 13.3777],
+                descrizione: "Simbolo iconico della riunificazione tedesca."
+            },
+            {
+                nome: "Reichstag",
+                coord: [52.5186, 13.3762],
+                descrizione: "Sede del Parlamento tedesco (Bundestag) con cupola panoramica."
+            },
+            {
+                nome: "Isola dei Musei (Museumsinsel)",
+                coord: [52.519, 13.398], // Adjusted slightly for better general location
+                descrizione: "Complesso museale patrimonio UNESCO (Pergamon, Neues Museum, etc.)."
+            },
+            {
+                nome: "East Side Gallery",
+                coord: [52.5050, 13.4396],
+                descrizione: "Il tratto più lungo rimasto del Muro di Berlino, trasformato in galleria d'arte all'aperto."
+            },
+            {
+                nome: "Checkpoint Charlie",
+                coord: [52.5075, 13.3904],
+                descrizione: "Famoso punto di passaggio tra Berlino Est e Ovest durante la Guerra Fredda."
+            },
+             {
+                nome: "Memoriale dell'Olocausto",
+                coord: [52.5138, 13.3788],
+                descrizione: "Memoriale per gli ebrei assassinati d'Europa."
+            },
+            {
+                nome: "Alexanderplatz & Torre della Televisione (Fernsehturm)",
+                coord: [52.5219, 13.4132],
+                descrizione: "Grande piazza pubblica e torre iconica con vista panoramica."
+            }
+        ];
 
-    attrazioni.forEach(attr => {
-      const marker = L.marker(attr.coord, {
-        icon: iconaAttrazione
-      }).addTo(markerLayer);
-      marker.bindPopup(`<b>${attr.nome}</b><br>${attr.descrizione}`);
-    });
+        // Define custom icon for attractions
+        const iconaAttrazione = L.icon({
+            iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/red-pushpin.png', // Standard red pushpin
+            iconSize: [32, 32], // Size of the icon
+            iconAnchor: [16, 32], // Point of the icon which will correspond to marker's location
+            popupAnchor: [0, -32] // Point from which the popup should open relative to the iconAnchor
+        });
 
-    map.on('click', function (e) {
-      if (points.length < 2) {
-        points.push(e.latlng);
-        L.marker(e.latlng).addTo(markerLayer);
-        if (points.length === 2) {
-          if (routingControl) {
-            map.removeControl(routingControl);
-          }
-
-          routingControl = L.Routing.control({
-            waypoints: points,
-            routeWhileDragging: false,
-            language: 'it',
-            createMarker: () => null
-          }).addTo(map);
-
-          let latlng1 = points[0];
-          let latlng2 = points[1];
-          let distance = map.distance(latlng1, latlng2) / 1000;
-
-          let tempoAuto = distance / 50 * 60;
-          let tempoPiedi = distance / 5 * 60;
-          let tempoBici = distance / 15 * 60;
-
-          document.getElementById("distance").innerHTML =
-            `Distanza lineare: ${distance.toFixed(2)} km<br>
-            🚶‍♂️ Tempo a piedi: ${Math.round(tempoPiedi)} minuti<br>
-            🚗 Tempo in auto: ${Math.round(tempoAuto)} minuti<br>
-            🚴‍♀️ Tempo in bici: ${Math.round(tempoBici)} minuti`;
+        // Function to add attraction markers
+        function addAttractionMarkers() {
+            attractionLayer.clearLayers(); // Clear existing attraction markers before adding new ones
+            attrazioni.forEach(attr => {
+                const marker = L.marker(attr.coord, {
+                    icon: iconaAttrazione // Use the custom attraction icon
+                }).addTo(attractionLayer); // Add to the specific attraction layer
+                // Bind popup with attraction name and description
+                marker.bindPopup(<b>${attr.nome}</b><br>${attr.descrizione});
+            });
         }
-      }
-    });
 
-    document.getElementById("reset").addEventListener("click", () => {
-      points = [];
-      markerLayer.clearLayers();
-      attrazioni.forEach(attr => {
-        const marker = L.marker(attr.coord, {
-          icon: iconaAttrazione
-        }).addTo(markerLayer);
-        marker.bindPopup(`<b>${attr.nome}</b><br>${attr.descrizione}`);
-      });
-      if (routingControl) {
-        map.removeControl(routingControl);
-      }
-      document.getElementById("distance").innerText = "";
-    });
-  </script>
+        // Add attraction markers initially
+        addAttractionMarkers();
+
+        // Handle map clicks for routing
+        map.on('click', function (e) {
+            // Allow adding points only if less than 2 points are selected
+            if (points.length < 2) {
+                points.push(e.latlng); // Add clicked coordinates to the points array
+                // Add a marker for the clicked point to the markerLayer
+                L.marker(e.latlng).addTo(markerLayer); // Use default icon
+
+                // Update info text
+                if (points.length === 1) {
+                    document.getElementById("info").innerText = "Clicca su un secondo punto per calcolare il percorso.";
+                }
+
+                // If two points have been selected, calculate and display the route
+                if (points.length === 2) {
+                    // Remove previous routing control if it exists
+                    if (routingControl) {
+                        map.removeControl(routingControl);
+                        routingControl = null; // Reset the variable
+                    }
+
+                    // Create a new routing control
+                    routingControl = L.Routing.control({
+                        waypoints: points, // Use the two clicked points as waypoints
+                        routeWhileDragging: false, // Disable route recalculation while dragging waypoints
+                        language: 'it', // Set language to Italian
+                        show: true, // Show the route instructions panel
+                        addWaypoints: false, // Prevent adding more waypoints via the control
+                        createMarker: function() { return null; }, // Prevent routing control from adding its own markers
+                        lineOptions: { // Customize the route line appearance
+                            styles: [{color: '#0ea5e9', opacity: 0.8, weight: 6}] // Example: Tailwind sky-500 color
+                        }
+                    }).addTo(map);
+
+                    // Calculate linear distance and estimated travel times
+                    let latlng1 = points[0];
+                    let latlng2 = points[1];
+                    let distance = map.distance(latlng1, latlng2) / 1000; // Distance in km
+
+                    // Rough estimations (adjust speeds as needed)
+                    let tempoPiedi = distance / 5 * 60; // Avg walking speed 5 km/h
+                    let tempoBici = distance / 15 * 60; // Avg cycling speed 15 km/h
+                    let tempoAuto = distance / 40 * 60; // Avg driving speed 40 km/h (city traffic)
+
+                    // Display the calculated distances and times
+                    document.getElementById("distance").innerHTML =
+                        `Dist. lineare: <strong>${distance.toFixed(2)} km</strong><br> <hr class="my-1 border-border"> <i>Tempi stimati (lineari):</i><br>
+                         🚶‍♂ ~${Math.round(tempoPiedi)} min
+                         🚴‍♀ ~${Math.round(tempoBici)} min
+                         🚗 ~${Math.round(tempoAuto)} min`; // More compact display
+
+                    document.getElementById("info").innerText = "Percorso calcolato. Clicca Reset."; // Shorter text
+                }
+            } else {
+                 // Inform user if they click more than twice
+                 document.getElementById("info").innerText = "Due punti selezionati. Clicca Reset."; // Shorter text
+            }
+        });
+
+        // Handle reset button click
+        document.getElementById("reset").addEventListener("click", () => {
+            points = []; // Clear the points array
+            markerLayer.clearLayers(); // Remove user-clicked markers from the map
+
+            // Remove the routing control if it exists
+            if (routingControl) {
+                map.removeControl(routingControl);
+                routingControl = null;
+            }
+
+            // Reset the information and distance display
+            document.getElementById("info").innerText = "Clicca sulla mappa per selezionare due punti."; // Shorter text
+            document.getElementById("distance").innerHTML = "";
+
+        });
+
+         // Mobile Menu Toggle Functionality
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const iconOpen = document.getElementById('icon-open');
+        const iconClose = document.getElementById('icon-close');
+
+        mobileMenuButton.addEventListener('click', () => {
+            const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+            mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+            mobileMenu.classList.toggle('hidden'); // Toggle visibility of the menu
+            iconOpen.classList.toggle('hidden'); // Toggle hamburger icon
+            iconClose.classList.toggle('hidden'); // Toggle close icon
+        });
+
+    </script>
 
 </body>
 </html>
