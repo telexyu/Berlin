@@ -4,113 +4,213 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Itinerario Viaggio a Berlino - Layout Rifinito</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Georgia:wght@400;700&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script>
-        // Configurazione Tailwind per colori personalizzati
-        tailwind.config = {
-          theme: {
-            extend: {
-              colors: {
-                // Colore primario (arancione) per elementi attivi, hover, bordi
-                primary: '#f97316', // Tailwind orange-600
-                // Colore secondario per sfondi chiari degli item
-                secondary: '#fff7ed', // Tailwind orange-50
-              }
-            }
+    <script type="text/javascript">
+      window.tailwind.config = {
+        darkMode: ['class'],
+        theme: {
+          extend: {
+            colors: {
+              border: 'hsl(var(--border))',
+              input: 'hsl(var(--input))',
+              ring: 'hsl(var(--ring))',
+              background: 'hsl(var(--background))',
+              foreground: 'hsl(var(--foreground))',
+              primary: {
+                DEFAULT: 'hsl(var(--primary))',
+                foreground: 'hsl(var(--primary-foreground))'
+              },
+              secondary: {
+                DEFAULT: 'hsl(var(--secondary))',
+                foreground: 'hsl(var(--secondary-foreground))'
+              },
+              destructive: {
+                DEFAULT: 'hsl(var(--destructive))',
+                foreground: 'hsl(var(--destructive-foreground))'
+              },
+              muted: {
+                DEFAULT: 'hsl(var(--muted))',
+                foreground: 'hsl(var(--muted-foreground))'
+              },
+              accent: {
+                DEFAULT: 'hsl(var(--accent))',
+                foreground: 'hsl(var(--accent-foreground))'
+              },
+              popover: {
+                DEFAULT: 'hsl(var(--popover))',
+                foreground: 'hsl(var(--popover-foreground))'
+              },
+              card: {
+                DEFAULT: 'hsl(var(--card))',
+                foreground: 'hsl(var(--card-foreground))'
+              },
+            },
+             borderRadius: {
+                lg: "var(--radius)",
+                md: "calc(var(--radius) - 2px)",
+                sm: "calc(var(--radius) - 4px)",
+            },
           }
         }
+      }
     </script>
-    <style>
-        /* Apply custom fonts */
-        body {
-            font-family: 'Inter', sans serif; /*Added Inter font*/
-            background-color: #f8fafc; /* Tailwind slate-50 - Sfondo leggermente grigio */
-            color: #334155; /* Tailwind slate-700 */
-            /* Aggiunge padding in basso per non sovrapporre il footer fisso */
-            padding-bottom: 5rem; /* Altezza approssimativa del footer */
+    <style type="text/tailwindcss">
+      @layer base {
+        :root {
+          --background: 0 0% 100%;
+          --foreground: 20 14.3% 4.1%;
+          --card: 0 0% 100%;
+          --card-foreground: 20 14.3% 4.1%;
+          --popover: 0 0% 100%;
+          --popover-foreground: 20 14.3% 4.1%;
+          --primary: 24.6 95% 53.1%;
+          --primary-foreground: 60 9.1% 97.8%;
+          --secondary: 60 4.8% 95.9%;
+          --secondary-foreground: 24 9.8% 10%;
+          --muted: 60 4.8% 95.9%;
+          --muted-foreground: 25 5.3% 44.7%;
+          --accent: 60 4.8% 95.9%;
+          --accent-foreground: 24 9.8% 10%;
+          --destructive: 0 84.2% 60.2%;
+          --destructive-foreground: 60 9.1% 97.8%;
+          --border: 20 5.9% 90%;
+          --input: 20 5.9% 90%;
+          --ring: 24.6 95% 53.1%;
+          --radius: 0.5rem;
         }
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Lora', serif;
+        .dark {
+          --background: 20 14.3% 4.1%;
+          --foreground: 60 9.1% 97.8%;
+          --card: 20 14.3% 4.1%;
+          --card-foreground: 60 9.1% 97.8%;
+          --popover: 20 14.3% 4.1%;
+          --popover-foreground: 60 9.1% 97.8%;
+          --primary: 20.5 90.2% 48.2%;
+          --primary-foreground: 60 9.1% 97.8%;
+          --secondary: 12 6.5% 15.1%;
+          --secondary-foreground: 60 9.1% 97.8%;
+          --muted: 12 6.5% 15.1%;
+          --muted-foreground: 24 5.4% 63.9%;
+          --accent: 12 6.5% 15.1%;
+          --accent-foreground: 60 9.1% 97.8%;
+          --destructive: 0 72.2% 50.6%;
+          --destructive-foreground: 60 9.1% 97.8%;
+          --border: 12 6.5% 15.1%;
+          --input: 12 6.5% 15.1%;
+          --ring: 20.5 90.2% 48.2%;
         }
-        /* Simple fade-in for sections */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        section:not(.hidden) {
-            animation: fadeIn 0.5s ease-in-out;
-        }
+      }
+       @layer base {
+          * {
+              @apply border-border;
+          }
+          body {
+              @apply bg-background text-foreground;
+              font-family: 'Inter', sans-serif;
+          }
+          #mobile-menu a {
+            display: block;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+         }
+         #mobile-menu a:hover {
+             background-color: hsl(var(--secondary));
+             color: hsl(var(--secondary-foreground));
+         }
+         #mobile-menu .flex svg {
+             margin: auto;
+         }
+      }
     </style>
 </head>
-<body class="bg-slate-50">
+<body class="bg-background text-foreground">
 
-    <header class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <header class="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div class="container mx-auto px-4">
             <div class="flex h-16 items-center justify-between">
 
                 <div class="flex items-center">
-                    <a href="https://telexyu.github.io/Berlin/">
-                        <h1 class="text-2xl font-bold text-slate-800">Viaggio Berlino</h1>
+                    <a href="https://telexyu.github.io/Berlin/" class="text-xl md:text-2xl font-bold text-foreground hover:text-primary transition-colors" style="text-decoration: none;">
+                        Viaggio Berlino
                     </a>
                 </div>
 
-                <nav class="hidden md:flex items-center space-x-6">
-                    <a href="https://telexyu.github.io/Berlin/itinerariopage1.html" class="text-sm font-medium text-primary border-b-2 border-primary" aria-current="page">ITINERARIO</a>
-                    <a href="https://telexyu.github.io/Berlin/berlino_luoghi.html" class="text-sm font-medium text-slate-600 hover:text-primary transition-colors">LUOGHI</a>
-                    <a href="https://telexyu.github.io/Berlin/ga.html" class="text-sm font-medium text-slate-600 hover:text-primary transition-colors">GALLERIA</a>
-                    <a href="https://telexyu.github.io/Berlin/aboutUs.html" class="text-sm font-medium text-slate-600 hover:text-primary transition-colors">ABOUT US</a>
-                    <a href="https://telexyu.github.io/Berlin/mappaberlino.html" class="text-sm font-medium text-slate-600 hover:text-primary transition-colors">MAPPA</a>
+                <nav class="hidden md:flex items-center space-x-6 text-sm font-medium">
+                    <a href="https://telexyu.github.io/Berlin/itinerariopage1.html" class="text-primary hover:text-primary/90 transition-colors" aria-current="page">ITINERARIO</a>
+                    <a href="https://telexyu.github.io/Berlin/berlino_luoghi.html" class="text-muted-foreground hover:text-primary transition-colors">LUOGHI</a>
+                    <a href="https://telexyu.github.io/Berlin/ga.html" class="text-muted-foreground hover:text-primary transition-colors">GALLERIA</a>
+                    <a href="https://telexyu.github.io/Berlin/aboutUs.html" class="text-muted-foreground hover:text-primary transition-colors">ABOUT US</a>
+                    <a href="https://telexyu.github.io/Berlin/mappaberlino.html" class="text-muted-foreground hover:text-primary transition-colors">MAPPA</a>
                 </nav>
 
                 <div class="hidden md:flex items-center space-x-4">
-                    <a href="#" target="_blank" class="text-slate-500 hover:text-primary transition-colors" title="Twitch">
-                        <i class="fab fa-twitch fa-lg"></i>
+                    <a href="https://www.twitch.tv/righiminutoperminuto" class="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer" aria-label="Twitch">
+                        <span class="sr-only">Twitch</span>
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/>
+                        </svg>
                     </a>
-                    <a href="#" target="_blank" class="text-slate-500 hover:text-primary transition-colors" title="Instagram">
-                        <i class="fab fa-instagram fa-lg"></i>
+                    <a href="https://www.instagram.com/righireport/" class="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                        <span class="sr-only">Instagram</span>
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"></path>
+                        </svg>
                     </a>
                 </div>
 
                 <div class="md:hidden">
-                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-slate-500 hover:text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary" aria-controls="mobile-menu" aria-expanded="false">
+                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground hover:bg-secondary hover:text-secondary-foreground focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary" aria-controls="mobile-menu" aria-expanded="false">
                         <span class="sr-only">Apri menu principale</span>
-                        <i class="fas fa-bars fa-lg"></i>
+                        <svg id="icon-open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
+                        </svg>
+                        <svg id="icon-close" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
                     </button>
                 </div>
             </div>
         </div>
 
-        <div class="md:hidden hidden" id="mobile-menu">
+        <div class="hidden md:hidden border-t border-border" id="mobile-menu">
             <div class="space-y-1 px-2 pt-2 pb-3">
-                <a href="https://telexyu.github.io/Berlin/itinerariopage1.html" class="block px-3 py-2 rounded-md text-base font-medium text-primary bg-secondary" aria-current="page">ITINERARIO</a>
-                <a href="https://telexyu.github.io/Berlin/berlino_luoghi.html" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:bg-slate-50 hover:text-slate-900">LUOGHI</a>
-                <a href="https://telexyu.github.io/Berlin/ga.html" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:bg-slate-50 hover:text-slate-900">GALLERIA</a>
-                <a href="https://telexyu.github.io/Berlin/aboutUs.html" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:bg-slate-50 hover:text-slate-900">ABOUT US</a>
-                <a href="https://telexyu.github.io/Berlin/mappaberlino.html" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:bg-slate-50 hover:text-slate-900">MAPPA</a>
+                <a href="https://telexyu.github.io/Berlin/itinerariopage1.html" class="text-primary hover:text-primary/90 transition-colors" aria-current="page">ITINERARIO</a>
+                <a href="https://telexyu.github.io/Berlin/berlino_luoghi.html" class="text-muted-foreground hover:text-primary transition-colors">LUOGHI</a>
+                <a href="https://telexyu.github.io/Berlin/ga.html" class="text-muted-foreground hover:text-primary transition-colors">GALLERIA</a>
+                <a href="https://telexyu.github.io/Berlin/aboutUs.html" class="text-muted-foreground hover:text-primary transition-colors">ABOUT US</a>
+                <a href="https://telexyu.github.io/Berlin/mappaberlino.html" class="text-muted-foreground hover:text-primary transition-colors">MAPPA</a>
             </div>
-            <div class="flex justify-center space-x-6 pb-4">
-                 <a href="#" target="_blank" class="text-slate-500 hover:text-primary transition-colors" title="Twitch">
-                    <i class="fab fa-twitch fa-lg"></i>
+            <div class="flex items-center justify-center space-x-4 border-t border-border px-2 pt-4 pb-4">
+                <a href="https://www.twitch.tv/righiminutoperminuto" class="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer" aria-label="Twitch">
+                    <span class="sr-only">Twitch</span>
+                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/>
+                    </svg>
                 </a>
-                <a href="#" target="_blank" class="text-slate-500 hover:text-primary transition-colors" title="Instagram">
-                    <i class="fab fa-instagram fa-lg"></i>
+                <a href="https://www.instagram.com/righireport/" class="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                    <span class="sr-only">Instagram</span>
+                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"></path>
+                    </svg>
                 </a>
             </div>
         </div>
     </header>
 
-    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+    <main class="container mx-auto px-4 py-8 md:py-12">
 
         <div class="text-center mb-12 md:mb-16">
-            <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-3">Il Tuo Itinerario a Berlino</h1>
-            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Scopri giorno per giorno le tappe del viaggio di istruzione nella vibrante capitale tedesca.</p>
+            <h1 class="text-4xl md:text-5xl font-bold text-foreground mb-3">Il Tuo Itinerario a Berlino</h1>
+            <p class="text-lg text-muted-foreground max-w-2xl mx-auto">Scopri giorno per giorno le tappe del viaggio di istruzione nella vibrante capitale tedesca.</p>
         </div>
 
         <div class="text-center mb-12">
-            <label for="days" class="mr-2 text-lg font-medium text-slate-700">Seleziona il giorno:</label>
-            <select id="days" onchange="showDay(this.value)" class="p-3 border-2 border-primary rounded-lg shadow-sm text-primary font-semibold cursor-pointer hover:border-orange-400 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition duration-150 ease-in-out">
+            <label for="days" class="mr-2 text-lg font-medium text-foreground">Seleziona il giorno:</label>
+            <select id="days" onchange="showDay(this.value)" class="p-3 border-2 border-primary rounded-lg shadow-sm text-primary font-semibold cursor-pointer hover:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition duration-150 ease-in-out">
                 <option value="giorno1">Giorno 1</option>
                 <option value="giorno2">Giorno 2</option>
                 <option value="giorno3">Giorno 3</option>
@@ -118,14 +218,14 @@
             </select>
         </div>
 
-        <section id="giorno1" class="bg-white rounded-xl shadow-lg p-6 md:p-8 mb-10 border border-gray-200">
+        <section id="giorno1" class="bg-card rounded-xl shadow-lg p-6 md:p-8 mb-10 border border-border">
             <h2 class="text-3xl md:text-4xl font-bold text-primary text-center mb-8 pb-3 border-b-2 border-primary">Giorno 1</h2>
             <ul class="list-none p-0 space-y-8">
-                <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-orange-400 transition duration-300 ease-in-out transform hover:-translate-y-1">
-                    <a href="#" class="flex flex-col md:flex-row items-center text-slate-800 no-underline w-full">
+                <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-primary/80 transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <a href="#" class="flex flex-col md:flex-row items-center text-foreground no-underline w-full">
                         <div class="flex-1 mb-4 md:mb-0 md:pr-6">
-                            <span class="text-lg font-semibold block text-slate-700">Visita del Palazzo del Reichstag</span>
-                            <p class="text-sm text-slate-600 mt-1 hidden sm:block leading-relaxed">Esplora la sede del parlamento tedesco e ammira la vista dalla cupola di vetro.</p>
+                            <span class="text-lg font-semibold block">Visita del Palazzo del Reichstag</span>
+                            <p class="text-sm text-muted-foreground mt-1 hidden sm:block leading-relaxed">Esplora la sede del parlamento tedesco e ammira la vista dalla cupola di vetro.</p>
                         </div>
                         <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Berlin_-_Reichstagsgeb%C3%A4ude3.jpg"
                              alt="Palazzo del Reichstag a Berlino"
@@ -133,11 +233,11 @@
                              onerror="this.onerror=null; this.src='https://placehold.co/300x200/eeeeee/cccccc?text=Reichstag';">
                     </a>
                 </li>
-                <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-orange-400 transition duration-300 ease-in-out transform hover:-translate-y-1">
-                    <a href="#" class="flex flex-col md:flex-row items-center text-slate-800 no-underline w-full">
+                <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-primary/80 transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <a href="#" class="flex flex-col md:flex-row items-center text-foreground no-underline w-full">
                         <div class="flex-1 mb-4 md:mb-0 md:pr-6">
-                            <span class="text-lg font-semibold block text-slate-700">Porta di Brandeburgo</span>
-                             <p class="text-sm text-slate-600 mt-1 hidden sm:block leading-relaxed">Il simbolo iconico di Berlino e della riunificazione tedesca.</p>
+                            <span class="text-lg font-semibold block">Porta di Brandeburgo</span>
+                             <p class="text-sm text-muted-foreground mt-1 hidden sm:block leading-relaxed">Il simbolo iconico di Berlino e della riunificazione tedesca.</p>
                         </div>
                         <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/BrandenburgTor_in_early_morning_light.jpg"
                              alt="Porta di Brandeburgo all'alba"
@@ -145,11 +245,11 @@
                              onerror="this.onerror=null; this.src='https://placehold.co/300x200/eeeeee/cccccc?text=Brandenburg';">
                     </a>
                 </li>
-                 <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-orange-400 transition duration-300 ease-in-out transform hover:-translate-y-1">
-                   <a href="#" class="flex flex-col md:flex-row items-center text-slate-800 no-underline w-full">
+                 <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-primary/80 transition duration-300 ease-in-out transform hover:-translate-y-1">
+                   <a href="#" class="flex flex-col md:flex-row items-center text-foreground no-underline w-full">
                         <div class="flex-1 mb-4 md:mb-0 md:pr-6">
-                            <span class="text-lg font-semibold block text-slate-700">Memoriale dell'Olocausto</span>
-                             <p class="text-sm text-slate-600 mt-1 hidden sm:block leading-relaxed">Un luogo toccante di riflessione dedicato alle vittime del nazismo.</p>
+                            <span class="text-lg font-semibold block">Memoriale dell'Olocausto</span>
+                             <p class="text-sm text-muted-foreground mt-1 hidden sm:block leading-relaxed">Un luogo toccante di riflessione dedicato alle vittime del nazismo.</p>
                         </div>
                         <img src="https://guideintour.it/wp-content/uploads/2024/05/Memoriale-olocausto-Berlino.jpg"
                              alt="Memoriale per gli ebrei assassinati d'Europa a Berlino"
@@ -157,193 +257,193 @@
                              onerror="this.onerror=null; this.src='https://placehold.co/300x200/eeeeee/cccccc?text=Holocaust+Memorial';">
                     </a>
                 </li>
-                 <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-orange-400 transition duration-300 ease-in-out transform hover:-translate-y-1">
-                    <a href="#" class="flex items-center text-slate-800 no-underline w-full">
+                 <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-primary/80 transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <a href="#" class="flex items-center text-foreground no-underline w-full">
                         <div class="flex-1">
-                             <span class="text-lg font-semibold block text-slate-700">Rientro in hotel, cena e pernottamento</span>
+                             <span class="text-lg font-semibold block">Rientro in hotel, cena e pernottamento</span>
                         </div>
                     </a>
                 </li>
             </ul>
         </section>
 
-        <section id="giorno2" class="hidden bg-white rounded-xl shadow-lg p-6 md:p-8 mb-10 border border-gray-200">
+        <section id="giorno2" class="hidden bg-card rounded-xl shadow-lg p-6 md:p-8 mb-10 border border-border">
              <h2 class="text-3xl md:text-4xl font-bold text-primary text-center mb-8 pb-3 border-b-2 border-primary">Giorno 2</h2>
              <ul class="list-none p-0 space-y-8">
-                <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-orange-400 transition duration-300 ease-in-out transform hover:-translate-y-1">
-                    <a href="#" class="flex flex-col md:flex-row items-center text-slate-800 no-underline w-full">
+                <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-primary/80 transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <a href="#" class="flex flex-col md:flex-row items-center text-foreground no-underline w-full">
                         <div class="flex-1 mb-4 md:mb-0 md:pr-6">
-                            <span class="text-lg font-semibold block text-slate-700">Zoo e Acquario</span>
-                            <p class="text-sm text-slate-600 mt-1 hidden sm:block leading-relaxed">Uno degli zoo più antichi e ricchi di specie al mondo, un'oasi verde in città.</p>
+                            <span class="text-lg font-semibold block">Zoo e Acquario</span>
+                            <p class="text-sm text-muted-foreground mt-1 hidden sm:block leading-relaxed">Uno degli zoo più antichi e ricchi di specie al mondo, un'oasi verde in città.</p>
                         </div>
                         <img src="https://aws-tiqets-cdn.imgix.net/images/content/6146fa5ce60e44a2a23dd052ec7fb3a1.jpg?auto=format%2Ccompress&fit=fill&h=500&ixlib=python-3.2.1&q=70&w=500&s=18e66c5b33d9700b17c4087ba29fe206&dpr=2.625" alt="Ingresso dello Zoo di Berlino" class="w-full md:w-auto md:max-w-xs lg:max-w-sm h-auto rounded-lg shadow-md object-cover transition transform hover:scale-105 duration-300" onerror="this.onerror=null; this.src='https://placehold.co/300x200/eeeeee/cccccc?text=Zoo';">
                     </a>
                 </li>
-                 <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-orange-400 transition duration-300 ease-in-out transform hover:-translate-y-1">
-                   <a href="#" class="flex flex-col md:flex-row items-center text-slate-800 no-underline w-full">
+                 <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-primary/80 transition duration-300 ease-in-out transform hover:-translate-y-1">
+                   <a href="#" class="flex flex-col md:flex-row items-center text-foreground no-underline w-full">
                         <div class="flex-1 mb-4 md:mb-0 md:pr-6">
-                            <span class="text-lg font-semibold block text-slate-700">Sosta al Monkey Bar</span>
-                            <p class="text-sm text-slate-600 mt-1 hidden sm:block leading-relaxed">Goditi un drink con vista panoramica sullo zoo e sulla città dal Bikini Berlin.</p>
+                            <span class="text-lg font-semibold block">Sosta al Monkey Bar</span>
+                            <p class="text-sm text-muted-foreground mt-1 hidden sm:block leading-relaxed">Goditi un drink con vista panoramica sullo zoo e sulla città dal Bikini Berlin.</p>
                         </div>
                         <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0a/8a/46/19/monkey-bar-berlin.jpg?w=900&h=500&s=1" alt="Vista dal Monkey Bar a Berlino" class="w-full md:w-auto md:max-w-xs lg:max-w-sm h-auto rounded-lg shadow-md object-cover transition transform hover:scale-105 duration-300" onerror="this.onerror=null; this.src='https://placehold.co/300x200/eeeeee/cccccc?text=Monkey+Bar';">
                     </a>
                 </li>
-                 <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-orange-400 transition duration-300 ease-in-out transform hover:-translate-y-1">
-                    <a href="#" class="flex flex-col md:flex-row items-center text-slate-800 no-underline w-full">
+                 <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-primary/80 transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <a href="#" class="flex flex-col md:flex-row items-center text-foreground no-underline w-full">
                         <div class="flex-1 mb-4 md:mb-0 md:pr-6">
-                            <span class="text-lg font-semibold block text-slate-700">Museo della tecnica</span>
-                            <p class="text-sm text-slate-600 mt-1 hidden sm:block leading-relaxed">Un viaggio affascinante attraverso la storia della tecnologia, dai treni agli aerei.</p>
+                            <span class="text-lg font-semibold block">Museo della tecnica</span>
+                            <p class="text-sm text-muted-foreground mt-1 hidden sm:block leading-relaxed">Un viaggio affascinante attraverso la storia della tecnologia, dai treni agli aerei.</p>
                         </div>
                         <img src="https://cdn.getyourguide.com/img/location/5729aa6090f4f.jpeg/99.jpg" alt="Esterno del Deutsches Technikmuseum a Berlino" class="w-full md:w-auto md:max-w-xs lg:max-w-sm h-auto rounded-lg shadow-md object-cover transition transform hover:scale-105 duration-300" onerror="this.onerror=null; this.src='https://placehold.co/300x200/eeeeee/cccccc?text=Technikmuseum';">
                     </a>
                 </li>
-                 <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-orange-400 transition duration-300 ease-in-out transform hover:-translate-y-1">
-                    <a href="#" class="flex flex-col md:flex-row items-center text-slate-800 no-underline w-full">
+                 <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-primary/80 transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <a href="#" class="flex flex-col md:flex-row items-center text-foreground no-underline w-full">
                         <div class="flex-1 mb-4 md:mb-0 md:pr-6">
-                            <span class="text-lg font-semibold block text-slate-700">Museo ebraico</span>
-                            <p class="text-sm text-slate-600 mt-1 hidden sm:block leading-relaxed">Scopri la storia e la cultura ebraica in Germania attraverso un'architettura suggestiva.</p>
+                            <span class="text-lg font-semibold block">Museo ebraico</span>
+                            <p class="text-sm text-muted-foreground mt-1 hidden sm:block leading-relaxed">Scopri la storia e la cultura ebraica in Germania attraverso un'architettura suggestiva.</p>
                         </div>
                         <img src="https://static2-viaggi.corriereobjects.it/wp-content/uploads/2020/01/Jewish_Museum_Berlin_02-wikimedia.jpg?v=1579790788" alt="Architettura del Museo Ebraico di Berlino" class="w-full md:w-auto md:max-w-xs lg:max-w-sm h-auto rounded-lg shadow-md object-cover transition transform hover:scale-105 duration-300" onerror="this.onerror=null; this.src='https://placehold.co/300x200/eeeeee/cccccc?text=Jewish+Museum';">
                     </a>
                 </li>
-                 <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-orange-400 transition duration-300 ease-in-out transform hover:-translate-y-1">
-                   <a href="#" class="flex flex-col md:flex-row items-center text-slate-800 no-underline w-full">
+                 <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-primary/80 transition duration-300 ease-in-out transform hover:-translate-y-1">
+                   <a href="#" class="flex flex-col md:flex-row items-center text-foreground no-underline w-full">
                         <div class="flex-1 mb-4 md:mb-0 md:pr-6">
-                            <span class="text-lg font-semibold block text-slate-700">Checkpoint Charlie e Museo del muro</span>
-                            <p class="text-sm text-slate-600 mt-1 hidden sm:block leading-relaxed">Rivivi la storia della Guerra Fredda nel famoso punto di passaggio e nel museo adiacente.</p>
+                            <span class="text-lg font-semibold block">Checkpoint Charlie e Museo del muro</span>
+                            <p class="text-sm text-muted-foreground mt-1 hidden sm:block leading-relaxed">Rivivi la storia della Guerra Fredda nel famoso punto di passaggio e nel museo adiacente.</p>
                         </div>
                         <img src="https://www.travel365.it/foto/checkpoint-charlie-berlino-germania-1-1.jpg" alt="Ricostruzione del Checkpoint Charlie a Berlino" class="w-full md:w-auto md:max-w-xs lg:max-w-sm h-auto rounded-lg shadow-md object-cover transition transform hover:scale-105 duration-300" onerror="this.onerror=null; this.src='https://placehold.co/300x200/eeeeee/cccccc?text=Checkpoint+Charlie';">
                     </a>
                 </li>
-                 <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-orange-400 transition duration-300 ease-in-out transform hover:-translate-y-1">
-                    <a href="#" class="flex flex-col md:flex-row items-center text-slate-800 no-underline w-full">
+                 <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-primary/80 transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <a href="#" class="flex flex-col md:flex-row items-center text-foreground no-underline w-full">
                         <div class="flex-1 mb-4 md:mb-0 md:pr-6">
-                            <span class="text-lg font-semibold block text-slate-700">Topografia del terrore</span>
-                            <p class="text-sm text-slate-600 mt-1 hidden sm:block leading-relaxed">Centro di documentazione sul terrore nazista, situato sui resti dei quartieri generali SS.</p>
+                            <span class="text-lg font-semibold block">Topografia del terrore</span>
+                            <p class="text-sm text-muted-foreground mt-1 hidden sm:block leading-relaxed">Centro di documentazione sul terrore nazista, situato sui resti dei quartieri generali SS.</p>
                         </div>
                         <img src="https://www.viveberlintours.com/wp-content/uploads/2019/07/Topografia_del_Terrore_Berlino.jpg" alt="Centro di documentazione Topografia del Terrore a Berlino" class="w-full md:w-auto md:max-w-xs lg:max-w-sm h-auto rounded-lg shadow-md object-cover transition transform hover:scale-105 duration-300" onerror="this.onerror=null; this.src='https://placehold.co/300x200/eeeeee/cccccc?text=Topography+of+Terror';">
                     </a>
                 </li>
-                 <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-orange-400 transition duration-300 ease-in-out transform hover:-translate-y-1">
-                   <a href="#" class="flex flex-col md:flex-row items-center text-slate-800 no-underline w-full">
+                 <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-primary/80 transition duration-300 ease-in-out transform hover:-translate-y-1">
+                   <a href="#" class="flex flex-col md:flex-row items-center text-foreground no-underline w-full">
                         <div class="flex-1 mb-4 md:mb-0 md:pr-6">
-                            <span class="text-lg font-semibold block text-slate-700">Potsdamer Platz</span>
-                            <p class="text-sm text-slate-600 mt-1 hidden sm:block leading-relaxed">Cuore moderno di Berlino con architettura avveniristica, negozi e intrattenimento.</p>
+                            <span class="text-lg font-semibold block">Potsdamer Platz</span>
+                            <p class="text-sm text-muted-foreground mt-1 hidden sm:block leading-relaxed">Cuore moderno di Berlino con architettura avveniristica, negozi e intrattenimento.</p>
                         </div>
                         <img src="https://www.ilturista.info/myTurista/files/458/Vista_Notturna_Potsdamer_Platz_Berlino.jpg" alt="Potsdamer Platz di notte a Berlino" class="w-full md:w-auto md:max-w-xs lg:max-w-sm h-auto rounded-lg shadow-md object-cover transition transform hover:scale-105 duration-300" onerror="this.onerror=null; this.src='https://placehold.co/300x200/eeeeee/cccccc?text=Potsdamer+Platz';">
                     </a>
                 </li>
-                 <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-orange-400 transition duration-300 ease-in-out transform hover:-translate-y-1">
-                    <a href="#" class="flex items-center text-slate-800 no-underline w-full">
+                 <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-primary/80 transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <a href="#" class="flex items-center text-foreground no-underline w-full">
                         <div class="flex-1">
-                            <span class="text-lg font-semibold block text-slate-700">Rientro in hotel, cena e pernottamento</span>
+                            <span class="text-lg font-semibold block">Rientro in hotel, cena e pernottamento</span>
                         </div>
                     </a>
                 </li>
              </ul>
         </section>
 
-        <section id="giorno3" class="hidden bg-white rounded-xl shadow-lg p-6 md:p-8 mb-10 border border-gray-200">
+        <section id="giorno3" class="hidden bg-card rounded-xl shadow-lg p-6 md:p-8 mb-10 border border-border">
             <h2 class="text-3xl md:text-4xl font-bold text-primary text-center mb-8 pb-3 border-b-2 border-primary">Giorno 3</h2>
              <ul class="list-none p-0 space-y-8">
-                 <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-orange-400 transition duration-300 ease-in-out transform hover:-translate-y-1">
-                    <a href="#" class="flex flex-col md:flex-row items-center text-slate-800 no-underline w-full">
+                 <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-primary/80 transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <a href="#" class="flex flex-col md:flex-row items-center text-foreground no-underline w-full">
                         <div class="flex-1 mb-4 md:mb-0 md:pr-6">
-                            <span class="text-lg font-semibold block text-slate-700">Isola dei musei</span>
-                            <p class="text-sm text-slate-600 mt-1 hidden sm:block leading-relaxed">Patrimonio UNESCO che ospita cinque musei di fama mondiale.</p>
+                            <span class="text-lg font-semibold block">Isola dei musei</span>
+                            <p class="text-sm text-muted-foreground mt-1 hidden sm:block leading-relaxed">Patrimonio UNESCO che ospita cinque musei di fama mondiale.</p>
                         </div>
                         <img src="https://www.visitberlin.de/system/files/styles/visitberlin_hero_visitberlin_desktop_2x/private/image/Museumsinsel%2BDom_iStock_c_Chalabala_DL_PPT_0.jpg.webp?itok=X0ec7y8P" alt="Vista aerea dell'Isola dei Musei e del Duomo di Berlino" class="w-full md:w-auto md:max-w-xs lg:max-w-sm h-auto rounded-lg shadow-md object-cover transition transform hover:scale-105 duration-300" onerror="this.onerror=null; this.src='https://placehold.co/300x200/eeeeee/cccccc?text=Museum+Island';">
                     </a>
                 </li>
-                <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-orange-400 transition duration-300 ease-in-out transform hover:-translate-y-1">
-                   <a href="#" class="flex flex-col md:flex-row items-center text-slate-800 no-underline w-full">
+                <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-primary/80 transition duration-300 ease-in-out transform hover:-translate-y-1">
+                   <a href="#" class="flex flex-col md:flex-row items-center text-foreground no-underline w-full">
                         <div class="flex-1 mb-4 md:mb-0 md:pr-6">
-                            <span class="text-lg font-semibold block text-slate-700">Duomo</span>
-                            <p class="text-sm text-slate-600 mt-1 hidden sm:block leading-relaxed">L'imponente cattedrale di Berlino con la sua magnifica cupola e interni sontuosi.</p>
+                            <span class="text-lg font-semibold block">Duomo</span>
+                            <p class="text-sm text-muted-foreground mt-1 hidden sm:block leading-relaxed">L'imponente cattedrale di Berlino con la sua magnifica cupola e interni sontuosi.</p>
                         </div>
                         <img src="https://img.nh-hotels.net/8yYbq/ZaBrj/original/Germany_Cathedral_1.jpg?output-quality=70&resize=555:*&composite-to=center,center|555:280&background-color=white" alt="Facciata del Duomo di Berlino (Berliner Dom)" class="w-full md:w-auto md:max-w-xs lg:max-w-sm h-auto rounded-lg shadow-md object-cover transition transform hover:scale-105 duration-300" onerror="this.onerror=null; this.src='https://placehold.co/300x200/eeeeee/cccccc?text=Berliner+Dom';">
                     </a>
                 </li>
-                <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-orange-400 transition duration-300 ease-in-out transform hover:-translate-y-1">
-                    <a href="#" class="flex flex-col md:flex-row items-center text-slate-800 no-underline w-full">
+                <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-primary/80 transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <a href="#" class="flex flex-col md:flex-row items-center text-foreground no-underline w-full">
                         <div class="flex-1 mb-4 md:mb-0 md:pr-6">
-                            <span class="text-lg font-semibold block text-slate-700">Marx-Engels-Forum</span>
-                            <p class="text-sm text-slate-600 mt-1 hidden sm:block leading-relaxed">Parco pubblico con le statue monumentali dei fondatori del socialismo scientifico.</p>
+                            <span class="text-lg font-semibold block">Marx-Engels-Forum</span>
+                            <p class="text-sm text-muted-foreground mt-1 hidden sm:block leading-relaxed">Parco pubblico con le statue monumentali dei fondatori del socialismo scientifico.</p>
                         </div>
                         <img src="https://static.wixstatic.com/media/d0a141_35d628446b5b4e95a731400263d01db9~mv2.jpg/v1/fill/w_980,h_653,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/d0a141_35d628446b5b4e95a731400263d01db9~mv2.jpg" alt="Statue di Marx ed Engels nel Marx-Engels-Forum" class="w-full md:w-auto md:max-w-xs lg:max-w-sm h-auto rounded-lg shadow-md object-cover transition transform hover:scale-105 duration-300" onerror="this.onerror=null; this.src='https://placehold.co/300x200/eeeeee/cccccc?text=Marx-Engels-Forum';">
                     </a>
                 </li>
-                <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-orange-400 transition duration-300 ease-in-out transform hover:-translate-y-1">
-                    <a href="#" class="flex flex-col md:flex-row items-center text-slate-800 no-underline w-full">
+                <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-primary/80 transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <a href="#" class="flex flex-col md:flex-row items-center text-foreground no-underline w-full">
                         <div class="flex-1 mb-4 md:mb-0 md:pr-6">
-                            <span class="text-lg font-semibold block text-slate-700">Alexanderplatz</span>
-                            <p class="text-sm text-slate-600 mt-1 hidden sm:block leading-relaxed">Piazza centrale e snodo dei trasporti, dominata dalla Fernsehturm (Torre della TV).</p>
+                            <span class="text-lg font-semibold block">Alexanderplatz</span>
+                            <p class="text-sm text-muted-foreground mt-1 hidden sm:block leading-relaxed">Piazza centrale e snodo dei trasporti, dominata dalla Fernsehturm (Torre della TV).</p>
                         </div>
                         <img src="https://content.r9cdn.net/rimg/dimg/94/77/3c308be3-lm-1035-172eedc4c70.jpg?width=1366&height=768&xhint=2600&yhint=3239&crop=true" alt="Alexanderplatz con la Torre della Televisione (Fernsehturm)" class="w-full md:w-auto md:max-w-xs lg:max-w-sm h-auto rounded-lg shadow-md object-cover transition transform hover:scale-105 duration-300" onerror="this.onerror=null; this.src='https://placehold.co/300x200/eeeeee/cccccc?text=Alexanderplatz';">
                     </a>
                 </li>
-                <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-orange-400 transition duration-300 ease-in-out transform hover:-translate-y-1">
-                    <a href="#" class="flex flex-col md:flex-row items-center text-slate-800 no-underline w-full">
+                <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-primary/80 transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <a href="#" class="flex flex-col md:flex-row items-center text-foreground no-underline w-full">
                         <div class="flex-1 mb-4 md:mb-0 md:pr-6">
-                            <span class="text-lg font-semibold block text-slate-700">East Side Gallery</span>
-                            <p class="text-sm text-slate-600 mt-1 hidden sm:block leading-relaxed">Il tratto più lungo del Muro di Berlino rimasto, ora una galleria d'arte a cielo aperto.</p>
+                            <span class="text-lg font-semibold block">East Side Gallery</span>
+                            <p class="text-sm text-muted-foreground mt-1 hidden sm:block leading-relaxed">Il tratto più lungo del Muro di Berlino rimasto, ora una galleria d'arte a cielo aperto.</p>
                         </div>
                         <img src="https://www.visitberlin.de/system/files/styles/visitberlin_bleed_header_visitberlin_mobile_1x/private/image/East-Side-Gallery_1427_c_visitBerlin_Foto_Philip_Koschel_DL_PPT_0.jpg.jpg?itok=H3jZPurE" alt="Murales sulla East Side Gallery, sezione del Muro di Berlino" class="w-full md:w-auto md:max-w-xs lg:max-w-sm h-auto rounded-lg shadow-md object-cover transition transform hover:scale-105 duration-300" onerror="this.onerror=null; this.src='https://placehold.co/300x200/eeeeee/cccccc?text=East+Side+Gallery';">
                     </a>
                 </li>
-                <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-orange-400 transition duration-300 ease-in-out transform hover:-translate-y-1">
-                    <a href="#" class="flex flex-col md:flex-row items-center text-slate-800 no-underline w-full">
+                <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-primary/80 transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <a href="#" class="flex flex-col md:flex-row items-center text-foreground no-underline w-full">
                         <div class="flex-1 mb-4 md:mb-0 md:pr-6">
-                            <span class="text-lg font-semibold block text-slate-700">Tempo libero nella vicina Uber Arena</span>
-                            <p class="text-sm text-slate-600 mt-1 hidden sm:block leading-relaxed">Shopping, ristoranti o semplice relax nel moderno quartiere Mercedes Platz.</p>
+                            <span class="text-lg font-semibold block">Tempo libero nella vicina Uber Arena</span>
+                            <p class="text-sm text-muted-foreground mt-1 hidden sm:block leading-relaxed">Shopping, ristoranti o semplice relax nel moderno quartiere Mercedes Platz.</p>
                         </div>
                         <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/08/6b/7a/ff/o2-world-berlin.jpg?w=900&h=500&s=1" alt="Esterno della Uber Arena (precedentemente O2 World) a Berlino" class="w-full md:w-auto md:max-w-xs lg:max-w-sm h-auto rounded-lg shadow-md object-cover transition transform hover:scale-105 duration-300" onerror="this.onerror=null; this.src='https://placehold.co/300x200/eeeeee/cccccc?text=Uber+Arena';">
                     </a>
                 </li>
-                <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-orange-400 transition duration-300 ease-in-out transform hover:-translate-y-1">
-                    <a href="#" class="flex items-center text-slate-800 no-underline w-full">
+                <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-primary/80 transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <a href="#" class="flex items-center text-foreground no-underline w-full">
                         <div class="flex-1">
-                            <span class="text-lg font-semibold block text-slate-700">Rientro in hotel, cena e pernottamento</span>
+                            <span class="text-lg font-semibold block">Rientro in hotel, cena e pernottamento</span>
                         </div>
                     </a>
                 </li>
              </ul>
         </section>
 
-        <section id="giorno4" class="hidden bg-white rounded-xl shadow-lg p-6 md:p-8 mb-10 border border-gray-200">
+        <section id="giorno4" class="hidden bg-card rounded-xl shadow-lg p-6 md:p-8 mb-10 border border-border">
             <h2 class="text-3xl md:text-4xl font-bold text-primary text-center mb-8 pb-3 border-b-2 border-primary">Giorno 4</h2>
              <ul class="list-none p-0 space-y-8">
-                 <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-orange-400 transition duration-300 ease-in-out transform hover:-translate-y-1">
-                    <a href="#" class="flex flex-col md:flex-row items-center text-slate-800 no-underline w-full">
+                 <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-primary/80 transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <a href="#" class="flex flex-col md:flex-row items-center text-foreground no-underline w-full">
                         <div class="flex-1 mb-4 md:mb-0 md:pr-6">
-                            <span class="text-lg font-semibold block text-slate-700">Olympiastadion</span>
-                            <p class="text-sm text-slate-600 mt-1 hidden sm:block leading-relaxed">Visita lo stadio monumentale costruito per le Olimpiadi del 1936.</p>
+                            <span class="text-lg font-semibold block">Olympiastadion</span>
+                            <p class="text-sm text-muted-foreground mt-1 hidden sm:block leading-relaxed">Visita lo stadio monumentale costruito per le Olimpiadi del 1936.</p>
                         </div>
                         <img src="https://www.tuttostadi.com/wp-content/uploads/2020/03/Stadio-Berlino-e1584909861276.jpg" alt="Vista interna dell'Olympiastadion di Berlino" class="w-full md:w-auto md:max-w-xs lg:max-w-sm h-auto rounded-lg shadow-md object-cover transition transform hover:scale-105 duration-300" onerror="this.onerror=null; this.src='https://placehold.co/300x200/eeeeee/cccccc?text=Olympiastadion';">
                     </a>
                 </li>
-                <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-orange-400 transition duration-300 ease-in-out transform hover:-translate-y-1">
-                   <a href="#" class="flex flex-col md:flex-row items-center text-slate-800 no-underline w-full">
+                <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-primary/80 transition duration-300 ease-in-out transform hover:-translate-y-1">
+                   <a href="#" class="flex flex-col md:flex-row items-center text-foreground no-underline w-full">
                         <div class="flex-1 mb-4 md:mb-0 md:pr-6">
-                            <span class="text-lg font-semibold block text-slate-700">Hard Rock Café</span>
-                            <p class="text-sm text-slate-600 mt-1 hidden sm:block leading-relaxed">Pranzo o pausa caffè nel famoso locale a tema rock sulla Ku'damm.</p>
+                            <span class="text-lg font-semibold block">Hard Rock Café</span>
+                            <p class="text-sm text-muted-foreground mt-1 hidden sm:block leading-relaxed">Pranzo o pausa caffè nel famoso locale a tema rock sulla Ku'damm.</p>
                         </div>
                         <img src="https://media-cdn.tripadvisor.com/media/photo-s/09/83/f2/d1/hard-rock-cafe-berlin.jpg" alt="Ingresso dell'Hard Rock Café di Berlino" class="w-full md:w-auto md:max-w-xs lg:max-w-sm h-auto rounded-lg shadow-md object-cover transition transform hover:scale-105 duration-300" onerror="this.onerror=null; this.src='https://placehold.co/300x200/eeeeee/cccccc?text=Hard+Rock+Cafe';">
                     </a>
                 </li>
-                <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-orange-400 transition duration-300 ease-in-out transform hover:-translate-y-1">
-                    <a href="#" class="flex flex-col md:flex-row items-center text-slate-800 no-underline w-full">
+                <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-primary/80 transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <a href="#" class="flex flex-col md:flex-row items-center text-foreground no-underline w-full">
                         <div class="flex-1 mb-4 md:mb-0 md:pr-6">
-                            <span class="text-lg font-semibold block text-slate-700">Kurfürstendamm (passeggiata e shopping)</span>
-                            <p class="text-sm text-slate-600 mt-1 hidden sm:block leading-relaxed">Tempo libero per passeggiare e fare acquisti sul viale più famoso di Berlino Ovest.</p>
+                            <span class="text-lg font-semibold block">Kurfürstendamm (passeggiata e shopping)</span>
+                            <p class="text-sm text-muted-foreground mt-1 hidden sm:block leading-relaxed">Tempo libero per passeggiare e fare acquisti sul viale più famoso di Berlino Ovest.</p>
                         </div>
                         <img src="https://a.travel-assets.com/findyours-php/viewfinder/images/res70/165000/165081-Kurfuerstendamm.jpg" alt="Viale Kurfürstendamm a Berlino con negozi" class="w-full md:w-auto md:max-w-xs lg:max-w-sm h-auto rounded-lg shadow-md object-cover transition transform hover:scale-105 duration-300" onerror="this.onerror=null; this.src='https://placehold.co/300x200/eeeeee/cccccc?text=Kurfürstendamm';">
                     </a>
                 </li>
-                <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-orange-400 transition duration-300 ease-in-out transform hover:-translate-y-1">
-                   <a href="#" class="flex items-center text-slate-800 no-underline w-full">
+                <li class="bg-secondary border-l-4 border-primary rounded-r-lg p-5 md:p-6 hover:shadow-xl hover:border-primary/80 transition duration-300 ease-in-out transform hover:-translate-y-1">
+                   <a href="#" class="flex items-center text-foreground no-underline w-full">
                         <div class="flex-1">
-                            <span class="text-lg font-semibold block text-slate-700">Rientro in hotel e trasferimento per l'aeroporto</span>
+                            <span class="text-lg font-semibold block">Rientro in hotel e trasferimento per l'aeroporto</span>
                         </div>
                    </a>
                 </li>
@@ -380,21 +480,16 @@
             // --- Mobile Menu Toggle ---
             const menuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
-            const menuIcon = menuButton.querySelector('i'); // Get the icon element
+            const iconOpen = document.getElementById('icon-open');
+            const iconClose = document.getElementById('icon-close');
 
-            if (menuButton && mobileMenu && menuIcon) {
+            if (menuButton && mobileMenu && iconOpen && iconClose) {
                 menuButton.addEventListener('click', () => {
                     const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
                     menuButton.setAttribute('aria-expanded', !isExpanded);
                     mobileMenu.classList.toggle('hidden');
-                    // Toggle between burger and times icon
-                    if (mobileMenu.classList.contains('hidden')) {
-                        menuIcon.classList.remove('fa-times');
-                        menuIcon.classList.add('fa-bars');
-                    } else {
-                        menuIcon.classList.remove('fa-bars');
-                        menuIcon.classList.add('fa-times');
-                    }
+                    iconOpen.classList.toggle('hidden');
+                    iconClose.classList.toggle('hidden');
                 });
             }
 
