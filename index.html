@@ -142,6 +142,7 @@
             <a href="https://telexyu.github.io/Berlin/berlino_luoghi.html" class="text-muted-foreground hover:text-primary transition-colors">LUOGHI</a>
             <a href="https://telexyu.github.io/Berlin/ga.html" class="text-muted-foreground hover:text-primary transition-colors">GALLERIA</a>
             <a href="https://telexyu.github.io/Berlin/aboutUs.html" class="text-muted-foreground hover:text-primary transition-colors">ABOUT US</a>
+           
             <a href="https://telexyu.github.io/Berlin/mappaberlino.html" class="text-muted-foreground hover:text-primary transition-colors">MAPPA</a>
           </nav>
 
@@ -180,7 +181,7 @@
           <a href="https://telexyu.github.io/Berlin/berlino_luoghi.html" class="text-muted-foreground hover:text-primary transition-colors">LUOGHI</a>
           <a href="https://telexyu.github.io/Berlin/ga.html" class="text-muted-foreground hover:text-primary transition-colors">GALLERIA</a>
           <a href="https://telexyu.github.io/Berlin/aboutUs.html" class="text-muted-foreground hover:text-primary transition-colors">ABOUT US</a>
-          
+         
           <a href="https://telexyu.github.io/Berlin/mappaberlino.html" class="text-muted-foreground hover:text-primary transition-colors">MAPPA</a>
         </div>
          <div class="flex items-center justify-center space-x-4 border-t border-border px-2 pt-4 pb-4">
@@ -270,7 +271,7 @@
       async function fetchWeather() {
           const apiKey = "1cf212d9504b25b72f9c8722b638005f"; // Replace with your actual API key if needed
           const city = "Berlin";
-          const url = https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=it;
+          const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=it`;
 
           const weatherIconDiv = document.getElementById("weather-icon");
           const cityNameP = document.getElementById("city-name");
@@ -286,19 +287,19 @@
           try {
               const response = await fetch(url);
               if (!response.ok) {
-                  throw new Error(HTTP error! status: ${response.status});
+                  throw new Error(`HTTP error! status: ${response.status}`);
               }
               const data = await response.json();
 
               // Update weather information
-              cityNameP.textContent = Meteo a ${data.name};
+              cityNameP.textContent = `Meteo a ${data.name}`;
               // Capitalize first letter of description
               descriptionP.textContent = data.weather[0].description.charAt(0).toUpperCase() + data.weather[0].description.slice(1);
-              temperatureP.textContent = Temperatura: ${Math.round(data.main.temp)}°C;
+              temperatureP.textContent = `Temperatura: ${Math.round(data.main.temp)}°C`;
 
               // Add weather icon
-              const iconUrl = https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png; // Use @2x for better resolution
-              weatherIconDiv.innerHTML = <img src="${iconUrl}" alt="${data.weather[0].description}" class="w-16 h-16">;
+              const iconUrl = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`; // Use @2x for better resolution
+              weatherIconDiv.innerHTML = `<img src="${iconUrl}" alt="${data.weather[0].description}" class="w-16 h-16">`;
 
           } catch (error) {
               console.error("Errore nel recupero dei dati meteo:", error);
@@ -310,54 +311,52 @@
       }
 
       // Call fetchWeather function when the page loads
-      fetchWeather();
+      document.addEventListener('DOMContentLoaded', fetchWeather);
 
       // --- Privacy Banner ---
-      const closePrivacyButton = document.getElementById("close-privacy-btn");
-      const privacyBanner = document.getElementById("privacy-banner");
+      document.addEventListener('DOMContentLoaded', function() {
+    const closePrivacyButton = document.getElementById("close-privacy-btn");
+    const privacyBanner = document.getElementById("privacy-banner");
 
-      if (closePrivacyButton && privacyBanner) {
-          // Check if banner was already closed
-          if (localStorage.getItem('privacyBannerClosed') === 'true') {
-              privacyBanner.style.display = 'none';
+    if (closePrivacyButton && privacyBanner) {
+        // Mostra sempre il banner (rimuovi il controllo localStorage)
+        privacyBanner.style.display = 'block';
+
+        // Add event listener to close button
+        closePrivacyButton.addEventListener("click", function() {
+            privacyBanner.style.display = 'none';
+            // Opzionale: ricordare la scelta in local storage
+            // localStorage.setItem('privacyBannerClosed', 'true');
+        });
+    } else {
+        console.error("Privacy banner or close button not found.");
+    }
+
+          // --- Mobile Menu Toggle ---
+          const mobileMenuButton = document.getElementById('mobile-menu-button'); // Use the button ID
+          const mobileMenu = document.getElementById('mobile-menu');
+          const iconOpen = document.getElementById('icon-open');
+          const iconClose = document.getElementById('icon-close');
+
+          // Check if all required elements exist
+          if (mobileMenuButton && mobileMenu && iconOpen && iconClose) {
+              mobileMenuButton.addEventListener('click', function() {
+                  // Check the current state (expanded or not)
+                  const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                  // Toggle the aria-expanded attribute
+                  this.setAttribute('aria-expanded', !isExpanded);
+
+                  // Toggle the 'hidden' class on the menu container
+                  mobileMenu.classList.toggle('hidden');
+
+                  // Toggle the 'hidden' class on the open and close icons
+                  iconOpen.classList.toggle('hidden');
+                  iconClose.classList.toggle('hidden');
+              });
+          } else {
+               console.error("Mobile menu button, menu container, or icons not found! Ensure the button has id='mobile-menu-button' and SVGs have id='icon-open' and id='icon-close'.");
           }
-
-          // Add event listener to close button
-          closePrivacyButton.addEventListener("click", function() {
-              privacyBanner.style.display = 'none';
-              // Remember the choice in local storage
-              localStorage.setItem('privacyBannerClosed', 'true');
-          });
-      } else {
-          console.error("Privacy banner or close button not found.");
-      }
-
-
-      // --- Mobile Menu Toggle ---
-      const mobileMenuButton = document.getElementById('mobile-menu-button'); // Use the button ID
-      const mobileMenu = document.getElementById('mobile-menu');
-      const iconOpen = document.getElementById('icon-open');
-      const iconClose = document.getElementById('icon-close');
-
-      // Check if all required elements exist
-      if (mobileMenuButton && mobileMenu && iconOpen && iconClose) {
-          mobileMenuButton.addEventListener('click', function() {
-              // Check the current state (expanded or not)
-              const isExpanded = this.getAttribute('aria-expanded') === 'true';
-              // Toggle the aria-expanded attribute
-              this.setAttribute('aria-expanded', !isExpanded);
-
-              // Toggle the 'hidden' class on the menu container
-              mobileMenu.classList.toggle('hidden');
-
-              // Toggle the 'hidden' class on the open and close icons
-              iconOpen.classList.toggle('hidden');
-              iconClose.classList.toggle('hidden');
-          });
-      } else {
-           console.error("Mobile menu button, menu container, or icons not found! Ensure the button has id='mobile-menu-button' and SVGs have id='icon-open' and id='icon-close'.");
-      }
-
+      });
     </script>
   </body>
 </html>
