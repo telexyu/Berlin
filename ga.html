@@ -1,0 +1,491 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viaggio Berlino - Galleria</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script type="text/javascript">
+      window.tailwind.config = {
+        darkMode: ['class'],
+        theme: {
+          extend: {
+            colors: {
+              border: 'hsl(var(--border))',
+              input: 'hsl(var(--input))',
+              ring: 'hsl(var(--ring))',
+              background: 'hsl(var(--background))',
+              foreground: 'hsl(var(--foreground))',
+              primary: {
+                DEFAULT: 'hsl(var(--primary))',
+                foreground: 'hsl(var(--primary-foreground))'
+              },
+              secondary: {
+                DEFAULT: 'hsl(var(--secondary))',
+                foreground: 'hsl(var(--secondary-foreground))'
+              },
+              destructive: {
+                DEFAULT: 'hsl(var(--destructive))',
+                foreground: 'hsl(var(--destructive-foreground))'
+              },
+              muted: {
+                DEFAULT: 'hsl(var(--muted))',
+                foreground: 'hsl(var(--muted-foreground))'
+              },
+              accent: {
+                DEFAULT: 'hsl(var(--accent))',
+                foreground: 'hsl(var(--accent-foreground))'
+              },
+              popover: {
+                DEFAULT: 'hsl(var(--popover))',
+                foreground: 'hsl(var(--popover-foreground))'
+              },
+              card: {
+                DEFAULT: 'hsl(var(--card))',
+                foreground: 'hsl(var(--card-foreground))'
+              },
+            },
+             borderRadius: {
+                lg: "var(--radius)",
+                md: "calc(var(--radius) - 2px)",
+                sm: "calc(var(--radius) - 4px)",
+            },
+          }
+        }
+      }
+    </script>
+    <style type="text/tailwindcss">
+      @layer base {
+        :root {
+          --background: 0 0% 100%;
+          --foreground: 20 14.3% 4.1%;
+          --card: 0 0% 100%;
+          --card-foreground: 20 14.3% 4.1%;
+          --popover: 0 0% 100%;
+          --popover-foreground: 20 14.3% 4.1%;
+          --primary: 24.6 95% 53.1%;
+          --primary-foreground: 60 9.1% 97.8%;
+          --secondary: 60 4.8% 95.9%;
+          --secondary-foreground: 24 9.8% 10%;
+          --muted: 60 4.8% 95.9%;
+          --muted-foreground: 25 5.3% 44.7%;
+          --accent: 60 4.8% 95.9%;
+          --accent-foreground: 24 9.8% 10%;
+          --destructive: 0 84.2% 60.2%;
+          --destructive-foreground: 60 9.1% 97.8%;
+          --border: 20 5.9% 90%;
+          --input: 20 5.9% 90%;
+          --ring: 24.6 95% 53.1%;
+          --radius: 0.5rem;
+        }
+        .dark {
+          --background: 20 14.3% 4.1%;
+          --foreground: 60 9.1% 97.8%;
+          --card: 20 14.3% 4.1%;
+          --card-foreground: 60 9.1% 97.8%;
+          --popover: 20 14.3% 4.1%;
+          --popover-foreground: 60 9.1% 97.8%;
+          --primary: 20.5 90.2% 48.2%;
+          --primary-foreground: 60 9.1% 97.8%;
+          --secondary: 12 6.5% 15.1%;
+          --secondary-foreground: 60 9.1% 97.8%;
+          --muted: 12 6.5% 15.1%;
+          --muted-foreground: 24 5.4% 63.9%;
+          --accent: 12 6.5% 15.1%;
+          --accent-foreground: 60 9.1% 97.8%;
+          --destructive: 0 72.2% 50.6%;
+          --destructive-foreground: 60 9.1% 97.8%;
+          --border: 12 6.5% 15.1%;
+          --input: 12 6.5% 15.1%;
+          --ring: 20.5 90.2% 48.2%;
+        }
+      }
+       @layer base {
+          * {
+              @apply border-border;
+          }
+          body {
+              @apply bg-background text-foreground;
+              font-family: 'Inter', sans-serif;
+          }
+          #mobile-menu a {
+            display: block;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+         }
+         #mobile-menu a:hover {
+             background-color: hsl(var(--secondary));
+             color: hsl(var(--secondary-foreground));
+         }
+         #mobile-menu .flex svg {
+             margin: auto;
+         }
+         /* Gallery styles */
+         .gallery-item {
+             transition: transform 0.3s ease;
+             aspect-ratio: 1/1; /* Mantiene rapporto quadrato */
+         }
+         .gallery-item:hover {
+             transform: scale(1.03);
+         }
+         .gallery-img {
+             width: 100%;
+             height: 100%;
+             object-fit: cover;
+         }
+      }
+    </style>
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  </head>
+  <body class="bg-background text-foreground">
+    <header class="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div class="container mx-auto px-4">
+        <div class="flex h-16 items-center justify-between">
+          <div class="flex items-center">
+            <a href="https://telexyu.github.io/Berlin/" class="text-xl md:text-2xl font-bold text-foreground hover:text-primary transition-colors" style="text-decoration: none;">
+              Viaggio Berlino
+            </a>
+          </div>
+
+          <nav class="hidden md:flex items-center space-x-6 text-sm font-medium">
+            <a href="https://telexyu.github.io/Berlin/itinerariopage1.html" class="text-muted-foreground hover:text-primary transition-colors">ITINERARIO</a>
+            <a href="https://telexyu.github.io/Berlin/berlino_luoghi.html" class="text-muted-foreground hover:text-primary transition-colors">LUOGHI</a>
+            <a href="#" class="text-muted-foreground hover:text-primary transition-colors">CARATTERISTICHE</a>
+            <a href="https://telexyu.github.io/Berlin/aboutUs.html" class="text-muted-foreground hover:text-primary transition-colors">ABOUT US</a>
+            <a href="#" class="text-muted-foreground hover:text-primary transition-colors">CONTATTI</a>
+            <a href="https://telexyu.github.io/Berlin/mappaberlino.html" class="text-muted-foreground hover:text-primary transition-colors">MAPPA</a>
+          </nav>
+
+          <div class="hidden md:flex items-center space-x-4">
+             <a href="https://www.twitch.tv/righiminutoperminuto" class="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer" aria-label="Twitch">
+                <span class="sr-only">Twitch</span>
+                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/>
+                </svg>
+             </a>
+             <a href="https://www.instagram.com/righireport/" class="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <span class="sr-only">Instagram</span>
+                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"></path>
+                </svg>
+             </a>
+          </div>
+
+          <div class="md:hidden">
+            <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground hover:bg-secondary hover:text-secondary-foreground focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary" aria-controls="mobile-menu" aria-expanded="false">
+              <span class="sr-only">Apri menu principale</span>
+              <svg id="icon-open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
+              </svg>
+              <svg id="icon-close" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="hidden md:hidden border-t border-border" id="mobile-menu">
+        <div class="space-y-1 px-2 pt-2 pb-3">
+           <a href="https://telexyu.github.io/Berlin/itinerariopage1.html" class="text-muted-foreground hover:text-primary transition-colors">ITINERARIO</a>
+          <a href="https://telexyu.github.io/Berlin/berlino_luoghi.html" class="text-muted-foreground hover:text-primary transition-colors">LUOGHI</a>
+          <a href="#" class="text-muted-foreground hover:text-primary transition-colors">CARATTERISTICHE</a>
+          <a href="https://telexyu.github.io/Berlin/aboutUs.html" class="text-muted-foreground hover:text-primary transition-colors">ABOUT US</a>
+          <a href="#" class="text-muted-foreground hover:text-primary transition-colors">CONTATTI</a>
+          <a href="https://telexyu.github.io/Berlin/mappaberlino.html" class="text-muted-foreground hover:text-primary transition-colors">MAPPA</a>
+        </div>
+         <div class="flex items-center justify-center space-x-4 border-t border-border px-2 pt-4 pb-4">
+           <a href="https://www.twitch.tv/righiminutoperminuto" class="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer" aria-label="Twitch">
+              <span class="sr-only">Twitch</span>
+              <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                 <path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/>
+              </svg>
+           </a>
+           <a href="https://www.instagram.com/righireport/" class="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <span class="sr-only">Instagram</span>
+              <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                 <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"></path>
+              </svg>
+           </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+      <h1 class="text-3xl md:text-4xl font-bold mb-8">Galleria Fotografica di Berlino</h1>
+      
+      <!-- Zoo Section -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-6 pb-2 border-b border-border">Zoo di Berlino</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/ee/01/d1/ee01d17f32f4e6ba54a771974418217d.jpg" alt="Zoo Berlino 1" class="gallery-img" width="800" height="800">
+          </div>
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/60/75/1e/60751edf75b03fe5d6df3346a2b74ed1.jpg" alt="Zoo Berlino 2" class="gallery-img" width="800" height="800">
+          </div>
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/f0/85/6f/f0856f2eadf96f8bac734c24a119bde3.jpg" alt="Zoo Berlino 3" class="gallery-img" width="800" height="800">
+          </div>
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/4c/97/9f/4c979f3408cc94e22c50dde1456c91dd.jpg" alt="Zoo Berlino 4" class="gallery-img" width="800" height="800">
+          </div>
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/59/d6/b5/59d6b5ec2de78066cda578f536712e74.jpg" alt="Zoo Berlino 5" class="gallery-img" width="800" height="800">
+          </div>
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/2e/f4/da/2ef4daedede2002208b22aa9656ac6ea.jpg" alt="Zoo Berlino 6" class="gallery-img" width="800" height="800">
+          </div>
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/87/10/5b/87105bd0b44a310cb49556e36863c495.jpg" alt="Zoo Berlino 7" class="gallery-img" width="800" height="800">
+          </div>
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/79/4b/4c/794b4c01aff8016465443caa37766b82.jpg" alt="Zoo Berlino 8" class="gallery-img" width="800" height="800">
+          </div>
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/38/8b/2e/388b2ecbdd9de0004dc0d5ebfc6e284f.jpg" alt="Zoo Berlino 9" class="gallery-img" width="800" height="800">
+          </div>
+        </div>
+      </section>
+      
+      <!-- Partenza Section -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-6 pb-2 border-b border-border">Volo</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/e5/23/5b/e5235b975c3f4ca3fc30430ca83a60ad.jpg" alt="Partenza 1" class="gallery-img" width="800" height="800">
+          </div>
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/55/3b/55/553b55f9788b94e5ea35b89b37f0d8aa.jpg" alt="Partenza 2" class="gallery-img" width="800" height="800">
+          </div>
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/bf/c1/ce/bfc1ce5a0047077a6021d77cb6588c55.jpg" alt="Partenza 3" class="gallery-img" width="800" height="800">
+          </div>
+        </div>
+      </section>
+      
+      <!-- Ghibli Section -->
+           <!-- Ghibli Section -->
+           <section class="mb-12">
+            <h2 class="text-2xl font-semibold mb-6 pb-2 border-b border-border">Ghibli</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <!-- Card 1 -->
+              <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border relative">
+                <div class="ghibli-slider" data-slider="1">
+                  <img src="https://i.pinimg.com/736x/6e/05/aa/6e05aaa49951b4d7221eee16c6e232e0.jpg" 
+                       alt="Ghibli 1" 
+                       class="gallery-img absolute inset-0 transition-opacity duration-1000 opacity-100" 
+                       width="800" height="800">
+                  <img src="https://i.pinimg.com/736x/b2/28/14/b228146b3ac18c23c2dcb9aaf7a16ba1.jpg" 
+                       alt="Ghibli 1 Alt" 
+                       class="gallery-img absolute inset-0 transition-opacity duration-1000 opacity-0" 
+                       width="800" height="800">
+                </div>
+              </div>
+              
+              <!-- Card 2 -->
+              <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border relative">
+                <div class="ghibli-slider" data-slider="2">
+                  <img src="https://i.pinimg.com/736x/ca/c3/1f/cac31fe9852527371f16e2cbadd6d6e5.jpg" 
+                       alt="Ghibli 2" 
+                       class="gallery-img absolute inset-0 transition-opacity duration-1000 opacity-100" 
+                       width="800" height="800">
+                  <img src="https://i.pinimg.com/736x/7e/16/0d/7e160da6418f3f07154fabf9a36ca760.jpg" 
+                       alt="Ghibli 2 Alt" 
+                       class="gallery-img absolute inset-0 transition-opacity duration-1000 opacity-0" 
+                       width="800" height="800">
+                </div>
+              </div>
+              
+              <!-- Card 3 -->
+              <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border relative">
+                <div class="ghibli-slider" data-slider="3">
+                  <img src="https://i.pinimg.com/736x/32/e1/40/32e1402d485341eb2adbaf7d06ab6ae2.jpg" 
+                       alt="Ghibli 3" 
+                       class="gallery-img absolute inset-0 transition-opacity duration-1000 opacity-100" 
+                       width="800" height="800">
+                  <img src="https://i.pinimg.com/736x/67/e6/9f/67e69f21730af4513bab1f747baece8b.jpg" 
+                       alt="Ghibli 3 Alt" 
+                       class="gallery-img absolute inset-0 transition-opacity duration-1000 opacity-0" 
+                       width="800" height="800">
+                </div>
+              </div>
+            </div>
+          </section>
+      
+      <!-- Foto con i Prof Section -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-6 pb-2 border-b border-border">Foto con i Prof</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/e9/5e/57/e95e57d69824be248719298a6cc73118.jpg" alt="Prof 1" class="gallery-img" width="800" height="800">
+          </div>
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/d9/e2/5c/d9e25ccc84c54fd751c1566f4e769450.jpg" alt="Prof 2" class="gallery-img" width="800" height="800">
+          </div>
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/52/47/0b/52470b303dd8e21fdb159943fd238db5.jpg" alt="Prof 3" class="gallery-img" width="800" height="800">
+          </div>
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/a9/dc/11/a9dc115c15cd6ff818eb71e10cc95b98.jpg" alt="Prof 4" class="gallery-img" width="800" height="800">
+          </div>
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/7f/65/fd/7f65fd4f50da7cd48a34396b6b806cea.jpg" alt="Prof 5" class="gallery-img" width="800" height="800">
+          </div>
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/2f/c8/20/2fc820d58418b91f63e996eefce0159a.jpg" alt="Prof 6" class="gallery-img" width="800" height="800">
+          </div>
+        </div>
+      </section>
+      
+      <!-- Musei Section -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-6 pb-2 border-b border-border">Musei</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/7e/b3/36/7eb3362f1002ebaaa536312034b4ddef.jpg" alt="Museo 1" class="gallery-img" width="800" height="800">
+          </div>
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/d6/f3/c0/d6f3c0f51fee7d059cefff9b5584c47a.jpg" alt="Museo 2" class="gallery-img" width="800" height="800">
+          </div>
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/45/2c/7b/452c7b946a16cf85adf72a099a5c175e.jpg" alt="Museo 3" class="gallery-img" width="800" height="800">
+          </div>
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/7d/f3/09/7df309c783f734d44d295736d4fd09e4.jpg" alt="Museo 4" class="gallery-img" width="800" height="800">
+          </div>
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/f9/bf/91/f9bf91c79275fae3d2c13758b5977dea.jpg" alt="Museo 5" class="gallery-img" width="800" height="800">
+          </div>
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/fb/6e/67/fb6e67102de308afb94d5f67ac6aa84c.jpg" alt="Museo 6" class="gallery-img" width="800" height="800">
+          </div>
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/cc/d8/5d/ccd85d9bb9496cff17fceb15eb3a5d3d.jpg" alt="Museo 7" class="gallery-img" width="800" height="800">
+          </div>
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/31/52/1a/31521a97f3ba34e235be0f42e8bc005f.jpg" alt="Museo 8" class="gallery-img" width="800" height="800">
+          </div>
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/01/3b/e5/013be5d18b18952f5793771aecad08d8.jpg" alt="Museo 9" class="gallery-img" width="800" height="800">
+          </div>
+        </div>
+      </section>
+      
+      <!-- Street Section -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-6 pb-2 border-b border-border">Streets</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/b0/c4/28/b0c428b714d9cb8fde66276ac2700f36.jpg" alt="Street 1" class="gallery-img" width="800" height="800">
+          </div>
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/9b/97/fa/9b97fa9bee0f7af0ac699ffd0730f91a.jpg" alt="Street 2" class="gallery-img" width="800" height="800">
+          </div>
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/00/40/a4/0040a43a2e6652db73b052426d4da42a.jpg" alt="Street 3" class="gallery-img" width="800" height="800">
+          </div>
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/2a/d5/91/2ad591c955368e5f443d252f01a96f4e.jpg" alt="Street 4" class="gallery-img" width="800" height="800">
+          </div>
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/f9/bf/91/f9bf91c79275fae3d2c13758b5977dea.jpg" alt="Street 5" class="gallery-img" width="800" height="800">
+          </div>
+          <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+            <img src="https://i.pinimg.com/736x/e2/3b/4a/e23b4a1084a76f023f32cf40c52ba2c5.jpg" alt="Street 6" class="gallery-img" width="800" height="800">
+          </div>
+        </div>
+      </section>
+      
+      <!-- Muro Section -->
+    
+            <section class="mb-12">
+              <h2 class="text-2xl font-semibold mb-6 pb-2 border-b border-border">Muro di Berlino</h2>
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+                  <img src="https://i.pinimg.com/736x/e3/60/ea/e360ea4073e6c9a3f66b22d13b2b770b.jpg" alt="Muro 1" class="gallery-img" width="800" height="800">
+                </div>
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+                  <img src="https://i.pinimg.com/736x/a3/db/4f/a3db4f2eec86109eefc123075c00fdbc.jpg" alt="Muro 2" class="gallery-img" width="800" height="800">
+                </div>
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+                  <img src="https://i.pinimg.com/736x/d5/3c/51/d53c510160f5bbd4533be79937fcbbaa.jpg" alt="Muro 3" class="gallery-img" width="800" height="800">
+                </div>
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+                  <img src="https://i.pinimg.com/736x/40/9f/1a/409f1acba6fe230396d452cefd1101c8.jpg" alt="Muro 4" class="gallery-img" width="800" height="800">
+                </div>
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+                  <img src="https://i.pinimg.com/736x/2c/e3/cf/2ce3cf7c91410fe3f1c11ad84a56162d.jpg" alt="Muro 5" class="gallery-img" width="800" height="800">
+                </div>
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md border border-border">
+                  <img src="https://i.pinimg.com/736x/0e/72/98/0e7298b7cee1ff025e54dc71b5f8d179.jpg" alt="Muro 6" class="gallery-img" width="800" height="800">
+                </div>
+              </div>
+            </section>
+          </main>
+  
+         
+  
+          <script>
+            // --- Mobile Menu Toggle ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const iconOpen = document.getElementById('icon-open');
+            const iconClose = document.getElementById('icon-close');
+  
+            if (mobileMenuButton && mobileMenu && iconOpen && iconClose) {
+                mobileMenuButton.addEventListener('click', function() {
+                    const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                    this.setAttribute('aria-expanded', !isExpanded);
+  
+                    mobileMenu.classList.toggle('hidden');
+                    iconOpen.classList.toggle('hidden');
+                    iconClose.classList.toggle('hidden');
+                });
+            } else {
+                 console.error("Mobile menu elements not found!");
+            }
+  
+            // --- Privacy Banner ---
+            const closePrivacyButton = document.getElementById("close-privacy-btn");
+            const privacyBanner = document.getElementById("privacy-banner");
+  
+            if (closePrivacyButton && privacyBanner) {
+                if (localStorage.getItem('privacyBannerClosed') === 'true') {
+                    privacyBanner.style.display = 'none';
+                }
+  
+                closePrivacyButton.addEventListener("click", function() {
+                    privacyBanner.style.display = 'none';
+                    localStorage.setItem('privacyBannerClosed', 'true');
+                });
+            }
+          </script>
+           <script>
+            // Slider automatico per le immagini Ghibli
+            document.addEventListener('DOMContentLoaded', function() {
+              const sliders = document.querySelectorAll('.ghibli-slider');
+              
+              sliders.forEach(slider => {
+                const images = slider.querySelectorAll('img');
+                let currentIndex = 0;
+                
+                // Funzione per cambiare immagine
+                function changeImage() {
+                  images[currentIndex].classList.remove('opacity-100');
+                  images[currentIndex].classList.add('opacity-0');
+                  
+                  currentIndex = (currentIndex + 1) % images.length;
+                  
+                  images[currentIndex].classList.remove('opacity-0');
+                  images[currentIndex].classList.add('opacity-100');
+                }
+                
+                // Cambia immagine ogni 3 secondi
+                setInterval(changeImage, 3000);
+              });
+            });
+          </script>
+        </body>
+      </html>
